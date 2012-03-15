@@ -1,0 +1,142 @@
+import java.io.*;
+
+public class Lexer {
+	
+	Lex_Tokenizer lT;
+	String stringBuffer="";
+	
+	public Lexer(String file) {
+	
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			lT = new Lex_Tokenizer(reader);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Token nextToken() {
+		Token t = null;
+		try{
+			t = lT.getToken();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return t;
+	}
+}
+%%
+%class Lex_Tokenizer
+%function getToken
+%type Token
+
+%eofval{
+return null;
+%eofval}
+
+%line
+%char
+%state ONELINECOMMENTS
+%state MANYLINECOMMENTS
+%state STRING
+
+ALPHA=[A-Za-z_]
+DIGIT=[0-9]
+ALPHA_NUMERIC={ALPHA}|{DIGIT}
+KEYWORD=class|else|if|int|float|boolean|String|return|static|while
+BOOLEAN=true|false 
+IDENT={ALPHA}({ALPHA_NUMERIC})*
+NUMBER=(({DIGIT})+)|(({DIGIT})+.({DIGIT})+)
+WHITE_SPACE=([\ \n\b\r\t\f])+
+STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&])*\")
+STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&])*)
+
+%%
+<YYINITIAL> {STRING} { 
+  return new Token("ST", yytext());
+}
+<YYINITIAL> {STRINGERROR} { 
+  return new Token("INVALID STRING", yytext());
+}
+<YYINITIAL> {NUMBER} { 
+  return new Token("NUM", yytext());
+}
+<YYINITIAL> {KEYWORD} { 
+  return new Token("KW", yytext());
+}
+<YYINITIAL> {BOOLEAN} { 
+  return new Token("BL", yytext());
+}
+<YYINITIAL> {IDENT} { 
+  return new Token("ID", yytext());
+}
+<YYINITIAL> {WHITE_SPACE} { }
+<YYINITIAL> ";" { 
+  return new Token("SM", ";");
+} 
+<YYINITIAL> "," { 
+  return new Token("FA", ","); 
+} 
+<YYINITIAL> "(" { 
+  return new Token("LP", "(");
+} 
+<YYINITIAL> ")" { 
+  return new Token("RP", ")"); 
+} 
+<YYINITIAL> "{" { 
+  return new Token("LB", "{");
+} 
+<YYINITIAL> "}" { 
+  return new Token("RB", "}");
+} 
+<YYINITIAL> "=" { 
+  return new Token("AO", "="); 
+} 
+<YYINITIAL> "+" { 
+  return new Token("PO", "+"); 
+} 
+<YYINITIAL> "-" { 
+  return new Token("MO", "-");
+} 
+<YYINITIAL> "*" { 
+  return new Token("TO", "*");
+} 
+<YYINITIAL> "/" { 
+  return new Token("DO", "/");
+} 
+<YYINITIAL> "%" { 
+  return new Token("MD", "%");
+} 
+<YYINITIAL> "==" { 
+  return new Token("EQ", "==");
+} 
+<YYINITIAL> "!=" { 
+  return new Token("NE", "!=");
+} 
+<YYINITIAL> "||" { 
+  return new Token("LO", "||"); 
+} 
+<YYINITIAL> "&&" { 
+  return new Token("LA", "&&");
+}  
+<YYINITIAL> "//" {
+  yybegin(ONELINECOMMENTS);
+}
+<YYINITIAL> "/*" {
+  yybegin(MANYLINECOMMENTS);
+}
+<MANYLINECOMMENTS> [^*/] {
+}
+<MANYLINECOMMENTS> "*/" {
+  yybegin(YYINITIAL);
+}
+<ONELINECOMMENTS> [^\n] {
+}
+<ONELINECOMMENTS> [\n] {
+  yybegin(YYINITIAL);
+}
+<YYINITIAL> . {
+  return new Token("INVALID", yytext());
+}
+
