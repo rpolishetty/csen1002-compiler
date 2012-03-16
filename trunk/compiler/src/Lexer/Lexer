@@ -43,14 +43,18 @@ return null;
 
 ALPHA=[A-Za-z_]
 DIGIT=[0-9]
+NONZERODIGIT=[1-9]
 ALPHA_NUMERIC={ALPHA}|{DIGIT}
 KEYWORD=class|else|if|int|float|boolean|String|return|static|while
 BOOLEAN=true|false 
 IDENT={ALPHA}({ALPHA_NUMERIC})*
 NUMBER=(({DIGIT})+)|(({DIGIT})+.({DIGIT})+)
+NUMBERINT=(({DIGIT})+)
+NUMBERFLOAT=(({DIGIT})+.({DIGIT})+)
 WHITE_SPACE=([\ \n\b\r\t\f])+
-STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&])*\")
-STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&])*)
+NUMBER2=(({NONZERODIGIT})+({DIGIT})*)|(({NONZERODIGIT})+({DIGIT})*.({DIGIT})+)|0
+STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'])*\")
+STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'])*)
 
 %%
 <YYINITIAL> {STRING} { 
@@ -59,8 +63,30 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&])*)
 <YYINITIAL> {STRINGERROR} { 
   return new Token("INVALID STRING", yytext());
 }
-<YYINITIAL> {NUMBER} { 
-  return new Token("NUM", yytext());
+<YYINITIAL> {NUMBERINT} { 
+  int number = 0;
+	for(int k=yy_buffer_start;k < yy_buffer_end; k++){
+		number *= 10;
+		number += yy_buffer[k]-'0';
+	}
+  return new Token("NUM",  "" + number);
+}
+<YYINITIAL> {NUMBERFLOAT} {
+	float floatNumber = 0;
+	float decimalPoint = 0;
+	for(int k=yy_buffer_start;k < yy_buffer_end; k++){
+		if(yy_buffer[k] == '.'){
+			decimalPoint=10;
+			continue;
+		}else if(decimalPoint>=10){
+			floatNumber += (yy_buffer[k]-'0')/decimalPoint;
+			decimalPoint*=10;
+		}else{
+			floatNumber *= 10;
+			floatNumber += yy_buffer[k]-'0';
+		}
+	}
+  return new Token("NUM",  "" + floatNumber);
 }
 <YYINITIAL> {KEYWORD} { 
   return new Token("KW", yytext());
