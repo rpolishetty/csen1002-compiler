@@ -42,19 +42,28 @@ return null;
 %state STRING
 
 ALPHA=[A-Za-z_]
+
 DIGIT=[0-9]
-NONZERODIGIT=[1-9]
+
 ALPHA_NUMERIC={ALPHA}|{DIGIT}
+
 KEYWORD=class|else|if|int|float|boolean|String|return|static|while
+
 BOOLEAN=true|false 
+
 IDENT={ALPHA}({ALPHA_NUMERIC})*
+
 NUMBER=(({DIGIT})+)|(({DIGIT})+.({DIGIT})+)
+
 NUMBERINT=(({DIGIT})+)
+
 NUMBERFLOAT=(({DIGIT})+.({DIGIT})+)
+
 WHITE_SPACE=([\ \n\b\r\t\f])+
-NUMBER2=(({NONZERODIGIT})+({DIGIT})*)|(({NONZERODIGIT})+({DIGIT})*.({DIGIT})+)|0
-STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'])*\")
-STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'])*)
+
+STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*\")
+
+STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 
 %%
 <YYINITIAL> {STRING} { 
@@ -163,6 +172,6 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  return new Token("INVALID", yytext());
+  return new Token("INVALID INPUT", yytext());
 }
 
