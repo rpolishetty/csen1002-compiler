@@ -18,16 +18,17 @@ import java.io.IOException;
  */
 public class MLA {
 	public static void main(String[] args) {
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler/src/Lexer/Algebra.decaf";
-		String outFile = "/Users/michaelmkamal/Documents/workspace/compiler/src/LexerSample.out";
+		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		String outFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/LexerSample.out";
 
 		if (args.length > 1) {
 			inFile = args[0];
 			outFile = args[1];
 		}
 
-		LexerManual lexer = new LexerManual(inFile);
-		//Lexer lexer = new Lexer(inFile);
+		//LexerManual lexer = new LexerManual(inFile);
+		//LexerEval lexer = new LexerEval(inFile);
+		Lexer lexer = new Lexer(inFile);
 		
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));

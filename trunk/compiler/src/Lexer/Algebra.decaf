@@ -19,9 +19,7 @@ class Algebra {
 	common divisor. */
 	static int gcd(int a, int b)
 	{
-		String s = "This is an invalid string literal
 		int m;
-		int ?23sd;
 		m = b % a;
 		if (m == 0)
 			return a;
@@ -40,9 +38,6 @@ class Algebra {
 	static float average(int n1, int n2, int n3)
 	{
 		float sum = n1 + n2 + n3;
-		return sum / 35.08866;
+		return sum / 3.0;
 	}
 }
-
-Even though it is illegal to  write anything here
-the lexical analyzer should work normally without errors

@@ -74,15 +74,15 @@ class Lex_Tokenizer {
 	}
 
 	private boolean yy_eof_done = false;
-	private final int STRING = 3;
-	private final int MANYLINECOMMENTS = 2;
 	private final int YYINITIAL = 0;
-	private final int ONELINECOMMENTS = 1;
+	private final int foundA = 2;
+	private final int foundV = 3;
+	private final int foundJ = 1;
 	private final int yy_state_dtrans[] = {
 		0,
-		42,
-		45,
-		49
+		13,
+		15,
+		16
 	};
 	private void yybegin (int state) {
 		yy_lexical_state = state;
@@ -248,110 +248,24 @@ class Lex_Tokenizer {
 		/* 10 */ YY_NO_ANCHOR,
 		/* 11 */ YY_NO_ANCHOR,
 		/* 12 */ YY_NO_ANCHOR,
-		/* 13 */ YY_NO_ANCHOR,
+		/* 13 */ YY_NOT_ACCEPT,
 		/* 14 */ YY_NO_ANCHOR,
-		/* 15 */ YY_NO_ANCHOR,
-		/* 16 */ YY_NO_ANCHOR,
+		/* 15 */ YY_NOT_ACCEPT,
+		/* 16 */ YY_NOT_ACCEPT,
 		/* 17 */ YY_NO_ANCHOR,
 		/* 18 */ YY_NO_ANCHOR,
-		/* 19 */ YY_NO_ANCHOR,
-		/* 20 */ YY_NO_ANCHOR,
-		/* 21 */ YY_NO_ANCHOR,
-		/* 22 */ YY_NO_ANCHOR,
-		/* 23 */ YY_NO_ANCHOR,
-		/* 24 */ YY_NO_ANCHOR,
-		/* 25 */ YY_NO_ANCHOR,
-		/* 26 */ YY_NO_ANCHOR,
-		/* 27 */ YY_NO_ANCHOR,
-		/* 28 */ YY_NO_ANCHOR,
-		/* 29 */ YY_NO_ANCHOR,
-		/* 30 */ YY_NO_ANCHOR,
-		/* 31 */ YY_NO_ANCHOR,
-		/* 32 */ YY_NOT_ACCEPT,
-		/* 33 */ YY_NO_ANCHOR,
-		/* 34 */ YY_NO_ANCHOR,
-		/* 35 */ YY_NO_ANCHOR,
-		/* 36 */ YY_NO_ANCHOR,
-		/* 37 */ YY_NO_ANCHOR,
-		/* 38 */ YY_NOT_ACCEPT,
-		/* 39 */ YY_NO_ANCHOR,
-		/* 40 */ YY_NO_ANCHOR,
-		/* 41 */ YY_NO_ANCHOR,
-		/* 42 */ YY_NOT_ACCEPT,
-		/* 43 */ YY_NO_ANCHOR,
-		/* 44 */ YY_NO_ANCHOR,
-		/* 45 */ YY_NOT_ACCEPT,
-		/* 46 */ YY_NO_ANCHOR,
-		/* 47 */ YY_NOT_ACCEPT,
-		/* 48 */ YY_NO_ANCHOR,
-		/* 49 */ YY_NOT_ACCEPT,
-		/* 50 */ YY_NO_ANCHOR,
-		/* 51 */ YY_NO_ANCHOR,
-		/* 52 */ YY_NO_ANCHOR,
-		/* 53 */ YY_NO_ANCHOR,
-		/* 54 */ YY_NO_ANCHOR,
-		/* 55 */ YY_NO_ANCHOR,
-		/* 56 */ YY_NO_ANCHOR,
-		/* 57 */ YY_NO_ANCHOR,
-		/* 58 */ YY_NO_ANCHOR,
-		/* 59 */ YY_NO_ANCHOR,
-		/* 60 */ YY_NO_ANCHOR,
-		/* 61 */ YY_NO_ANCHOR,
-		/* 62 */ YY_NO_ANCHOR,
-		/* 63 */ YY_NO_ANCHOR,
-		/* 64 */ YY_NO_ANCHOR,
-		/* 65 */ YY_NO_ANCHOR,
-		/* 66 */ YY_NO_ANCHOR,
-		/* 67 */ YY_NO_ANCHOR,
-		/* 68 */ YY_NO_ANCHOR,
-		/* 69 */ YY_NO_ANCHOR,
-		/* 70 */ YY_NO_ANCHOR,
-		/* 71 */ YY_NO_ANCHOR,
-		/* 72 */ YY_NO_ANCHOR,
-		/* 73 */ YY_NO_ANCHOR,
-		/* 74 */ YY_NO_ANCHOR,
-		/* 75 */ YY_NO_ANCHOR,
-		/* 76 */ YY_NO_ANCHOR,
-		/* 77 */ YY_NO_ANCHOR,
-		/* 78 */ YY_NO_ANCHOR,
-		/* 79 */ YY_NO_ANCHOR,
-		/* 80 */ YY_NO_ANCHOR,
-		/* 81 */ YY_NO_ANCHOR,
-		/* 82 */ YY_NO_ANCHOR,
-		/* 83 */ YY_NO_ANCHOR,
-		/* 84 */ YY_NO_ANCHOR
+		/* 19 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
-"5:8,4:2,24,5,4,39,5:18,4,37,1,5:2,36,6,5,27,28,34,32,26,33,5,35,3:10,5,25,5" +
-",31,5:3,2:18,18,2:7,5:4,2,5,9,17,7,2,11,13,20,23,12,2:2,8,2,14,16,2:2,19,10" +
-",15,21,2,22,2:3,29,38,30,5:2,0:2")[0];
+"7:10,1,7:2,0,7:18,1,7:15,2:10,7:7,3:26,7:4,3,7,5,3:8,4,3:11,6,3:4,7:5,8:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,85,
-"0,1,2,3,4,5,1:7,6,1:3,7,1:3,3,1:5,3,1:4,8,9,10,8,11,12:2,2,13,14,15,16,17,1" +
-"8,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,4" +
-"3,44,45,46,47,48,49,50,51,52,53,54,55,56,57")[0];
+	private int yy_rmap[] = unpackFromString(1,20,
+"0,1,2,3,4:3,5,4,6,4,7,4,8,4,9,10,11,12,13")[0];
 
-	private int yy_nxt[][] = unpackFromString(58,40,
-"1,2,3,4,5,6,36,73,3:2,80,63,34,74,3,64,3,84,81,82,3:2,75,3,5,7,8,9,10,11,12" +
-",13,14,15,16,17,18,41,44,5,-1:41,19,2,33,2,-1,2:18,-1,2:8,-1:2,2:4,-1:3,3:2" +
-",-1:3,3:17,-1:17,32:2,4,32:20,-1,32:14,-1:5,5,-1:19,5,-1:14,5,-1:31,22,-1:4" +
-"2,23,24,-1:7,35,-1:37,37,39,33,39,38,39:18,-1,39:8,38:2,39:4,-1:3,3:2,-1:3," +
-"3:6,21,40,3:9,-1:22,20,-1:36,39,-1:38,3:2,-1:3,3:8,21,3:8,-1:47,25,-1:8,1,2" +
-"8:23,29,28:15,-1:2,3:2,-1:3,3:4,21,3:12,-1:54,26,-1,1,30:33,47,-1,30:4,-1:2" +
-",3:2,-1:3,3:4,27,3:12,-1:51,31,-1:6,3:2,-1:3,3:3,21,3:13,-1:16,1,-1:41,3:2," +
-"-1:3,21,3:16,-1:18,3:2,-1:3,3:13,21,3:3,-1:18,3:2,-1:3,3:7,21,3:9,-1:18,3:2" +
-",-1:3,3:3,43,3:13,-1:18,3:2,-1:3,3:14,46,3:2,-1:18,3:2,-1:3,3:3,48,3:13,-1:" +
-"18,3:2,-1:3,3:2,40,3:14,-1:18,3:2,-1:3,3:3,46,3:13,-1:18,3:2,-1:3,3,43,3:15" +
-",-1:18,3:2,-1:3,3:5,50,3:11,-1:18,3:2,-1:3,3:7,51,3:9,-1:18,3:2,-1:3,3:12,5" +
-"2,3:4,-1:18,3:2,-1:3,3:2,52,3:14,-1:18,3:2,-1:3,3,53,3:15,-1:18,3:2,-1:3,3:" +
-"12,54,3:4,-1:18,3:2,-1:3,3:2,55,3:14,-1:18,3:2,-1:3,3:9,56,3:7,-1:18,3:2,-1" +
-":3,3,57,3:15,-1:18,3:2,-1:3,3:5,58,3:11,-1:18,3:2,-1:3,3:8,59,3:8,-1:18,3:2" +
-",-1:3,3:5,60,3:11,-1:18,3:2,-1:3,3:14,61,3:2,-1:18,3:2,-1:3,3:4,62,3:12,-1:" +
-"18,3:2,-1:3,3,65,3:15,-1:18,3:2,-1:3,3,66,67,3:14,-1:18,3:2,-1:3,3:16,68,-1" +
-":18,3:2,-1:3,3:2,69,3:14,-1:18,3:2,-1:3,3:12,70,3:4,-1:18,3:2,-1:3,3:8,71,3" +
-":8,-1:18,3:2,-1:3,3,72,3:15,-1:18,3:2,-1:3,3:8,76,3:8,-1:18,3:2,-1:3,3:8,77" +
-",3:8,-1:18,3:2,-1:3,3:4,78,3:12,-1:18,3:2,-1:3,3:9,79,3:7,-1:18,3:2,-1:3,3:" +
-"9,83,3:7,-1:16");
+	private int yy_nxt[][] = unpackFromString(14,9,
+"-1,1,2,3,4,3:2,5,6,-1,1,-1:9,19,-1:8,3:2,-1,3:2,-1:13,7:3,-1,7,-1:4,9:4,-1:" +
+"5,11:3,-1,11,-1:5,7:2,8,7,-1,6,-1:3,9:3,10,-1,6,-1:3,11:2,12,11,-1,6,-1:2,1" +
+"4,-1:8,17,-1:8,18,-1:6");
 
 	public Token getToken ()
 		throws java.io.IOException {
@@ -399,12 +313,12 @@ return null;
 					yy_to_mark();
 					switch (yy_last_accept_state) {
 					case 1:
-						
+						{ }
 					case -2:
 						break;
 					case 2:
 						{ 
-  return new Token("INVALID STRING", yytext());
+  return new Token("NUM", yytext());
 }
 					case -3:
 						break;
@@ -416,449 +330,79 @@ return null;
 						break;
 					case 4:
 						{ 
-  return new Token("NUM", yytext());
+ 	yybegin(foundJ);
 }
 					case -5:
 						break;
 					case 5:
-						{ }
+						{
+  return new Token("ERROR", yytext());
+}
 					case -6:
 						break;
 					case 6:
-						{
-  return new Token("INVALID", yytext());
-}
+						
 					case -7:
 						break;
 					case 7:
 						{ 
-  return new Token("SM", ";");
+ 	return new Token("ID", yytext());
 }
 					case -8:
 						break;
 					case 8:
 						{ 
-  return new Token("FA", ","); 
+ 	yybegin(foundA);
 }
 					case -9:
 						break;
 					case 9:
 						{ 
-  return new Token("LP", "(");
+ 	return new Token("ID", yytext());
 }
 					case -10:
 						break;
 					case 10:
 						{ 
-  return new Token("RP", ")"); 
+ 	yybegin(foundV);
 }
 					case -11:
 						break;
 					case 11:
 						{ 
-  return new Token("LB", "{");
+ 	return new Token("ID", yytext());
 }
 					case -12:
 						break;
 					case 12:
 						{ 
-  return new Token("RB", "}");
+ 	return new Token("INVALID ID", yytext());
 }
 					case -13:
 						break;
-					case 13:
-						{ 
-  return new Token("AO", "="); 
-}
-					case -14:
-						break;
 					case 14:
-						{ 
-  return new Token("PO", "+"); 
-}
-					case -15:
-						break;
-					case 15:
-						{ 
-  return new Token("MO", "-");
-}
-					case -16:
-						break;
-					case 16:
-						{ 
-  return new Token("TO", "*");
-}
-					case -17:
-						break;
-					case 17:
-						{ 
-  return new Token("DO", "/");
-}
-					case -18:
-						break;
-					case 18:
-						{ 
-  return new Token("MD", "%");
-}
-					case -19:
-						break;
-					case 19:
-						{ 
-  return new Token("ST", yytext());
-}
-					case -20:
-						break;
-					case 20:
-						{ 
-  return new Token("LA", "&&");
-}
-					case -21:
-						break;
-					case 21:
-						{ 
-  return new Token("KW", yytext());
-}
-					case -22:
-						break;
-					case 22:
-						{ 
-  return new Token("EQ", "==");
-}
-					case -23:
-						break;
-					case 23:
-						{
-  yybegin(MANYLINECOMMENTS);
-}
-					case -24:
-						break;
-					case 24:
-						{
-  yybegin(ONELINECOMMENTS);
-}
-					case -25:
-						break;
-					case 25:
-						{ 
-  return new Token("NE", "!=");
-}
-					case -26:
-						break;
-					case 26:
-						{ 
-  return new Token("LO", "||"); 
-}
-					case -27:
-						break;
-					case 27:
-						{ 
-  return new Token("BL", yytext());
-}
-					case -28:
-						break;
-					case 28:
-						{
-}
-					case -29:
-						break;
-					case 29:
-						{
-  yybegin(YYINITIAL);
-}
-					case -30:
-						break;
-					case 30:
-						{
-}
-					case -31:
-						break;
-					case 31:
-						{
-  yybegin(YYINITIAL);
-}
-					case -32:
-						break;
-					case 33:
-						{ 
-  return new Token("INVALID STRING", yytext());
-}
-					case -33:
-						break;
-					case 34:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -34:
-						break;
-					case 35:
 						{ 
   return new Token("NUM", yytext());
 }
-					case -35:
+					case -14:
 						break;
-					case 36:
-						{
-  return new Token("INVALID", yytext());
-}
-					case -36:
-						break;
-					case 37:
+					case 17:
 						{ 
-  return new Token("ST", yytext());
+  return new Token("NUM", yytext());
 }
-					case -37:
+					case -15:
 						break;
-					case 39:
+					case 18:
 						{ 
-  return new Token("INVALID STRING", yytext());
+  return new Token("NUM", yytext());
 }
-					case -38:
+					case -16:
 						break;
-					case 40:
+					case 19:
 						{ 
-  return new Token("ID", yytext());
+  return new Token("NUM", yytext());
 }
-					case -39:
-						break;
-					case 41:
-						{
-  return new Token("INVALID", yytext());
-}
-					case -40:
-						break;
-					case 43:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -41:
-						break;
-					case 44:
-						{
-  return new Token("INVALID", yytext());
-}
-					case -42:
-						break;
-					case 46:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -43:
-						break;
-					case 48:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -44:
-						break;
-					case 50:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -45:
-						break;
-					case 51:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -46:
-						break;
-					case 52:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -47:
-						break;
-					case 53:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -48:
-						break;
-					case 54:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -49:
-						break;
-					case 55:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -50:
-						break;
-					case 56:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -51:
-						break;
-					case 57:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -52:
-						break;
-					case 58:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -53:
-						break;
-					case 59:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -54:
-						break;
-					case 60:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -55:
-						break;
-					case 61:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -56:
-						break;
-					case 62:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -57:
-						break;
-					case 63:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -58:
-						break;
-					case 64:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -59:
-						break;
-					case 65:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -60:
-						break;
-					case 66:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -61:
-						break;
-					case 67:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -62:
-						break;
-					case 68:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -63:
-						break;
-					case 69:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -64:
-						break;
-					case 70:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -65:
-						break;
-					case 71:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -66:
-						break;
-					case 72:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -67:
-						break;
-					case 73:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -68:
-						break;
-					case 74:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -69:
-						break;
-					case 75:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -70:
-						break;
-					case 76:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -71:
-						break;
-					case 77:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -72:
-						break;
-					case 78:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -73:
-						break;
-					case 79:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -74:
-						break;
-					case 80:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -75:
-						break;
-					case 81:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -76:
-						break;
-					case 82:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -77:
-						break;
-					case 83:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -78:
-						break;
-					case 84:
-						{ 
-  return new Token("ID", yytext());
-}
-					case -79:
+					case -17:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
