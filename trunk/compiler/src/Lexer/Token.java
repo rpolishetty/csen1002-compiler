@@ -28,6 +28,17 @@ public class Token {
 	public static final int AO = 21;
 	public static final int InvalidInput = 22;
 	public static final int InvalidString = 23;
+	public static final int CLASS = 24;
+	public static final int STATIC = 25;
+	public static final int IF = 26;
+	public static final int ELSE = 27;
+	public static final int INT = 28;
+	public static final int FLOAT = 29;
+	public static final int BOOLEAN = 30;
+	public static final int STRING = 31;
+	public static final int RETURN = 32;
+	public static final int STATIC = 33;
+	public static final int WHILE = 34;
 	
 	private int token; // Type of of token
 	private String lexeme; // The lexeme
