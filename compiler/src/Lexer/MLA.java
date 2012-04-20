@@ -26,9 +26,8 @@ public class MLA {
 			outFile = args[1];
 		}
 
-		//LexerManual lexer = new LexerManual(inFile);
-		//LexerEval lexer = new LexerEval(inFile);
-		Lexer lexer = new Lexer(inFile);
+		LexerManual lexer = new LexerManual(inFile);
+		//Lexer lexer = new Lexer(inFile);
 		
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));

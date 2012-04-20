@@ -1,38 +1,14 @@
-import java.io.*;
 
-public class Lexer {
-	
-	Lex_Tokenizer lT;
-	String stringBuffer="";
-	
-	public Lexer(String file) {
-	
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-
-			lT = new Lex_Tokenizer(reader);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Token nextToken() {
-		Token t = null;
-		try{
-			t = lT.getToken();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return t;
-	}
-}
+import java_cup.runtime.Symbol;
 %%
-%class Lex_Tokenizer
-%function getToken
-%type Token
+%class Lexer
+
+%implements java_cup.runtime.Scanner
+%function next_token
+%type java_cup.runtime.Symbol
 
 %eofval{
-return null;
+	return new Symbol(sym.EOF, null);
 %eofval}
 
 %line
@@ -67,10 +43,10 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 
 %%
 <YYINITIAL> {STRING} { 
-  return new Token("ST", yytext());
+  return new Symbol(sym.ST, yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-  return new Token("INVALID STRING", yytext());
+  return new Symbol(sym.InvalidString, yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
   int number = 0;
@@ -78,7 +54,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 		number *= 10;
 		number += yy_buffer[k]-'0';
 	}
-  return new Token("NUM",  "" + number);
+  return new Symbol(sym.NM,  "" + number);
 }
 <YYINITIAL> {NUMBERFLOAT} {
 	float floatNumber = 0;
@@ -95,65 +71,65 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 			floatNumber += yy_buffer[k]-'0';
 		}
 	}
-  return new Token("NUM",  "" + floatNumber);
+  return new Symbol(sym.NM,  "" + floatNumber);
 }
 <YYINITIAL> {KEYWORD} { 
-  return new Token("KW", yytext());
+  return new Symbol(sym.KW, yytext());
 }
 <YYINITIAL> {BOOLEAN} { 
-  return new Token("BL", yytext());
+  return new Symbol(sym.BL, yytext());
 }
 <YYINITIAL> {IDENT} { 
-  return new Token("ID", yytext());
+  return new Symbol(sym.ID, yytext());
 }
 <YYINITIAL> {WHITE_SPACE} { }
 <YYINITIAL> ";" { 
-  return new Token("SM", ";");
+  return new Symbol(sym.SM, ";");
 } 
 <YYINITIAL> "," { 
-  return new Token("FA", ","); 
+  return new Symbol(sym.FA, ","); 
 } 
 <YYINITIAL> "(" { 
-  return new Token("LP", "(");
+  return new Symbol(sym.LP, "(");
 } 
 <YYINITIAL> ")" { 
-  return new Token("RP", ")"); 
+  return new Symbol(sym.RP, ")"); 
 } 
 <YYINITIAL> "{" { 
-  return new Token("LB", "{");
+  return new Symbol(sym.LB, "{");
 } 
 <YYINITIAL> "}" { 
-  return new Token("RB", "}");
+  return new Symbol(sym.RB, "}");
 } 
 <YYINITIAL> "=" { 
-  return new Token("AO", "="); 
+  return new Symbol(sym.AO, "="); 
 } 
 <YYINITIAL> "+" { 
-  return new Token("PO", "+"); 
+  return new Symbol(sym.PO, "+"); 
 } 
 <YYINITIAL> "-" { 
-  return new Token("MO", "-");
+  return new Symbol(sym.MO, "-");
 } 
 <YYINITIAL> "*" { 
-  return new Token("TO", "*");
+  return new Symbol(sym.TO, "*");
 } 
 <YYINITIAL> "/" { 
-  return new Token("DO", "/");
+  return new Symbol(sym.DO, "/");
 } 
 <YYINITIAL> "%" { 
-  return new Token("MD", "%");
+  return new Symbol(sym.MD, "%");
 } 
 <YYINITIAL> "==" { 
-  return new Token("EQ", "==");
+  return new Symbol(sym.EQ, "==");
 } 
 <YYINITIAL> "!=" { 
-  return new Token("NE", "!=");
+  return new Symbol(sym.NE, "!=");
 } 
 <YYINITIAL> "||" { 
-  return new Token("LO", "||"); 
+  return new Symbol(sym.LO, "||"); 
 } 
 <YYINITIAL> "&&" { 
-  return new Token("LA", "&&");
+  return new Symbol(sym.LA, "&&");
 }  
 <YYINITIAL> "//" {
   yybegin(ONELINECOMMENTS);
@@ -172,6 +148,6 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  return new Token("INVALID INPUT", yytext());
+  return new Symbol(sym.InvalidInput, yytext());
 }
 
