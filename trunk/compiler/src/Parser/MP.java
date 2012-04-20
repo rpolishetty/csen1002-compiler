@@ -23,7 +23,7 @@ public class MP {
 
 		LexerManual lexer = new LexerManual(inFile);
 
-		Parser parser = new Parser(lexer);
+		ParserManual parser = new ParserManual(lexer);
 		
 		boolean value = parser.parse();
 		
