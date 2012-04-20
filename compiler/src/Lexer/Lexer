@@ -23,8 +23,6 @@ DIGIT=[0-9]
 
 ALPHA_NUMERIC={ALPHA}|{DIGIT}
 
-KEYWORD=class|else|if|int|float|boolean|String|return|static|while
-
 BOOLEAN=true|false 
 
 IDENT={ALPHA}({ALPHA_NUMERIC})*
@@ -73,11 +71,35 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 	}
   return new Symbol(sym.NM,  "" + floatNumber);
 }
-<YYINITIAL> {KEYWORD} { 
-  return new Symbol(sym.KW, yytext());
+<YYINITIAL> "class" { 
+  return new Symbol(sym.CLASS, yytext());
 }
-<YYINITIAL> {BOOLEAN} { 
-  return new Symbol(sym.BL, yytext());
+<YYINITIAL> "else" { 
+  return new Symbol(sym.ELSE, yytext());
+}
+<YYINITIAL> "if" { 
+  return new Symbol(sym.IF, yytext());
+}
+<YYINITIAL> "int" { 
+  return new Symbol(sym.INT, yytext());
+}
+<YYINITIAL> "float" { 
+  return new Symbol(sym.FLOAT, yytext());
+}
+<YYINITIAL> "boolean" { 
+  return new Symbol(sym.BOOLEAN, yytext());
+}
+<YYINITIAL> "String" { 
+  return new Symbol(sym.STRING, yytext());
+}
+<YYINITIAL> "return" { 
+  return new Symbol(sym.RETURN, yytext());
+}
+<YYINITIAL> "static" { 
+  return new Symbol(sym.STATIC, yytext());
+}
+<YYINITIAL> "while" { 
+  return new Symbol(sym.WHILE, yytext());
 }
 <YYINITIAL> {IDENT} { 
   return new Symbol(sym.ID, yytext());
