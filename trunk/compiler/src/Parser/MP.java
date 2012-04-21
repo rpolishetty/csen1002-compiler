@@ -15,7 +15,8 @@ import Lexer.LexerManual;
  */
 public class MP {
 	public static void main(String[] args) {
-		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		//String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
 
 		if (args.length > 1) {
 			inFile = args[0];
