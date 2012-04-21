@@ -23,16 +23,13 @@ public class ParserManual {
 	public boolean parse() {
 		
 		token = lexer.nextToken();
-		
 		boolean value;
 		
 		while(token.getTokenType() != Token.EOF) {
 			value = classDecl();
-			
 			if(!value)
 				return false;
 		}
-		
 		return true;
 	}
 	
@@ -40,22 +37,16 @@ public class ParserManual {
 		
 		boolean value = true;
 		
-		switch (token.getTokenType()) {
-		case Token.KW:
-			
-			if(token.getLexeme().equals("class")){
 		
-				value &= match(Token.KW);
-				value &= match(Token.ID);
-				value &= match(Token.LB);
-				value &= methodDecls();
-				value &= match(Token.RB);
-				
-				if(!value)
-					System.out.println("class");
-				
-				return value;
-			}
+		if(token.getLexeme().equals("class")){
+	
+			value &= match(Token.KW);
+			value &= match(Token.ID);
+			value &= match(Token.LB);
+			value &= methodDecls();
+			value &= match(Token.RB);
+			
+			return value;
 		}
 		
 		return false;
@@ -66,19 +57,12 @@ public class ParserManual {
 		boolean value = true;
 		
 		while(true){
-			switch (token.getTokenType()) {
-			case Token.KW:
-				
-				if(token.getLexeme().equals("static")){
-					value &= methodDecl();
-				}
-				break;
-
-			default:
-				if(!value)
-					System.out.println("methods");
+			
+			if(token.getLexeme().equals("static"))
+				value &= methodDecl();
+			else
 				return value;
-			}			
+			
 		}
 		
 	}
@@ -87,39 +71,24 @@ public class ParserManual {
 		
 		boolean value = true;
 		
-		switch (token.getTokenType()) {
-		case Token.KW:
+		value &= match(Token.KW);
+		value &= type();
+		value &= match(Token.KW);
+		value &= match(Token.ID);				
+		value &= match(Token.LP);
+		value &= formalParams();
+		value &= match(Token.RP);
+		value &= block();
 			
-			value &= match(Token.KW);
-			value &= type();
-			value &= match(Token.KW);
-			value &= match(Token.ID);				
-			value &= match(Token.LP);
-			value &= formalParams();
-			value &= match(Token.RP);
-			value &= block();
-				
-			if(!value)
-				System.out.println("method");
-				
-				return value;
-			
-		}
-		return false;
+		return value;
 	}
 
 	private boolean type() {
-			
-		switch (token.getTokenType()) {
-		case Token.KW:
-				
-			if(token.getLexeme().equals("int") || token.getLexeme().equals("float") 
-					|| token.getLexeme().equals("boolean") || token.getLexeme().equals("String"))
-				
-				return true;
-		}
-		
-		return false;
+		if(token.getLexeme().equals("int") || token.getLexeme().equals("float") 
+				|| token.getLexeme().equals("boolean") || token.getLexeme().equals("String"))
+			return true;
+		else
+			return false;
 	}
 
 	private boolean formalParams() {
@@ -202,98 +171,8 @@ public class ParserManual {
 			}			
 		}
 	}
-
+	
 	private boolean statement() {
-		
-		boolean value = true; //openStmt();// || matchedStmt(); //|| ; 
-		
-		if(!value)
-			System.out.println("stmt");
-		return value;
-	}
-	
-	private boolean openStmt() {
-		
-		boolean value = true;
-		System.out.println(token.getLexeme());
-		if(token.getLexeme().equals("if")){
-			value &= match(Token.KW);
-			value &= match(Token.LP);
-			value &= expression();
-			value &= match(Token.RP);
-		
-			switch (token.getTokenType()) {
-		
-			case Token.KW:
-				if(token.getLexeme().equals("if"))
-					value &= statement();
-				
-				else{
-					value &= matchedStmt();
-				
-					if(token.getLexeme().equals("else")){
-						value &= match(Token.KW);
-						value &= openStmt();
-					}
-				
-					else{
-				
-						System.out.println("os");
-						return false;
-						}
-					}	
-			}
-		}
-		
-		else{
-			System.out.println("os2");
-			return false;
-		}
-		
-		if(!value)
-			System.out.println("os1");
-		return value;
-	}
-	
-	private boolean matchedStmt() {
-		
-		boolean value = true;
-		
-		switch (token.getTokenType()) {
-		
-		case Token.KW:
-			if(token.getLexeme().equals("if")){
-				
-				value &= match(Token.KW);
-				value &= match(Token.LP);
-				value &= expression();
-				value &= match(Token.RP);
-				
-				value &= matchedStmt();
-				
-				if(token.getLexeme().equals("else")){
-					value &= match(Token.KW);
-					value &= matchedStmt();
-				}
-				
-				else{
-					
-					System.out.println("ms");
-					return false;
-					}
-				}
-			
-			else
-				value &= stmtWithoutIf();
-		}
-		
-		if(!value)
-			System.out.println("ms1");
-		
-		return value;
-	}
-
-	private boolean stmtWithoutIf() {
 		
 		boolean value = true;
 		
@@ -312,6 +191,9 @@ public class ParserManual {
 			
 			else if(token.getLexeme().equals("return"))
 				value &= returnStmt();
+			
+			else if(token.getLexeme().equals("if"))
+				value &= ifStmt();
 			
 			else 
 				value &= localVarDecl();
@@ -383,6 +265,23 @@ public class ParserManual {
 			System.out.println("return");
 		
 		return value;
+	}
+	
+	private boolean ifStmt() {
+		
+		boolean value = true;
+		
+			value &= match(Token.KW);
+			value &= match(Token.LP);
+			value &= expression();
+			value &= match(Token.RP);
+			value &= statement();
+			
+			if(token.getLexeme().equals("else")){
+				value &= match(Token.KW);
+				value &= statement();
+			}
+			return value;		
 	}
 	
 	private boolean expression() {
