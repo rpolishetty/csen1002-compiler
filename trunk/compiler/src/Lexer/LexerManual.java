@@ -67,6 +67,7 @@ public class LexerManual {
 			if (curr == EOF) {
 				try {
 					reader.close();
+					return new Token(Token.EOF, "");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
