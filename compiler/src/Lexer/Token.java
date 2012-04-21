@@ -37,8 +37,7 @@ public class Token {
 	public static final int BOOLEAN = 30;
 	public static final int STRING = 31;
 	public static final int RETURN = 32;
-	public static final int STATIC = 33;
-	public static final int WHILE = 34;
+	public static final int WHILE = 33;
 	
 	private int token; // Type of of token
 	private String lexeme; // The lexeme

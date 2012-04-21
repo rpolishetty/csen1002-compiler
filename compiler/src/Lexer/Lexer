@@ -1,4 +1,4 @@
-
+import Parser.sym;
 import java_cup.runtime.Symbol;
 %%
 %class Lexer
@@ -44,7 +44,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ST, yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-  return new Symbol(sym.InvalidString, yytext());
+  return new Symbol(sym.error, yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
   int number = 0;
@@ -170,6 +170,6 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  return new Symbol(sym.InvalidInput, yytext());
+  return new Symbol(sym.error, yytext());
 }
 

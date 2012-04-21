@@ -12,7 +12,7 @@ public class AP {
 
 	public static void main(String[] args) {
 		
-		String inFile = "Sample.in";
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
 
 		if (args.length > 1) {
 			inFile = args[0];
@@ -23,7 +23,7 @@ public class AP {
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			DataInputStream dis = new DataInputStream(bis);
 	
-			Parser parser = new Parser(new Lexer(dis));
+			parser parser = new parser(new Lexer(dis));
 			Symbol res = parser.parse();
 			boolean value = ((Boolean)res.value).booleanValue();
 			
