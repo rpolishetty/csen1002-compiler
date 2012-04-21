@@ -84,6 +84,7 @@ public class ParserManual {
 	}
 
 	private boolean type() {
+		
 		if(token.getLexeme().equals("int") || token.getLexeme().equals("float") 
 				|| token.getLexeme().equals("boolean") || token.getLexeme().equals("String"))
 			return true;
@@ -98,8 +99,6 @@ public class ParserManual {
 		if(type()){
 			value &= properFormalParams();
 			
-			if(!value)
-				System.out.println("fparams");
 		}
 		
 		return value;
@@ -117,8 +116,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("pfparams");
 				return value;	
 			}
 		}
@@ -130,9 +127,6 @@ public class ParserManual {
 		
 		value &= match(Token.KW);
 		value &= match(Token.ID);
-		
-		if(!value)
-			System.out.println("fparam");
 		
 		return value;
 	}
@@ -146,8 +140,6 @@ public class ParserManual {
 		value &= statements();
 		value &= match(Token.RB);
 		
-		if(!value)
-			System.out.println("block");
 		return value;
 	}
 
@@ -155,18 +147,18 @@ public class ParserManual {
 		
 		boolean value = true;
 		
-		while(true){
+	while(true){
 			switch (token.getTokenType()) {
 			case Token.LB:
 			case Token.ID:
-			case Token.KW:
 				value &= statement();
-				break;
-
+			case Token.KW:
+				if(token.getLexeme().equals("while") || token.getLexeme().equals("return")
+						|| token.getLexeme().equals("if") || type()){
+					value &= statement();
+					break;
+				}
 			default:
-				if(!value)
-					System.out.println("stmts");
-			
 				return value;
 			}			
 		}
@@ -195,14 +187,12 @@ public class ParserManual {
 			else if(token.getLexeme().equals("if"))
 				value &= ifStmt();
 			
-			else 
+			else
 				value &= localVarDecl();
-			
 			break;
+		default:
+			return false;
 		}
-		
-		if(!value)
-			System.out.println("swif");
 		
 		return value;
 	}
@@ -214,9 +204,6 @@ public class ParserManual {
 		value &= match(Token.KW);
 		value &= match(Token.ID);
 		value &= match(Token.SM);
-		
-		if(!value)
-			System.out.println("local");
 		
 		return value;
 	}
@@ -230,9 +217,6 @@ public class ParserManual {
 		value &= expression();
 		value &= match(Token.SM);
 		
-		if(!value)
-			System.out.println("assign");
-		
 		return value;
 	}
 	
@@ -245,10 +229,7 @@ public class ParserManual {
 		value &= expression();
 		value &= match(Token.RP);
 		value &= statement();
-		
-		if(!value)
-			System.out.println("while");
-		
+
 		return value;
 	}
 
@@ -259,10 +240,6 @@ public class ParserManual {
 		value &= match(Token.KW);
 		value &= expression();
 		value &= match(Token.SM);
-		
-		
-		if(!value)
-			System.out.println("return");
 		
 		return value;
 	}
@@ -296,8 +273,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("exp");
 				return value;	
 			}
 		}
@@ -315,8 +290,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("condexp");
 				return value;	
 			}
 		}
@@ -335,8 +308,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("eqexp");
 				return value;	
 			}
 		}
@@ -356,8 +327,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("addexp");
 				return value;	
 			}
 		}
@@ -377,8 +346,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("multexp");
 				return value;	
 			}
 		}
@@ -410,13 +377,8 @@ public class ParserManual {
 			break;
 			
 		default: 
-			
-			System.out.println("prexp");
 			return false;
 		}
-		
-		if(!value)
-			System.out.println("prexp1");
 		
 		return value;
 	}
@@ -428,9 +390,6 @@ public class ParserManual {
 		value &= match(Token.LP);
 		value &= actualParams();
 		value &= match(Token.RP);
-		
-		if(!value)
-			System.out.println("callexp");
 		
 		return value;
 	}
@@ -448,10 +407,6 @@ public class ParserManual {
 			value &= properActualParams();
 			break;
 		}
-		
-		if(!value)
-			System.out.println("actParams");
-		
 		return value;
 	}
 
@@ -467,8 +422,6 @@ public class ParserManual {
 				break;
 				
 			default:
-				if(!value)
-					System.out.println("pactparams");
 				return value;	
 			}
 		}
