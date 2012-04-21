@@ -1,0 +1,110 @@
+package Parser;
+import java_cup.runtime.*;
+	
+/* Terminals (tokens returned by the scanner). */
+terminal			SM, PO, MO, TO, DO, BL, ST, NM, ID, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP, INT, FLOAT, BOOLEAN, STRING,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
+
+/* Non-terminals */
+nonterminal	Boolean		classDecl, methodDecls, methodDecl, type, formalParams,
+						block, properFormalParams, formalParam, statements, statement, localVarDecl,
+						assignStmt, whileStmt, returnStmt, expression, conditionalAndExpr,
+						equalityExpr, additiveExpr, multiplicativeExpr, primaryExpr, callExpr, actualParams,
+						properActualParams, ifStmt,ifStmt1;
+
+/* Precedences */
+precedence left ELSE;
+precedence left LO;
+precedence left LA;
+precedence left EQ, NE;
+precedence left PO, MO;
+precedence left TO, DO, MD;
+
+/* The grammar */
+
+classDecl ::= CLASS ID LB methodDecls:mds RB
+			  {:RESULT = mds;:}
+			  | error
+			  {:RESULT = false;:};
+			  
+methodDecls ::= methodDecls:mds methodDecl:md
+			  {:RESULT = mds && md;:} 
+			  | {:RESULT = true;:};
+			  
+methodDecl ::= STATIC type:t ID LP formalParams:fps RP block:b
+			  {:RESULT = t && fps && b;:};
+			  
+formalParams ::= properFormalParams:pfp 
+				{:RESULT = pfp;:} 
+			  | {:RESULT = true;:};
+
+properFormalParams ::= properFormalParams:pfp FA formalParam:fp
+				{:RESULT = pfp && fp;:} 
+			  | formalParam:fp
+			  {:RESULT = fp;:};
+			  
+formalParam ::= type:t ID {:RESULT = t;:};
+
+type ::= INT{:RESULT = true;:} | FLOAT{:RESULT = true;:} | BOOLEAN{:RESULT = true;:}
+	 | STRING {:RESULT = true;:};
+			  
+block ::= LB statements:sts RB  {:RESULT = sts;:};
+
+statements ::= statements:sts statement:st {:RESULT = sts && st;:}
+			| {:RESULT = true;:};
+
+statement ::= block:b {:RESULT = b;:}
+			| localVarDecl:lvr {:RESULT = lvr;:}
+			| assignStmt:as {:RESULT = as;:}
+			| ifStmt:is {:RESULT = is;:}
+			| whileStmt:ws {:RESULT = ws;:}
+			| returnStmt:rs {:RESULT = rs;:};
+			
+
+localVarDecl ::= type:t ID SM {:RESULT = t;:};
+
+assignStmt ::= ID AO expression:e SM {:RESULT = e;:};
+
+ifStmt ::= IF LP expression:e RP statement:s ifStmt1:is1 {:RESULT = e && s && is1;:};
+			
+ifStmt1 ::= ELSE statement:s {:RESULT = s;:}
+			| {:RESULT = true;:};
+
+whileStmt ::= WHILE LP expression:e RP statement:s {:RESULT = e && s;:};
+
+returnStmt ::= RETURN expression:e SM {:RESULT = e;:}; 
+
+expression ::= conditionalAndExpr:cae {:RESULT = cae;:}
+			| expression:e LO conditionalAndExpr:cae {:RESULT = e && cae;:};
+			
+conditionalAndExpr ::= equalityExpr:ee {:RESULT = ee;:}
+			| conditionalAndExpr:cae LA equalityExpr:ee {:RESULT = ee && cae;:};
+			
+equalityExpr ::= additiveExpr:ae {:RESULT = ae;:}
+			| equalityExpr:ee EQ additiveExpr:ae {:RESULT = ee && ae;:}  
+			| equalityExpr:ee NE additiveExpr:ae {:RESULT = ee && ae;:};
+			
+additiveExpr ::= multiplicativeExpr:me {:RESULT = me;:}
+			| additiveExpr:ae PO multiplicativeExpr:me {:RESULT = me && ae;:}  
+			| additiveExpr:ae MO multiplicativeExpr:me {:RESULT = me && ae;:};
+			
+multiplicativeExpr ::= primaryExpr:pe {:RESULT = pe;:}
+			| multiplicativeExpr:me TO primaryExpr:pe {:RESULT = me && pe;:}  
+			| multiplicativeExpr:me DO primaryExpr:pe {:RESULT = me && pe;:}
+			| multiplicativeExpr:me MD primaryExpr:pe {:RESULT = me && pe;:};
+
+primaryExpr ::= NM {:RESULT = true;:}
+			| BL {:RESULT = true;:}
+			| ST {:RESULT = true;:}
+			| ID {:RESULT = true;:}
+			| callExpr:ce {:RESULT = ce;:}
+			| LP expression:e RP {:RESULT = e;:};
+			
+callExpr ::= ID LP actualParams:ap RP {:RESULT = ap;:};
+
+actualParams ::= properActualParams:pap {:RESULT = pap;:}
+				| {:RESULT = true;:};
+				
+properActualParams ::= properActualParams:pap FA expression:e  {:RESULT = pap && e;:}
+					| expression:e  {:RESULT = e;:};
+					
+		
