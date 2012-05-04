@@ -10,7 +10,7 @@ public class ClassDecl {
 	}
 	
 	public ClassDecl(MethodDecls mds) {
-		this.mds=mds;
+		this.mds = mds;
 	}
 	
 	public String toString(){
