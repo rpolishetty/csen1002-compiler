@@ -1,6 +1,6 @@
 package ParserObjects;
 
-public class EqualityExpr {
+public class EqualityExpr extends ConditionalAndExpr{
 
 	public AdditiveExpr addExp;
 	public int op;

@@ -1,6 +1,6 @@
 package ParserObjects;
 
-public class MultiplicativeExpr {
+public class MultiplicativeExpr extends AdditiveExpr{
 
 	public PrimaryExpr primExp;
 	public int op;

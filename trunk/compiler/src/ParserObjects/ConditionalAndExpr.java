@@ -1,8 +1,6 @@
 package ParserObjects;
 
-import java.util.ArrayList;
-
-public class ConditionalAndExpr {
+public class ConditionalAndExpr extends Expression{
 
 	public EqualityExpr eqExp;
 	public int op;
