@@ -1,7 +1,10 @@
 package Parser;
 
+import java.util.ArrayList;
+
 import Lexer.LexerManual;
 import Lexer.Token;
+import ParserObjects.*;
 
 /*
  * class Parser
@@ -20,70 +23,65 @@ public class ParserManual {
 		lexer = lex;
 	}
 	
-	public boolean parse() {
+	public ClassDecl parse() throws SyntacticException {
 		
 		token = lexer.nextToken();
-		boolean value;
+		
+		ClassDecl cd = new ClassDecl();
 		
 		while(token.getTokenType() != Token.EOF) {
-			value = classDecl();
-			if(!value)
-				return false;
+			cd = classDecl();
 		}
-		return true;
+		return cd;
 	}
 	
-	private boolean classDecl(){
+	private ClassDecl classDecl() throws SyntacticException{
 		
-		boolean value = true;
-		
+		MethodDecls mds;
 		
 		if(token.getLexeme().equals("class")){
-	
-			value &= match(Token.KW);
-			value &= match(Token.ID);
-			value &= match(Token.LB);
-			value &= methodDecls();
-			value &= match(Token.RB);
+			match(Token.KW);
+			match(Token.ID);
+			match(Token.LB);
+			mds = methodDecls();
+			match(Token.RB);
 			
-			return value;
+			return new ClassDecl(mds);
 		}
 		
-		return false;
+		throw new SyntacticException("Error");
 	}
 	
-	private boolean methodDecls() {
+	private MethodDecls methodDecls() throws SyntacticException {
 		
-		boolean value = true;
+		ArrayList<MethodDecl> md = new ArrayList<MethodDecl>();
 		
 		while(true){
 			
 			if(token.getLexeme().equals("static"))
-				value &= methodDecl();
+				md.add(methodDecl());
 			else
-				return value;
-			
+				return new MethodDecls(md);
 		}
 		
 	}
 
-	private boolean methodDecl() {
+	private MethodDecl methodDecl() throws SyntacticException {
 		
-		boolean value = true;
-		
-		value &= match(Token.KW);
-		value &= type();
-		value &= match(Token.KW);
-		value &= match(Token.ID);				
-		value &= match(Token.LP);
-		value &= formalParams();
-		value &= match(Token.RP);
-		value &= block();
+		match(Token.KW);
+		Type t = type();
+		match(Token.KW);
+		String id = token.getLexeme();
+		match(Token.ID);				
+		match(Token.LP);
+		FormalParams fps = formalParams();
+		match(Token.RP);
+		Block b = block();
 			
-		return value;
+		return new MethodDecl(t,id,fps,b);
 	}
 
-	private boolean type() {
+	private Type type() {
 		
 		if(token.getLexeme().equals("int") || token.getLexeme().equals("float") 
 				|| token.getLexeme().equals("boolean") || token.getLexeme().equals("String"))
@@ -92,7 +90,7 @@ public class ParserManual {
 			return false;
 	}
 
-	private boolean formalParams() {
+	private FormalParams formalParams() {
 		
 		boolean value = true;
 		
@@ -104,14 +102,14 @@ public class ParserManual {
 		return value;
 	}
 	
-	private boolean properFormalParams() {
+	private boolean properFormalParams() throws SyntacticException {
 		
 		boolean value = formalParam();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.FA:
-				value &= match(token.getTokenType());
+				match(token.getTokenType());
 				value &= formalParam();
 				break;
 				
@@ -125,20 +123,20 @@ public class ParserManual {
 		
 		boolean value = true;
 		
-		value &= match(Token.KW);
-		value &= match(Token.ID);
+		match(Token.KW);
+		match(Token.ID);
 		
 		return value;
 	}
 	
 
-	private boolean block() {
+	private Block block() {
 		
 		boolean value = true;
 				
-		value &= match(Token.LB);
+		match(Token.LB);
 		value &= statements();
-		value &= match(Token.RB);
+		match(Token.RB);
 		
 		return value;
 	}
@@ -427,12 +425,12 @@ public class ParserManual {
 		}
 	}
 
-	private boolean match(int t) {
+	private void match(int t) throws SyntacticException {
 		if (token.getTokenType() == t) {
 			token = lexer.nextToken();
-			return true;
+			
 		} else {
-			return false;
+			throw new SyntacticException("Error");
 		}
 	}
 }
