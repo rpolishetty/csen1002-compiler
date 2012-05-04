@@ -68,333 +68,387 @@ public class ParserManual {
 
 	private MethodDecl methodDecl() throws SyntacticException {
 		
+		Type t;
+		String id;
+		FormalParams fps;
+		Block b;
+		
 		match(Token.KW);
-		Type t = type();
+		t = type();
 		match(Token.KW);
-		String id = token.getLexeme();
+		id = token.getLexeme();
 		match(Token.ID);				
 		match(Token.LP);
-		FormalParams fps = formalParams();
+		fps = formalParams();
 		match(Token.RP);
-		Block b = block();
+		b = block();
 			
 		return new MethodDecl(t,id,fps,b);
 	}
 
-	private Type type() {
+	private Type type() throws SyntacticException {
 		
-		if(token.getLexeme().equals("int") || token.getLexeme().equals("float") 
-				|| token.getLexeme().equals("boolean") || token.getLexeme().equals("String"))
-			return true;
+		if(token.getLexeme().equals("int"))
+			return new Type(Type.INT);
+		
+		else if(token.getLexeme().equals("float"))
+			return new Type(Type.FL);
+			
+		else if(token.getLexeme().equals("boolean"))
+			return new Type(Type.BL);
+		
+		else if(token.getLexeme().equals("String"))
+			return new Type(Type.ST);
+		
 		else
-			return false;
+			throw new SyntacticException("Error");
 	}
 
 	private FormalParams formalParams() {
 		
-		boolean value = true;
-		
 		if(type()){
-			value &= properFormalParams();
+			return new FormalParams(properFormalParams());
 			
 		}
 		
-		return value;
+		return new FormalParams();
 	}
 	
-	private boolean properFormalParams() throws SyntacticException {
+	private ProperFormalParams properFormalParams() throws SyntacticException {
 		
-		boolean value = formalParam();
+		ArrayList<FormalParam> fp = new ArrayList<FormalParam>();
+		
+		fp.add(formalParam());
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.FA:
 				match(token.getTokenType());
-				value &= formalParam();
+				fp.add(formalParam());
 				break;
 				
 			default:
-				return value;	
+				return new ProperFormalParams(fp);	
 			}
 		}
 	}
 
-	private boolean formalParam() {
-		
-		boolean value = true;
-		
+	private FormalParam formalParam() throws SyntacticException {
+	
+		String t = token.getLexeme();
 		match(Token.KW);
+		
+		String id = token.getLexeme();
 		match(Token.ID);
 		
-		return value;
+		return new FormalParam(new Type(t) , id);
 	}
 	
 
-	private Block block() {
+	private Block block() throws SyntacticException {
+	
+		Statements sts;
 		
-		boolean value = true;
-				
 		match(Token.LB);
-		value &= statements();
+		sts = statements();
 		match(Token.RB);
 		
-		return value;
+		return new Block(sts);
 	}
 
-	private boolean statements() {
+	private Statements statements() throws SyntacticException {
 		
-		boolean value = true;
+		ArrayList<Statement> stmt = new ArrayList<Statement>();
 		
-	while(true){
+		while(true){
 			switch (token.getTokenType()) {
 			case Token.LB:
 			case Token.ID:
-				value &= statement();
+				stmt.add(statement());
 			case Token.KW:
 				if(token.getLexeme().equals("while") || token.getLexeme().equals("return")
-						|| token.getLexeme().equals("if") || type()){
-					value &= statement();
+						|| token.getLexeme().equals("if") || token.getLexeme().equals("int")
+						|| token.getLexeme().equals("float") || token.getLexeme().equals("boolean")
+						|| token.getLexeme().equals("String")){
+					stmt.add(statement());
 					break;
 				}
 			default:
-				return value;
-			}			
+				return new Statements(stmt);
+			}
 		}
 	}
 	
-	private boolean statement() {
+	private Statement statement() throws SyntacticException {
 		
-		boolean value = true;
+		Statement stmt;
 		
 		switch (token.getTokenType()) {
 		case Token.LB:
-			value &= block();
+			stmt = new Statement(block());
 			break;
 		
 		case Token.ID:
-			value &= assignStmt();
+			stmt = new Statement(assignStmt());
 			break;
 			
 		case Token.KW:
 			if(token.getLexeme().equals("while"))
-				value &= whileStmt();
+				stmt = new Statement(whileStmt());
 			
 			else if(token.getLexeme().equals("return"))
-				value &= returnStmt();
+				stmt = new Statement(returnStmt());
 			
 			else if(token.getLexeme().equals("if"))
-				value &= ifStmt();
+				stmt = new Statement(ifStmt());
 			
 			else
-				value &= localVarDecl();
+				stmt = new Statement(localVarDecl());
 			break;
 		default:
-			return false;
+			throw new SyntacticException("Error");
 		}
 		
-		return value;
+		return stmt;
 	}
 
-	private boolean localVarDecl() {
+	private LocalVarDecl localVarDecl() throws SyntacticException {
+	
+		String t = token.getLexeme();
+		match(Token.KW);
 		
-		boolean value = true;
+		String id = token.getLexeme();
+		match(Token.ID);
+		match(Token.SM);
 		
-		value &= match(Token.KW);
-		value &= match(Token.ID);
-		value &= match(Token.SM);
-		
-		return value;
+		return new LocalVarDecl(new Type(t), id);
 	}
 
-	private boolean assignStmt() {
+	private AssignStmt assignStmt() throws SyntacticException {
+
+		String id = token.getLexeme();
+		Expression exp;
 		
-		boolean value = true;
+		match(Token.ID);
+		match(Token.AO);
+		exp = expression();
+		match(Token.SM);
 		
-		value &= match(Token.ID);
-		value &= match(Token.AO);
-		value &= expression();
-		value &= match(Token.SM);
-		
-		return value;
+		return new AssignStmt(id, exp);
 	}
 	
-	private boolean whileStmt() {
+	private WhileStmt whileStmt() throws SyntacticException {
 		
-		boolean value = true;
+		Expression exp;
+		Statement stmt;
 		
-		value &= match(Token.KW);
-		value &= match(Token.LP);
-		value &= expression();
-		value &= match(Token.RP);
-		value &= statement();
+		match(Token.KW);
+		match(Token.LP);
+		exp = expression();
+		match(Token.RP);
+		stmt = statement();
 
-		return value;
+		return new WhileStmt(exp, stmt);
 	}
 
-	private boolean returnStmt() {
+	private ReturnStmt returnStmt() throws SyntacticException {
 		
-		boolean value = true;
+		Expression exp;
 		
-		value &= match(Token.KW);
-		value &= expression();
-		value &= match(Token.SM);
+		match(Token.KW);
+		exp = expression();
+		match(Token.SM);
 		
-		return value;
+		return new ReturnStmt(exp);
 	}
 	
-	private boolean ifStmt() {
+	private IfStmt ifStmt() throws SyntacticException {
 		
-		boolean value = true;
+		Expression exp;
+		Statement ifStmt;
+		Statement elseStmt;
 		
-			value &= match(Token.KW);
-			value &= match(Token.LP);
-			value &= expression();
-			value &= match(Token.RP);
-			value &= statement();
+		match(Token.KW);
+		match(Token.LP);
+		exp = expression();
+		match(Token.RP);
+		ifStmt = statement();
+		
+		if(token.getLexeme().equals("else")){
+			match(Token.KW);
+			elseStmt = statement();
 			
-			if(token.getLexeme().equals("else")){
-				value &= match(Token.KW);
-				value &= statement();
-			}
-			return value;		
+			return new IfStmt(exp, ifStmt, elseStmt);
+		}
+		
+		else
+			return new IfStmt(exp, ifStmt);		
 	}
 	
-	private boolean expression() {
+	private Expression expression() throws SyntacticException {
 		
-		boolean value = conditionalAndExpr();
+		Expression exp = conditionalAndExpr();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.LO:
-				value &= match(token.getTokenType());
-				value &= conditionalAndExpr();
+				match(token.getTokenType());
+				exp = new Expression(conditionalAndExpr(), Expression.LO, exp);
 				break;
 				
 			default:
-				return value;	
+				return exp;	
 			}
 		}
 	}
 
-	private boolean conditionalAndExpr() {
+	private ConditionalAndExpr conditionalAndExpr() throws SyntacticException {
 
-		boolean value = equalityExpr();
+		ConditionalAndExpr exp = equalityExpr();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.LA:
-				value &= match(token.getTokenType());
-				value &= equalityExpr();
+				match(token.getTokenType());
+				exp = new ConditionalAndExpr(equalityExpr(), ConditionalAndExpr.LA, exp);
 				break;
 				
 			default:
-				return value;	
+				return exp;	
 			}
 		}
 	}
 
-	private boolean equalityExpr() {
+	private EqualityExpr equalityExpr() throws SyntacticException {
 		
-		boolean value = additiveExpr();
+		EqualityExpr exp = additiveExpr();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.EQ:
+				match(token.getTokenType());
+				exp = new EqualityExpr(additiveExpr(), EqualityExpr.EQ, exp);
+				break;
 			case Token.NE:
-				value &= match(token.getTokenType());
-				value &= additiveExpr();
+				match(token.getTokenType());
+				exp = new EqualityExpr(additiveExpr(), EqualityExpr.NE, exp);
 				break;
 				
 			default:
-				return value;	
+				return exp;	
 			}
 		}
 		
 	}
 
-	private boolean additiveExpr() {
+	private AdditiveExpr additiveExpr() throws SyntacticException {
 		
-		boolean value = multiplicativeExpr();
+		AdditiveExpr exp = multiplicativeExpr();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.PO:
+				match(token.getTokenType());
+				exp = new AdditiveExpr(multiplicativeExpr(), AdditiveExpr.PO, exp);
+				break;
 			case Token.MO:
-				value &= match(token.getTokenType());
-				value &= multiplicativeExpr();
+				match(token.getTokenType());
+				exp = new AdditiveExpr(multiplicativeExpr(), AdditiveExpr.MO, exp);
 				break;
 				
 			default:
-				return value;	
+				return exp;	
 			}
 		}
 	}
 
-	private boolean multiplicativeExpr() {
+	private MultiplicativeExpr multiplicativeExpr() throws SyntacticException {
 
-		boolean value = primaryExpr();
+		MultiplicativeExpr exp = primaryExpr();
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.TO:
+				match(token.getTokenType());
+				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.TO, exp);
+				break;
 			case Token.DO:
+				match(token.getTokenType());
+				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.DO, exp);
+				break;
 			case Token.MD:
-				value &= match(token.getTokenType());
-				value &= primaryExpr();
+				match(token.getTokenType());
+				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.MD, exp);
 				break;
 				
 			default:
-				return value;	
+				return exp;	
 			}
 		}
 	}
 
-	private boolean primaryExpr() {
+	private PrimaryExpr primaryExpr() throws SyntacticException {
 		
-		boolean value = true;
+		PrimaryExpr exp;
+		
+		String tk = token.getLexeme();
 		
 		switch (token.getTokenType()) {
 		case Token.NM:
+			match(token.getTokenType());
+			exp = new PrimaryExpr(Integer.parseInt(tk));
+			break;
 		case Token.BL:
+			match(token.getTokenType());
+			exp = new PrimaryExpr(Boolean.parseBoolean(tk));
+			break;
 		case Token.ST:
-			value &= match(token.getTokenType());
+			match(token.getTokenType());
+			exp = new PrimaryExpr(tk);
 			break;
 			
 		case Token.ID:
-			value &= match(token.getTokenType());
 			
 			if(token.getTokenType() == Token.LP)
-				value &= callExpr();
+				exp = new PrimaryExpr(callExpr());
+			
+			else{
+				match(token.getTokenType());
+				exp = new PrimaryExpr(tk);
+				}
 				
 			break;
 			
 		case Token.LP:
-			value &= match(Token.LP);
-			value &= expression();
-			value &= match(Token.RP);
+			match(Token.LP);
+			exp = new PrimaryExpr(expression());
+			match(Token.RP);
 			break;
 			
 		default: 
-			return false;
+			throw new SyntacticException("Error");
 		}
 		
-		return value;
+		return exp;
 	}
 
-	private boolean callExpr() {
+	private CallExpr callExpr() throws SyntacticException {
 		
-		boolean value = true;
+		String id = token.getLexeme();
 		
-		value &= match(Token.LP);
-		value &= actualParams();
-		value &= match(Token.RP);
+		ActualParams aps;
 		
-		return value;
+		match(Token.ID);
+		match(Token.LP);
+		aps = actualParams();
+		match(Token.RP);
+		
+		return new CallExpr(id, aps);
 	}
 
-	private boolean actualParams() {
+	private ActualParams actualParams() throws SyntacticException {
 		
-		boolean value = true;
+		ActualParams aps = new ActualParams();
 		
 		switch (token.getTokenType()) {
 		case Token.NM:
@@ -402,25 +456,28 @@ public class ParserManual {
 		case Token.ST:
 		case Token.ID:
 		case Token.LP:
-			value &= properActualParams();
+			aps = new ActualParams(properActualParams());
 			break;
+				
 		}
-		return value;
+		return aps;
 	}
 
-	private boolean properActualParams() {
+	private ProperActualParams properActualParams() throws SyntacticException {
 		
-		boolean value = expression();
+		ArrayList<Expression> ap = new ArrayList<Expression>();
+		
+		ap.add(expression());
 		
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.FA:
-				value &= match(token.getTokenType());
-				value &= expression();
+				match(token.getTokenType());
+				ap.add(expression());
 				break;
 				
 			default:
-				return value;	
+				return new ProperActualParams(ap);	
 			}
 		}
 	}
