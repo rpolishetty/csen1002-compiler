@@ -16,8 +16,12 @@ public class ProperFormalParams {
 	}
 
 	public String toString() {
-		 String ret = "ProperFormalParams\n";
 		 
+		String ret = "ProperFormalParams\n";
+		
+		if(fpList.isEmpty())
+			return ret;
+	
 		 for(FormalParam fp: fpList)
 				ret += "| " + fp.toString() + "\n";
 			

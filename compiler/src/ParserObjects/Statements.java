@@ -19,6 +19,9 @@ public class Statements {
 		
 		String ret = "Statements\n";
 		
+		if(stList.isEmpty())
+			return ret;
+		
 		for(Statement st: stList)
 			ret += "| " + st.toString() + "\n";
 		

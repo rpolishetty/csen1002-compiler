@@ -15,7 +15,11 @@ public class MethodDecls {
 	}
 	
 	public String toString(){
+		
 		String ret = "MethodDecls\n";
+		
+		if(mdList.isEmpty())
+			return ret;
 		
 		for(MethodDecl md: mdList)
 			ret += "| " + md.toString() + "\n";
