@@ -101,15 +101,15 @@ public class ParserManual {
 			return new Type(Type.ST);
 		
 		else
-			throw new SyntacticException("Error");
+			return null;
 	}
 
-	private FormalParams formalParams() {
+	private FormalParams formalParams() throws SyntacticException {
 		
-		if(type()){
+		Type t = type();
+		
+		if(t != null)
 			return new FormalParams(properFormalParams());
-			
-		}
 		
 		return new FormalParams();
 	}
@@ -256,7 +256,7 @@ public class ParserManual {
 		Expression exp;
 		
 		match(Token.KW);
-		exp = expression();
+		exp = expression(); 
 		match(Token.SM);
 		
 		return new ReturnStmt(exp);
@@ -396,7 +396,12 @@ public class ParserManual {
 		switch (token.getTokenType()) {
 		case Token.NM:
 			match(token.getTokenType());
-			exp = new PrimaryExpr(Integer.parseInt(tk));
+			
+			if(tk.contains("."))
+				exp = new PrimaryExpr(Float.parseFloat(tk));
+			
+			else
+				exp = new PrimaryExpr(Integer.parseInt(tk));
 			break;
 		case Token.BL:
 			match(token.getTokenType());
@@ -408,14 +413,14 @@ public class ParserManual {
 			break;
 			
 		case Token.ID:
+			match(token.getTokenType());
 			
 			if(token.getTokenType() == Token.LP)
-				exp = new PrimaryExpr(callExpr());
+				exp = new PrimaryExpr(callExpr(tk));
 			
-			else{
-				match(token.getTokenType());
+			else
 				exp = new PrimaryExpr(tk);
-				}
+				
 				
 			break;
 			
@@ -432,13 +437,10 @@ public class ParserManual {
 		return exp;
 	}
 
-	private CallExpr callExpr() throws SyntacticException {
-		
-		String id = token.getLexeme();
+	private CallExpr callExpr(String id) throws SyntacticException {
 		
 		ActualParams aps;
 		
-		match(Token.ID);
 		match(Token.LP);
 		aps = actualParams();
 		match(Token.RP);

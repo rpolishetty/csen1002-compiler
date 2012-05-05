@@ -27,7 +27,7 @@ public class IfStmt {
 		ret += "| " + ifStmt.toString() + "\n";
 		
 		if(elseStmt != null){
-			ret += "| ELSE\n";
+			ret += "| ElseStmt\n";
 			ret += "| " + elseStmt.toString() + "\n";
 			}
 		

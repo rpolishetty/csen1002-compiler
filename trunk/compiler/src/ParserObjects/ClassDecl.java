@@ -16,7 +16,7 @@ public class ClassDecl {
 	public String toString(){
 		String ret = "ClassDecl\n";
 		
-		ret += mds.toString();
+		ret += "| " + mds.toString();
 		
 		return ret;
 	}

@@ -2,7 +2,8 @@ package ParserObjects;
 
 public class PrimaryExpr extends MultiplicativeExpr{
 
-	int nm;
+	int in;
+	float fl;
 	boolean bl;
 	String st;
 	CallExpr cExp;
@@ -14,29 +15,34 @@ public class PrimaryExpr extends MultiplicativeExpr{
 
 	}
 	
-	public PrimaryExpr(int nm) {
-		this.nm = nm;
+	public PrimaryExpr(int in) {
+		this.in = in;
 		type = 1;
+	}
+	
+	public PrimaryExpr(float fl) {
+		this.fl = fl;
+		type = 2;
 	}
 	
 	public PrimaryExpr(boolean bl) {
 		this.bl = bl;
-		type = 2;
+		type = 3;
 	}
 	
 	public PrimaryExpr(String st) {
 		this.st = st;
-		type = 3;
+		type = 4;
 	}
 	
 	public PrimaryExpr(CallExpr ce) {
 		this.cExp = ce;
-		type = 4;
+		type = 5;
 	}
 	
 	public PrimaryExpr(Expression e) {
 		this.exp = e;
-		type = 5;
+		type = 6;
 	}
 	
 	public String toString() {
@@ -45,22 +51,26 @@ public class PrimaryExpr extends MultiplicativeExpr{
 		switch(type){
 		
 		case 1: 
-			ret += "| " + nm + "\n";
+			ret += "| " + in + "\n";
 			break;
 			
 		case 2: 
-			ret += "| " + bl + "\n";
+			ret += "| " + fl + "\n";
 			break;
 			
 		case 3: 
-			ret += "| " + st + "\n";
+			ret += "| " + bl + "\n";
 			break;
 			
 		case 4: 
-			ret += "| " + cExp.toString() + "\n";
+			ret += "| " + st + "\n";
 			break;
 			
 		case 5: 
+			ret += "| " + cExp.toString() + "\n";
+			break;
+			
+		case 6: 
 			ret += "| " + exp.toString() + "\n";
 			break;
 	

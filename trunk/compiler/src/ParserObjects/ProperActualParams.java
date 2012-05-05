@@ -16,7 +16,11 @@ public class ProperActualParams {
 	}
 
 	public String toString() {
-		 String ret = "ProperActualParams\n";
+		 
+		String ret = "ProperActualParams\n";
+		
+		if(eList.isEmpty())
+			return ret;
 		 
 		 for(Expression e: eList)
 				ret += "| " + e.toString() + "\n";
