@@ -1,10 +1,13 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class AssignStmt {
 
 	String id;
 	Expression exp;
-	
+	public static SymbolTable symTable;
 	public AssignStmt() {
 	}
 	
@@ -16,10 +19,21 @@ public class AssignStmt {
 	public String toString() {
 		String ret = "AssignStmt\n";
 		
-		ret += "| " + id + "\n";
+		ret += "| " + "ID\n" + "| | " + id + "\n";
 		ret += "| " + exp.toString() + "\n";
 		
 		return ret;
+	}
+	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		if(!symTable.contains(id))
+			throw new SemanticException("bbb");
+		
+		exp.check();
+			
 	}
 	
 	

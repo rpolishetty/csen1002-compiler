@@ -1,8 +1,11 @@
 package ParserObjects;
 
+import Parser.SymbolTable;
+
 public class ReturnStmt {
 
 	Expression exp;
+	public static SymbolTable symTable;
 	
 	public ReturnStmt() {
 
@@ -19,4 +22,10 @@ public class ReturnStmt {
 		return ret;
 	}
 	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		exp.check();
+	}
 }

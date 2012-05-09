@@ -1,11 +1,16 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class MethodDecl {
 
 	Type t;
 	String id;
 	FormalParams fps;
 	Block b;
+	
+	public static SymbolTable symTable;
 	
 	
 	public MethodDecl() {
@@ -26,7 +31,7 @@ public class MethodDecl {
 		
 		String s = "";
 		s += t.toString();
-		s += id + "\n";
+		s += "ID\n| " + id + "\n";
 		s += fps.toString();
 		s += b.toString();
 		
@@ -34,6 +39,22 @@ public class MethodDecl {
 			ret += "| " + st + "\n";
 		
 		return ret;
+	}
+
+
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		symTable.openScope();
+		
+		if(symTable.contains(id))
+			throw new SemanticException("bbb");
+			
+		symTable.add(new Entry(id));
+		fps.check();
+		b.check();
+		symTable.closeScope();
+		
 	}
 	
 	

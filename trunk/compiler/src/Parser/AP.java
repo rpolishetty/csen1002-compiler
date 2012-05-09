@@ -3,8 +3,11 @@ package Parser;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 import Lexer.Lexer;
+import ParserObjects.ClassDecl;
+import ParserObjects.Expr;
 
 import java_cup.runtime.Symbol;
 
@@ -13,6 +16,7 @@ public class AP {
 	public static void main(String[] args) {
 		
 		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
 
 		if (args.length > 1) {
 			inFile = args[0];
@@ -25,13 +29,24 @@ public class AP {
 	
 			parser parser = new parser(new Lexer(dis));
 			Symbol res = parser.parse();
-			boolean value = ((Boolean)res.value).booleanValue();
+//			boolean value = ((Boolean)res.value).booleanValue();
+//			
+//			if(value)
+//				System.out.println("File: " + inFile + " parsed successfully.");
+//			else
+//				System.out.println("Error in parsing file: " + inFile);
 			
-			if(value)
-				System.out.println("File: " + inFile + " parsed successfully.");
-			else
-				System.out.println("Error in parsing file: " + inFile);
+//			ArrayList<Expr> expressions = (ArrayList<Expr>)res.value;
+//			
+//			for(Expr e: expressions) {
+//				System.out.print(e);
+//				System.out.println("Value = " + e.evaluate() + "\n");
+//			}
 	
+			ClassDecl c = (ClassDecl) res.value;
+			//for(Expr e: expressions) {
+				System.out.print(c);
+				
 			fis.close();
 			bis.close();
 			dis.close();

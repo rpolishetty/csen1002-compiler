@@ -1,5 +1,8 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class Statement {
 	
 	Block b;
@@ -8,7 +11,7 @@ public class Statement {
 	IfStmt ifStmt;
 	WhileStmt whileStmt;
 	ReturnStmt returnStmt;
-	
+	public static SymbolTable symTable;
 	int type;
 	
 	public Statement() {
@@ -76,6 +79,39 @@ public class Statement {
 		
 		return ret;
 	}
+	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		switch(type){
+			case 1: 
+				b.check();
+				break;
+				
+			case 2: 
+				lcd.check();
+				break;
+				
+			case 3: 
+				assignSt.check();
+				break;
+				
+			case 4: 
+				ifStmt.check();
+				break;
+				
+			case 5: 
+				whileStmt.check();
+				break;
+				
+			case 6: 
+				returnStmt.check();
+				break;
+		}
+		
+	}
+	
 	
 	
 	

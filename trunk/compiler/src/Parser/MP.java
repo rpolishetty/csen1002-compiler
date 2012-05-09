@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Lexer.LexerManual;
 import Lexer.LexerSample;
+import ParserObjects.ClassDecl;
 import ParserObjects.Expr;
 import ParserObjects.SemanticException;
 import ParserObjects.SyntacticException;
@@ -22,20 +23,23 @@ import ParserObjects.SyntacticException;
 public class MP {
 	public static void main(String[] args) throws SyntacticException, SemanticException {
 		//String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
-		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
 
 		if (args.length > 1) {
 			inFile = args[0];
 		}
 
-		//LexerManual lexer = new LexerManual(inFile);
+		//Manual
+		LexerManual lexer = new LexerManual(inFile);
+		ParserManual parser = new ParserManual(lexer);
 		
-		LexerSample lexer = new LexerSample(inFile);
-
-		//ParserManual parser = new ParserManual(lexer);
+		//Sample
+		//LexerSample lexer = new LexerSample(inFile);
+		//ParserSample parser = new ParserSample(lexer);
 		
-		ParserSample parser = new ParserSample(lexer);
+		
+		
 
 		
 //		boolean value = parser.parse();
@@ -45,11 +49,12 @@ public class MP {
 //		else
 //			System.out.println("Error in parsing file: " + inFile);
 		
-		ArrayList<Expr> expressions = parser.parse();
-		
-		for(Expr e: expressions) {
-			System.out.print(e);
-			System.out.println("Value = " + e.evaluate() + "\n");
-		}
+//		ArrayList<Expr> expressions = parser.parse();
+		ClassDecl c = parser.parse();
+		//c.check();
+		//for(Expr e: expressions) {
+			System.out.print(c);
+			//System.out.println("Value = " + e.evaluate() + "\n");
+		//}
 	}
 }

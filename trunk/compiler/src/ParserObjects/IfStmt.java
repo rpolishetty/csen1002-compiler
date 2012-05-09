@@ -1,10 +1,14 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class IfStmt {
 
 	Expression exp;
 	Statement ifStmt;
 	Statement elseStmt;
+	public static SymbolTable symTable;
 	
 	public IfStmt() {
 
@@ -32,5 +36,17 @@ public class IfStmt {
 			}
 		
 		return ret;
+	}
+	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		exp.check();
+		ifStmt.check();
+		
+		if(elseStmt != null){
+			elseStmt.check();
+		}
 	}
 }

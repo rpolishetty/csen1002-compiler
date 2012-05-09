@@ -1,9 +1,12 @@
 package ParserObjects;
 
+import Parser.SymbolTable;
+
 public class WhileStmt {
 
 	Expression exp;
 	Statement stmt;
+	public static SymbolTable symTable;
 	
 	public WhileStmt() {
 
@@ -22,7 +25,13 @@ public class WhileStmt {
 		return ret;
 	}
 	
-	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		exp.check();
+		stmt.check();
+	}
 	
 	
 }
