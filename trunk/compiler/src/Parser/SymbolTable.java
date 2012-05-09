@@ -9,7 +9,7 @@ import java.util.Hashtable;
  */
 public class SymbolTable {
 	// The Hash Table used to build the Symbol Table
-	public Hashtable<String, Entry> st;
+	private Hashtable<String, Entry> st;
 	
 	// The level of the scope of the current instance
 	private int level;
@@ -46,11 +46,18 @@ public class SymbolTable {
 	}
 	
 	/*
+	 * This method is used to get entries from the table
+	 */
+	public Entry get(String k) {
+		return st.get(k);
+	}
+	
+	/*
 	 * This method checks if a certain identifier
 	 * is already in the symbol table.
 	 */
 	public boolean contains(String id) {
-		return st.contains(id);
+		return st.containsKey(id);
 	}
 	
 	/*
