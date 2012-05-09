@@ -30,9 +30,7 @@ public class ConditionalAndExpr extends Expression{
 				s += "&&\n";
 	
 		}
-		
 		s += eqExp.toString();
-		
 		for(String st: s.split("\n"))
 			ret += "| " + st + "\n";
 	

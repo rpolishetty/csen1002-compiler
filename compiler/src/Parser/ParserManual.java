@@ -37,16 +37,18 @@ public class ParserManual {
 	
 	private ClassDecl classDecl() throws SyntacticException{
 		
+		String id;
 		MethodDecls mds;
 		
 		if(token.getLexeme().equals("class")){
 			match(Token.KW);
+			id = token.getLexeme();
 			match(Token.ID);
 			match(Token.LB);
 			mds = methodDecls();
 			match(Token.RB);
 			
-			return new ClassDecl(mds);
+			return new ClassDecl(id,mds);
 		}
 		
 		throw new SyntacticException("Error");

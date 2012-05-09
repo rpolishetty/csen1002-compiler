@@ -1,5 +1,7 @@
 package ParserObjects;
 
+import Parser.SymbolTable;
+
 public class Expression {
 
 	public ConditionalAndExpr condExp;
@@ -40,7 +42,12 @@ public class Expression {
 		return ret;
 	}
 	
+	public void check() throws SemanticException {
+		
+		
 	
+		
+	}
 	
 	
 }

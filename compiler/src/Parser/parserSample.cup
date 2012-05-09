@@ -1,0 +1,72 @@
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import ParserObjects.*;
+	
+/* Terminals (tokens returned by the scanner). */
+terminal			SM, PO, MO, TO, DO;
+terminal String 	NM;
+
+/* Non-terminals */
+nonterminal	ArrayList<Expr> expr_list;
+nonterminal Expr					expr_part, expr;
+nonterminal	Term					term;
+
+/* Precedences */
+precedence left PO, MO;
+precedence left TO, DO;
+
+/* The grammar */
+
+expr_list ::= expr_list:el expr_part:e
+			  {: el.add(e);
+			     RESULT = el;
+			  :} 
+			  | expr_part:e 
+			  {: ArrayList<Expr> el = new ArrayList<Expr>();
+			     el.add(e);
+			     RESULT = el;
+			  :};
+			  
+expr_part ::= expr:e SM
+			  {:RESULT = e;:}
+			  | error SM ;
+			  
+expr      ::= expr:e PO term:t
+              {:RESULT = new Expr(t, Expr.PO, e);:} 
+            | expr:e MO term:t
+              {:RESULT = new Expr(t, Expr.MO, e);:}
+            | term:t
+              {:RESULT = t;:}
+            ;
+              
+term      ::= term:t TO NM:n
+			  {:RESULT = new Term(Integer.parseInt(n), Term.TO, t);:}  
+            | term:t DO NM:n
+              {:RESULT = new Term(Integer.parseInt(n), Term.DO, t);:}   
+	    	| NM:n
+	    	  {:RESULT = new Term(Integer.parseInt(n), 0, null);:}
+	    	;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

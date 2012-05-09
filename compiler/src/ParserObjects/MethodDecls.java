@@ -2,10 +2,13 @@ package ParserObjects;
 
 import java.util.ArrayList;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class MethodDecls {
 	
-	ArrayList<MethodDecl> mdList;
-	
+	public ArrayList<MethodDecl> mdList;
+	public static SymbolTable symTable;
 	public MethodDecls() {
 		
 	}
@@ -25,5 +28,13 @@ public class MethodDecls {
 			ret += "| " + md.toString() + "\n";
 		
 		return ret;
+	}
+
+	public void check() throws SemanticException {
+		symTable = SymbolTable.getInstance();
+		
+		for(MethodDecl md: mdList)
+			md.check();
+		
 	}
 }

@@ -1,9 +1,12 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class FormalParams {
 
 	ProperFormalParams pfp;
-
+	public static SymbolTable symTable;
 	
 	public FormalParams() {
 
@@ -23,6 +26,14 @@ public class FormalParams {
 			ret += "| " + pfp.toString() + "\n";
 		
 		return ret;
+	}
+
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		if(pfp != null)
+			pfp.check();
+		
 	}
 	
 	

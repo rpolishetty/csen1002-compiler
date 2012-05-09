@@ -1,15 +1,39 @@
 package Parser;
+import java.util.ArrayList;
+import ParserObjects.*;
 import java_cup.runtime.*;
 	
 /* Terminals (tokens returned by the scanner). */
-terminal			SM, PO, MO, TO, DO, BL, ST, NM, ID, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP, INT, FLOAT, BOOLEAN, STRING,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
-
+terminal			SM, PO, MO, TO, DO, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
+terminal String		ID, INT, FLOAT, BOOLEAN, STRING, ST;
+terminal String		NM;
+terminal String		BL;
 /* Non-terminals */
-nonterminal	Boolean		classDecl, methodDecls, methodDecl, type, formalParams,
-						block, properFormalParams, formalParam, statements, statement, localVarDecl,
-						assignStmt, whileStmt, returnStmt, expression, conditionalAndExpr,
-						equalityExpr, additiveExpr, multiplicativeExpr, primaryExpr, callExpr, actualParams,
-						properActualParams, ifStmt,ifStmt1;
+
+nonterminal	ClassDecl	classDecl;
+nonterminal	MethodDecls	methodDecls;
+nonterminal	MethodDecl	methodDecl;
+nonterminal	FormalParams	formalParams;
+nonterminal	ProperFormalParams	properFormalParams;
+nonterminal	FormalParam	formalParam;
+nonterminal	Type	type;
+nonterminal	Block	block;	
+nonterminal	Statements	statements;	
+nonterminal	Statement	statement;	
+nonterminal	LocalVarDecl	localVarDecl;	
+nonterminal	AssignStmt	assignStmt;	
+nonterminal	IfStmt	ifStmt;	
+nonterminal	WhileStmt	whileStmt;	
+nonterminal	ReturnStmt	returnStmt;	
+nonterminal	Expression	expression;
+nonterminal	ConditionalAndExpr	conditionalAndExpr;	
+nonterminal	EqualityExpr	equalityExpr;	
+nonterminal	AdditiveExpr	additiveExpr;	
+nonterminal	MultiplicativeExpr	multiplicativeExpr;	
+nonterminal	PrimaryExpr	primaryExpr;
+nonterminal	CallExpr	callExpr;
+nonterminal	ActualParams	actualParams;	
+nonterminal	ProperActualParams	properActualParams;	
 
 /* Precedences */
 precedence left ELSE;
@@ -21,90 +45,107 @@ precedence left TO, DO, MD;
 
 /* The grammar */
 
-classDecl ::= CLASS ID LB methodDecls:mds RB
-			  {:RESULT = mds;:}
+classDecl ::= CLASS ID:id LB methodDecls:mds RB
+			  {:RESULT = new ClassDecl(id,mds);:}
 			  | error
-			  {:RESULT = false;:};
+			  {:ClassDecl.throwException();:};
 			  
 methodDecls ::= methodDecls:mds methodDecl:md
-			  {:RESULT = mds && md;:} 
-			  | {:RESULT = true;:};
+			  {:mds.mdList.add(md);
+			     RESULT = new MethodDecls(mds.mdList);:} 
+			  | {:ArrayList<MethodDecl> mdList = new ArrayList<MethodDecl>();
+			      RESULT = new MethodDecls(mdList);:};
 			  
-methodDecl ::= STATIC type:t ID LP formalParams:fps RP block:b
-			  {:RESULT = t && fps && b;:};
+methodDecl ::= STATIC type:t ID:id LP formalParams:fps RP block:b
+			  {:RESULT = new MethodDecl(t,id,fps,b);:};
 			  
 formalParams ::= properFormalParams:pfp 
-				{:RESULT = pfp;:} 
-			  | {:RESULT = true;:};
+				{:RESULT = new FormalParams(pfp);:}
+			  | {:RESULT = null;:};
 
 properFormalParams ::= properFormalParams:pfp FA formalParam:fp
-				{:RESULT = pfp && fp;:} 
+				{:pfp.fpList.add(fp);
+			     RESULT = new ProperFormalParams(pfp.fpList);:} 
 			  | formalParam:fp
-			  {:RESULT = fp;:};
+			  	{:ArrayList<FormalParam> fpList = new ArrayList<FormalParam>();
+			  	  fpList.add(fp);
+			      RESULT = new ProperFormalParams(fpList);
+			      :};
 			  
-formalParam ::= type:t ID {:RESULT = t;:};
+formalParam ::= type:t ID:id {:RESULT = new FormalParam(t,id);:};
 
-type ::= INT{:RESULT = true;:} | FLOAT{:RESULT = true;:} | BOOLEAN{:RESULT = true;:}
-	 | STRING {:RESULT = true;:};
+type ::= INT:int1{:RESULT = new Type(int1);:} | FLOAT:float1{:RESULT = new Type(float1);:} | BOOLEAN:boolean1{:RESULT = new Type(boolean1);:}
+	 | STRING:string1 {:RESULT = new Type(string1);:};
 			  
-block ::= LB statements:sts RB  {:RESULT = sts;:};
+block ::= LB statements:sts RB  {:RESULT = new Block(sts);:};
 
-statements ::= statements:sts statement:st {:RESULT = sts && st;:}
-			| {:RESULT = true;:};
+statements ::= statements:sts statement:st 
+			  {:sts.stList.add(st);
+			    RESULT =  new Statements(sts.stList);;:}
+			| {:ArrayList<Statement> stList = new ArrayList<Statement>();
+			    RESULT = new Statements(stList);:};
 
-statement ::= block:b {:RESULT = b;:}
-			| localVarDecl:lvr {:RESULT = lvr;:}
-			| assignStmt:as {:RESULT = as;:}
-			| ifStmt:is {:RESULT = is;:}
-			| whileStmt:ws {:RESULT = ws;:}
-			| returnStmt:rs {:RESULT = rs;:};
+statement ::= block:b {:RESULT = new Statement(b);:}
+			| localVarDecl:lvr {:RESULT = new Statement(lvr);:}
+			| assignStmt:as {:RESULT = new Statement(as);:}
+			| ifStmt:is {:RESULT = new Statement(is);:}
+			| whileStmt:ws {:RESULT = new Statement(ws);:}
+			| returnStmt:rs {:RESULT = new Statement(rs);:};
 			
 
-localVarDecl ::= type:t ID SM {:RESULT = t;:};
+localVarDecl ::= type:t ID:id SM {:RESULT = new LocalVarDecl(t,id);:};
 
-assignStmt ::= ID AO expression:e SM {:RESULT = e;:};
+assignStmt ::= ID:id AO expression:e SM {:RESULT = new AssignStmt(id,e);:};
 
-ifStmt ::= IF LP expression:e RP statement:s ifStmt1:is1 {:RESULT = e && s && is1;:};
+ifStmt ::= IF LP expression:e RP statement:s {:RESULT = new IfStmt(e,s);:} 
+		 | IF LP expression:e RP statement:s ELSE statement:s1 {:RESULT = new IfStmt(e,s,s1);:};
 			
-ifStmt1 ::= ELSE statement:s {:RESULT = s;:}
-			| {:RESULT = true;:};
 
-whileStmt ::= WHILE LP expression:e RP statement:s {:RESULT = e && s;:};
+whileStmt ::= WHILE LP expression:e RP statement:s {:RESULT = new WhileStmt(e,s);:};
 
-returnStmt ::= RETURN expression:e SM {:RESULT = e;:}; 
+returnStmt ::= RETURN expression:e SM {:RESULT = new ReturnStmt(e);:}; 
 
-expression ::= conditionalAndExpr:cae {:RESULT = cae;:}
-			| expression:e LO conditionalAndExpr:cae {:RESULT = e && cae;:};
+expression ::= expression:e LO conditionalAndExpr:cae {:RESULT = new Expression(cae,1,e);:}
+			| conditionalAndExpr:cae  {:RESULT = cae;:};
 			
-conditionalAndExpr ::= equalityExpr:ee {:RESULT = ee;:}
-			| conditionalAndExpr:cae LA equalityExpr:ee {:RESULT = ee && cae;:};
+conditionalAndExpr ::= conditionalAndExpr:cae LA equalityExpr:ee {:RESULT = new ConditionalAndExpr(ee , 1, cae);:}
+			| equalityExpr:ee {:RESULT = ee;:};
 			
-equalityExpr ::= additiveExpr:ae {:RESULT = ae;:}
-			| equalityExpr:ee EQ additiveExpr:ae {:RESULT = ee && ae;:}  
-			| equalityExpr:ee NE additiveExpr:ae {:RESULT = ee && ae;:};
+equalityExpr ::= equalityExpr:ee EQ additiveExpr:ae {:RESULT = new EqualityExpr(ae, 1, ee);:}  
+			| equalityExpr:ee NE additiveExpr:ae {:RESULT = new EqualityExpr(ae, 2, ee);:}
+			| additiveExpr:ae {:RESULT = ae;:};
 			
-additiveExpr ::= multiplicativeExpr:me {:RESULT = me;:}
-			| additiveExpr:ae PO multiplicativeExpr:me {:RESULT = me && ae;:}  
-			| additiveExpr:ae MO multiplicativeExpr:me {:RESULT = me && ae;:};
+additiveExpr ::= additiveExpr:ae PO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, 1, ae);:}  
+			| additiveExpr:ae MO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, 2, ae);:}
+			| multiplicativeExpr:me {:RESULT = me;:};
 			
-multiplicativeExpr ::= primaryExpr:pe {:RESULT = pe;:}
-			| multiplicativeExpr:me TO primaryExpr:pe {:RESULT = me && pe;:}  
-			| multiplicativeExpr:me DO primaryExpr:pe {:RESULT = me && pe;:}
-			| multiplicativeExpr:me MD primaryExpr:pe {:RESULT = me && pe;:};
+multiplicativeExpr ::= multiplicativeExpr:me TO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 1, me);:}  
+			| multiplicativeExpr:me DO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 2, me);:}
+			| multiplicativeExpr:me MD primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 3, me);:}
+			| primaryExpr:pe {:RESULT = pe;:};
 
-primaryExpr ::= NM {:RESULT = true;:}
-			| BL {:RESULT = true;:}
-			| ST {:RESULT = true;:}
-			| ID {:RESULT = true;:}
-			| callExpr:ce {:RESULT = ce;:}
-			| LP expression:e RP {:RESULT = e;:};
+primaryExpr ::= NM:nm {:
+			if(nm.contains("."))
+				RESULT = new PrimaryExpr(Float.parseFloat(nm));
+			else
+				RESULT = new PrimaryExpr(Integer.parseInt(nm));:}
+			| BL:bl {:RESULT =  new PrimaryExpr(Boolean.parseBoolean(bl));:}
+			| ST:st {:RESULT = new PrimaryExpr(st);:}
+			| ID:id {:RESULT = new PrimaryExpr(id);:}
+			| callExpr:ce {:RESULT = new PrimaryExpr(ce);:}
+			| LP expression:e RP {:RESULT = new PrimaryExpr(e);:};
 			
-callExpr ::= ID LP actualParams:ap RP {:RESULT = ap;:};
+callExpr ::= ID:id LP actualParams:aps RP {:RESULT = new CallExpr(id,aps);:};
 
-actualParams ::= properActualParams:pap {:RESULT = pap;:}
-				| {:RESULT = true;:};
+actualParams ::= properActualParams:pap2 {:RESULT = new ActualParams(pap2);:}
+				| {:RESULT = null;:};
 				
-properActualParams ::= properActualParams:pap FA expression:e  {:RESULT = pap && e;:}
-					| expression:e  {:RESULT = e;:};
+properActualParams ::= properActualParams:pap FA expression:e  
+					{:pap.eList.add(e);
+			    	RESULT = new ProperActualParams(pap.eList);:}	
+					| expression:e 
+					{:ArrayList<Expression> eList = new ArrayList<Expression>();
+					eList.add(e);
+			    	RESULT = new ProperActualParams(eList);:};
 					
 		

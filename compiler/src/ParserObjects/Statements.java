@@ -2,10 +2,13 @@ package ParserObjects;
 
 import java.util.ArrayList;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class Statements {
 
-	ArrayList<Statement> stList;
-
+	public ArrayList<Statement> stList;
+	public static SymbolTable symTable;
 	public Statements() {
 	
 	}
@@ -27,6 +30,16 @@ public class Statements {
 		
 		return ret;
 	}
+	
+	public void check() throws SemanticException {
+		
+		symTable = SymbolTable.getInstance();
+		
+		for(Statement st: stList)
+			st.check();
+		
+	}
+	
 	
 	
 	
