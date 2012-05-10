@@ -43,7 +43,7 @@ public class MethodDecl {
 		return ret;
 	}
 	
-	public ArrayList<String> getParamatersTypes(){
+	public ArrayList<Integer> getParamatersTypes(){
 		return fps.getParamatersTypes();
 	}
 
@@ -67,7 +67,42 @@ public class MethodDecl {
 		fps.check();
 		b.check();
 		
-		int type = b.sts.stList.get(b.sts.stList.size()-1).type;
+		boolean flag = false;
+		
+		for(Statement s: b.sts.stList){
+			if(s.type == Statement.RETUTNSTMT){ 
+				flag = true;
+				
+				if(this.t.type != s.returnStmt.exp.returnType)
+					throw new SemanticException("Return type of method \"" + id + "\" " +
+							"should be the same as the method type");
+				
+				break;
+			}
+			
+			else if(s.type == Statement.IFSTMT && s.ifStmt.elseStmt != null && s.ifStmt.elseStmt.type != Statement.IFSTMT){ 
+
+					if(s.b != null){
+						for(Statement st: s.b.sts.stList){
+							if(st.type == Statement.RETUTNSTMT){ 
+								
+								flag = true;
+								
+								if(this.t.type != s.returnStmt.exp.returnType)
+									throw new SemanticException("Return type of method \"" + id + "\" " +
+											"should be the same as the method type");
+								break;
+							}
+			
+						}
+					}
+				}	
+			}
+		
+		//if(!flag)
+			//throw new SemanticException("Method \"" + id + "\" should have a reachable return statement");
+		
+		
 		symTable.closeScope();
 		
 	/*	for(Entry e: symTable.st.values())

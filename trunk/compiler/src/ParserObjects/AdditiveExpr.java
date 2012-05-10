@@ -6,8 +6,8 @@ public class AdditiveExpr extends EqualityExpr{
 	public int op;
 	public AdditiveExpr addExp;
 	
-	public static final int PO = 1;
-	public static final int MO = 2;
+	public static final int PO = 14;
+	public static final int MO = 15;
 	
 	public AdditiveExpr() {
 		
@@ -44,6 +44,21 @@ public class AdditiveExpr extends EqualityExpr{
 	}
 	public void check() throws SemanticException {
 		multExp.check();
-		addExp.check();
+		
+		if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
+			throw new SemanticException("Additive expression must be of type int or float");
+				
+		if(addExp !=null) {
+			addExp.check();
+			
+			if(multExp.returnType != addExp.returnType)
+				throw new SemanticException("Both sides of additive expression must be of the same type");
+			
+			else if((addExp.returnType != Expression.INT) && (addExp.returnType != Expression.FLOAT))
+				throw new SemanticException("Additive expression must be of type int or float");
+			
+			
+		}
+		
 	}
 }

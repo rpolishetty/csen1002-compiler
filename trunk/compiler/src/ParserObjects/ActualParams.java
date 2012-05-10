@@ -26,11 +26,11 @@ public class ActualParams {
 		return ret;
 	}
 	
-	public ArrayList<String> getParamatersTypes(){
+	public ArrayList<Integer> getParamatersTypes(){
 		if(pap != null)
 			return pap.getParamatersTypes();
 		else
-			return new ArrayList<String>();
+			return new ArrayList<Integer>();
 	}
 	
 	public void check() throws SemanticException {

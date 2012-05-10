@@ -28,8 +28,8 @@ public class ProperActualParams {
 		return ret;
 	}
 	
-	public ArrayList<String> getParamatersTypes(){
-		ArrayList<String> types = new ArrayList<String>();
+	public ArrayList<Integer> getParamatersTypes(){
+		ArrayList<Integer> types = new ArrayList<Integer>();
 		for(Expression e: eList)
 			types.add(e.getType());
 		return types;

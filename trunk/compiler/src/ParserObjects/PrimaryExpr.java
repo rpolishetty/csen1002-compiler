@@ -1,5 +1,8 @@
 package ParserObjects;
 
+import Parser.Entry;
+import Parser.SymbolTable;
+
 public class PrimaryExpr extends MultiplicativeExpr{
 
 	int in;
@@ -8,17 +11,10 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	String st;
 	CallExpr cExp;
 	Expression exp;
-	
 	int type;
 	
-	public static final int INT = 1;
-	public static final int FLOAT = 2;
-	public static final int BOOL = 3;
-	public static final int STRING = 4;
-	public static final int ID = 5;
-	public static final int CE = 6;
-	public static final int E = 7;
-	
+	public static SymbolTable symTable;
+
 	public PrimaryExpr() {
 
 	}
@@ -26,31 +22,32 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	public PrimaryExpr(int in) {
 		this.in = in;
 		type = INT;
-		returnType = "int";
+		returnType = INT;
 	}
 	
 	public PrimaryExpr(float fl) {
 		this.fl = fl;
 		type = FLOAT;
-		returnType = "float";
+		returnType = FLOAT;
 	}
 	
 	public PrimaryExpr(boolean bl) {
 		this.bl = bl;
-		type = BOOL;
-		returnType = "boolean";
+		type = BOOLEAN;
+		returnType = BOOLEAN;
 	}
 	
 	public PrimaryExpr(String st) {
 		this.st = st;
 		type = STRING;
-		returnType = "String";
+		returnType = STRING;
 	}
 	
 	public PrimaryExpr(String idType, String st) {
 		this.st = st;
 		type = ID;
-		returnType = st;
+		idName = st;
+		returnType = ID;
 	}
 	
 	public PrimaryExpr(CallExpr ce) {
@@ -64,7 +61,7 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	}
 	
 	public String toString() {
-		String ret = "PrimaryExpr\n";
+		String ret = "PrimaryExpression\n";
 		
 		switch(type){
 		
@@ -76,7 +73,7 @@ public class PrimaryExpr extends MultiplicativeExpr{
 			ret += "| " + fl + "\n";
 			break;
 			
-		case BOOL: 
+		case BOOLEAN: 
 			ret += "| " + bl + "\n";
 			break;
 			
@@ -102,8 +99,27 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	}
 	
 	public void check() throws SemanticException {
+		symTable = SymbolTable.getInstance();
 		
 		switch(type){
+			case ID: 
+
+				if(!symTable.contains(idName))
+					throw new SemanticException("Local Variable \"" + idName + "\" is not declared in the current scope");
+				
+				Entry e = symTable.get(st);
+				int t;
+				try {
+					FormalParam o = (FormalParam) e.object;
+					t = o.t.type;
+				} catch (Exception e2) {
+					LocalVarDecl o = (LocalVarDecl) e.object;
+					t = o.t.type;
+				}
+				
+				returnType = t;
+				break;
+			
 			case CE: 
 				cExp.check();
 				break;

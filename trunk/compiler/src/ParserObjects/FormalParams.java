@@ -30,11 +30,11 @@ public class FormalParams {
 		return ret;
 	}
 	
-	public ArrayList<String> getParamatersTypes(){
+	public ArrayList<Integer> getParamatersTypes(){
 		if(pfp != null)
 			return pfp.getParamatersTypes();
 		else
-			return  new ArrayList<String>();
+			return  new ArrayList<Integer>();
 	}
 
 	public void check() throws SemanticException {

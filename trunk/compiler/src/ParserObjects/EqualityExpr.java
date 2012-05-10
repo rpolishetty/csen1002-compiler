@@ -6,8 +6,8 @@ public class EqualityExpr extends ConditionalAndExpr{
 	public int op;
 	public EqualityExpr eqExp;
 	
-	public static final int EQ = 1;
-	public static final int NE = 2;
+	public static final int EQ = 12;
+	public static final int NE = 13;
 	
 	public EqualityExpr() {
 		
@@ -17,7 +17,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 		addExp = ae;
 		op = o;
 		eqExp = ee;
-		returnType = "boolean";
+		returnType = Expression.BOOLEAN;
 	}
 	
 	public String toString(){
@@ -44,7 +44,14 @@ public class EqualityExpr extends ConditionalAndExpr{
 	}
 
 	public void check() throws SemanticException {
+		
 		addExp.check();
-		eqExp.check();
+		
+		if(eqExp !=null) {
+			eqExp.check();
+			
+			if(addExp.returnType != eqExp.returnType)
+				throw new SemanticException("Both sides of equality expression must be of the same type");
+		}
 	}
 }

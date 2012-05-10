@@ -44,6 +44,10 @@ public class IfStmt {
 		symTable = SymbolTable.getInstance();
 		
 		exp.check();
+		
+		if(exp.returnType != Expression.BOOLEAN)
+			throw new SemanticException("Expression in if statement must be of type Boolean");
+		
 		ifStmt.check();
 		
 		if(elseStmt != null){

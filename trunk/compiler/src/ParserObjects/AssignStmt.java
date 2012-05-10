@@ -33,6 +33,21 @@ public class AssignStmt {
 			throw new SemanticException("Local Variable \"" + id + "\" is not declared in the current scope");
 		
 		exp.check();
+		
+		Entry e = symTable.get(id);
+		int t;
+		
+		try {
+			FormalParam o = (FormalParam) e.object;
+			t = o.t.type;
+		} catch (Exception e2) {
+			LocalVarDecl o = (LocalVarDecl) e.object;
+			t = o.t.type;
+		}
+		
+		if(t != exp.returnType)
+			throw new SemanticException("Expression assgined to local variable \"" + id + "\" " +
+					"should be the same as the variable type");
 			
 	}
 	
