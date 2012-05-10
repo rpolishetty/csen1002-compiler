@@ -46,7 +46,7 @@ public class LocalVarDecl {
 				throw new SemanticException("Local Variable \"" + id + "\" is previously defined in the current scope");
 		
 			
-		symTable.add(new Entry(id));
+		symTable.add(new Entry(id), this);
 		
 	}
 	

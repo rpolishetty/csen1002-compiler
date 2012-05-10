@@ -23,7 +23,7 @@ public class ParserManual {
 		lexer = lex;
 	}
 	
-	public ClassDecl parse() throws SyntacticException {
+	public ClassDecl parse() throws SyntacticException, SemanticException {
 		
 		token = lexer.nextToken();
 		
@@ -35,7 +35,7 @@ public class ParserManual {
 		return cd;
 	}
 	
-	private ClassDecl classDecl() throws SyntacticException{
+	private ClassDecl classDecl() throws SyntacticException, SemanticException{
 		
 		String id;
 		MethodDecls mds;
@@ -54,7 +54,7 @@ public class ParserManual {
 		throw new SyntacticException("Error");
 	}
 	
-	private MethodDecls methodDecls() throws SyntacticException {
+	private MethodDecls methodDecls() throws SyntacticException, SemanticException {
 		
 		ArrayList<MethodDecl> md = new ArrayList<MethodDecl>();
 		
@@ -68,7 +68,7 @@ public class ParserManual {
 		
 	}
 
-	private MethodDecl methodDecl() throws SyntacticException {
+	private MethodDecl methodDecl() throws SyntacticException, SemanticException {
 		
 		Type t;
 		String id;
@@ -147,7 +147,7 @@ public class ParserManual {
 	}
 	
 
-	private Block block() throws SyntacticException {
+	private Block block() throws SyntacticException, SemanticException {
 	
 		Statements sts;
 		
@@ -158,7 +158,7 @@ public class ParserManual {
 		return new Block(sts);
 	}
 
-	private Statements statements() throws SyntacticException {
+	private Statements statements() throws SyntacticException, SemanticException {
 		
 		ArrayList<Statement> stmt = new ArrayList<Statement>();
 		
@@ -181,7 +181,7 @@ public class ParserManual {
 		}
 	}
 	
-	private Statement statement() throws SyntacticException {
+	private Statement statement() throws SyntacticException, SemanticException {
 		
 		Statement stmt;
 		
@@ -226,7 +226,7 @@ public class ParserManual {
 		return new LocalVarDecl(new Type(t), id);
 	}
 
-	private AssignStmt assignStmt() throws SyntacticException {
+	private AssignStmt assignStmt() throws SyntacticException, SemanticException {
 
 		String id = token.getLexeme();
 		Expression exp;
@@ -239,7 +239,7 @@ public class ParserManual {
 		return new AssignStmt(id, exp);
 	}
 	
-	private WhileStmt whileStmt() throws SyntacticException {
+	private WhileStmt whileStmt() throws SyntacticException, SemanticException {
 		
 		Expression exp;
 		Statement stmt;
@@ -253,7 +253,7 @@ public class ParserManual {
 		return new WhileStmt(exp, stmt);
 	}
 
-	private ReturnStmt returnStmt() throws SyntacticException {
+	private ReturnStmt returnStmt() throws SyntacticException, SemanticException {
 		
 		Expression exp;
 		
@@ -264,7 +264,7 @@ public class ParserManual {
 		return new ReturnStmt(exp);
 	}
 	
-	private IfStmt ifStmt() throws SyntacticException {
+	private IfStmt ifStmt() throws SyntacticException, SemanticException {
 		
 		Expression exp;
 		Statement ifStmt;
@@ -287,7 +287,7 @@ public class ParserManual {
 			return new IfStmt(exp, ifStmt);		
 	}
 	
-	private Expression expression() throws SyntacticException {
+	private Expression expression() throws SyntacticException, SemanticException {
 		
 		Expression exp = conditionalAndExpr();
 		
@@ -304,7 +304,7 @@ public class ParserManual {
 		}
 	}
 
-	private ConditionalAndExpr conditionalAndExpr() throws SyntacticException {
+	private ConditionalAndExpr conditionalAndExpr() throws SyntacticException, SemanticException {
 
 		ConditionalAndExpr exp = equalityExpr();
 		
@@ -321,7 +321,7 @@ public class ParserManual {
 		}
 	}
 
-	private EqualityExpr equalityExpr() throws SyntacticException {
+	private EqualityExpr equalityExpr() throws SyntacticException, SemanticException {
 		
 		EqualityExpr exp = additiveExpr();
 		
@@ -343,7 +343,7 @@ public class ParserManual {
 		
 	}
 
-	private AdditiveExpr additiveExpr() throws SyntacticException {
+	private AdditiveExpr additiveExpr() throws SyntacticException, SemanticException {
 		
 		AdditiveExpr exp = multiplicativeExpr();
 		
@@ -364,7 +364,7 @@ public class ParserManual {
 		}
 	}
 
-	private MultiplicativeExpr multiplicativeExpr() throws SyntacticException {
+	private MultiplicativeExpr multiplicativeExpr() throws SyntacticException, SemanticException {
 
 		MultiplicativeExpr exp = primaryExpr();
 		
@@ -389,7 +389,7 @@ public class ParserManual {
 		}
 	}
 
-	private PrimaryExpr primaryExpr() throws SyntacticException {
+	private PrimaryExpr primaryExpr() throws SyntacticException, SemanticException {
 		
 		PrimaryExpr exp;
 		
@@ -439,7 +439,7 @@ public class ParserManual {
 		return exp;
 	}
 
-	private CallExpr callExpr(String id) throws SyntacticException {
+	private CallExpr callExpr(String id) throws SyntacticException, SemanticException {
 		
 		ActualParams aps;
 		
@@ -450,7 +450,7 @@ public class ParserManual {
 		return new CallExpr(id, aps);
 	}
 
-	private ActualParams actualParams() throws SyntacticException {
+	private ActualParams actualParams() throws SyntacticException, SemanticException {
 		
 		ActualParams aps = new ActualParams();
 		
@@ -467,7 +467,7 @@ public class ParserManual {
 		return aps;
 	}
 
-	private ProperActualParams properActualParams() throws SyntacticException {
+	private ProperActualParams properActualParams() throws SyntacticException, SemanticException {
 		
 		ArrayList<Expression> ap = new ArrayList<Expression>();
 		

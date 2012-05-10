@@ -8,6 +8,8 @@ public class Expression {
 	public int op;
 	public Expression exp;
 	
+	String returnType;
+	
 	public static final int LO = 1;
 	
 	public Expression() {
@@ -18,6 +20,7 @@ public class Expression {
 		condExp = ce;
 		op = o;
 		exp = e;
+		returnType = "boolean";
 	}
 	
 	public String toString(){
@@ -42,9 +45,14 @@ public class Expression {
 		return ret;
 	}
 	
+	public String getType(){
+		return returnType;
+	}
+	
 	public void check() throws SemanticException {
 		
-		
+		condExp.check();
+		exp.check();
 	
 		
 	}

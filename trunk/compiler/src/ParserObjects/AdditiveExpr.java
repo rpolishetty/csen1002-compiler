@@ -41,4 +41,8 @@ public class AdditiveExpr extends EqualityExpr{
 		
 		return ret;
 	}
+	public void check() throws SemanticException {
+		multExp.check();
+		addExp.check();
+	}
 }

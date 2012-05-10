@@ -1,5 +1,7 @@
 package ParserObjects;
 
+import java.util.ArrayList;
+
 import Parser.Entry;
 import Parser.SymbolTable;
 
@@ -40,6 +42,10 @@ public class MethodDecl {
 		
 		return ret;
 	}
+	
+	public ArrayList<String> getParamatersTypes(){
+		return fps.getParamatersTypes();
+	}
 
 
 	public void check() throws SemanticException {
@@ -55,7 +61,7 @@ public class MethodDecl {
 				throw new SemanticException("Method name \"" + id + "\" cannot be the same as the name of another method");
 		}
 		
-		symTable.add(new Entry(id));
+		symTable.add(new Entry(id),this);
 		symTable.openScope();	
 		
 		fps.check();

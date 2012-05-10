@@ -16,6 +16,7 @@ public class ConditionalAndExpr extends Expression{
 		eqExp = ee;
 		op = o;
 		condExp = ce;
+		returnType = "boolean";
 	}
 	
 	public String toString(){
@@ -36,6 +37,12 @@ public class ConditionalAndExpr extends Expression{
 	
 		
 		return ret;
+	}
+	
+	public void check() throws SemanticException {
+		eqExp.check();
+		condExp.check();
+		
 	}
 
 }

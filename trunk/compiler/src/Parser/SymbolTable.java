@@ -41,8 +41,9 @@ public class SymbolTable {
 	/*
 	 * This method is used to add entries to the table
 	 */
-	public void add(Entry e) {
+	public void add(Entry e ,Object object) {
 		e.level = level;
+		e.object = object;
 		st.put(e.id, e);
 	}
 	
