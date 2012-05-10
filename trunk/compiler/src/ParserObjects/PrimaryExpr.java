@@ -15,8 +15,9 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	public static final int FLOAT = 2;
 	public static final int BOOL = 3;
 	public static final int STRING = 4;
-	public static final int CE = 5;
-	public static final int E = 6;
+	public static final int ID = 5;
+	public static final int CE = 6;
+	public static final int E = 7;
 	
 	public PrimaryExpr() {
 
@@ -25,21 +26,25 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	public PrimaryExpr(int in) {
 		this.in = in;
 		type = INT;
+		returnType = "int";
 	}
 	
 	public PrimaryExpr(float fl) {
 		this.fl = fl;
 		type = FLOAT;
+		returnType = "float";
 	}
 	
 	public PrimaryExpr(boolean bl) {
 		this.bl = bl;
 		type = BOOL;
+		returnType = "boolean";
 	}
 	
 	public PrimaryExpr(String st) {
 		this.st = st;
 		type = STRING;
+		returnType = "String";
 	}
 	
 	public PrimaryExpr(CallExpr ce) {
