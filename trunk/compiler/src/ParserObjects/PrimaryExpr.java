@@ -50,7 +50,7 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	public PrimaryExpr(String idType, String st) {
 		this.st = st;
 		type = ID;
-		returnType = "String";
+		returnType = st;
 	}
 	
 	public PrimaryExpr(CallExpr ce) {
@@ -81,6 +81,10 @@ public class PrimaryExpr extends MultiplicativeExpr{
 			break;
 			
 		case STRING: 
+			ret += "| " + st + "\n";
+			break;
+			
+		case ID: 
 			ret += "| " + st + "\n";
 			break;
 			
