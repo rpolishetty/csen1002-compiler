@@ -11,38 +11,45 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	
 	int type;
 	
+	public static final int INT = 1;
+	public static final int FLOAT = 2;
+	public static final int BOOL = 3;
+	public static final int STRING = 4;
+	public static final int CE = 5;
+	public static final int E = 6;
+	
 	public PrimaryExpr() {
 
 	}
 	
 	public PrimaryExpr(int in) {
 		this.in = in;
-		type = 1;
+		type = INT;
 	}
 	
 	public PrimaryExpr(float fl) {
 		this.fl = fl;
-		type = 2;
+		type = FLOAT;
 	}
 	
 	public PrimaryExpr(boolean bl) {
 		this.bl = bl;
-		type = 3;
+		type = BOOL;
 	}
 	
 	public PrimaryExpr(String st) {
 		this.st = st;
-		type = 4;
+		type = STRING;
 	}
 	
 	public PrimaryExpr(CallExpr ce) {
 		this.cExp = ce;
-		type = 5;
+		type = CE;
 	}
 	
 	public PrimaryExpr(Expression e) {
 		this.exp = e;
-		type = 6;
+		type = E;
 	}
 	
 	public String toString() {
@@ -50,33 +57,48 @@ public class PrimaryExpr extends MultiplicativeExpr{
 		
 		switch(type){
 		
-		case 1: 
+		case INT: 
 			ret += "| " + in + "\n";
 			break;
 			
-		case 2: 
+		case FLOAT: 
 			ret += "| " + fl + "\n";
 			break;
 			
-		case 3: 
+		case BOOL: 
 			ret += "| " + bl + "\n";
 			break;
 			
-		case 4: 
+		case STRING: 
 			ret += "| " + st + "\n";
 			break;
 			
-		case 5: 
+		case CE: 
 			ret += "| " + cExp.toString() + "\n";
 			break;
 			
-		case 6: 
+		case E: 
 			ret += "| " + exp.toString() + "\n";
 			break;
 	
 		}
 		
 		return ret;
+	}
+	
+	public void check() throws SemanticException {
+		
+		switch(type){
+			case CE: 
+				cExp.check();
+				break;
+				
+			case E: 
+				exp.check();
+				break;
+			default:
+				break;
+		}
 	}
 	
 }

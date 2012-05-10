@@ -25,6 +25,8 @@ public class Entry {
 	 */
 	public String id;
 	
+	public Object object;
+	
 	public Entry(String s, int level) {
 		id = s;
 		this.level = level;

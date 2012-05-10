@@ -47,7 +47,7 @@ public class FormalParam {
 		}
 		
 			
-		symTable.add(new Entry(id));
+		symTable.add(new Entry(id), this);
 		
 	}
 	

@@ -1,5 +1,7 @@
 package ParserObjects;
 
+import java.util.ArrayList;
+
 import Parser.SymbolTable;
 
 public class ActualParams {
@@ -22,6 +24,13 @@ public class ActualParams {
 			ret += "| " + pap.toString() + "\n";
 		
 		return ret;
+	}
+	
+	public ArrayList<String> getParamatersTypes(){
+		if(pap != null)
+			return pap.getParamatersTypes();
+		else
+			return new ArrayList<String>();
 	}
 	
 	public void check() throws SemanticException {

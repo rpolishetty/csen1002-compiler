@@ -18,6 +18,33 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		primExp = pe;
 		op = o;
 		multExp = me;
+		switch(primExp.type){
+		
+		case PrimaryExpr.INT: 
+			returnType = "int";
+			break;
+			
+		case PrimaryExpr.FLOAT: 
+			returnType = "float";
+			break;
+			
+		case PrimaryExpr.BOOL: 
+			returnType = "boolean";
+			break;
+			
+		case PrimaryExpr.STRING: 
+			returnType = "String";
+			break;
+			
+		case PrimaryExpr.CE: 
+			returnType = primExp.getType();
+			break;
+			
+		case PrimaryExpr.E: 
+			returnType = primExp.getType();
+			break;
+	
+		}
 	}
 	
 	public String toString(){
@@ -43,6 +70,11 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	
 		
 		return ret;
+	}
+	
+	public void check() throws SemanticException {
+		primExp.check();
+		multExp.check();
 	}
 
 	

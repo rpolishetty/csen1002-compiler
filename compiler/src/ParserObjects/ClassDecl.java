@@ -35,7 +35,7 @@ public class ClassDecl {
 	public void check() throws SemanticException {
 
 		symTable = SymbolTable.getInstance();
-		symTable.add(new Entry(id));
+		symTable.add(new Entry(id),this);
 		symTable.openScope();
 		mds.check();
 		symTable.closeScope();

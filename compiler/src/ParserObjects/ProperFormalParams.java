@@ -31,6 +31,13 @@ public class ProperFormalParams {
 		return ret;
 	}
 	
+	public ArrayList<String> getParamatersTypes(){
+		ArrayList<String> types = new ArrayList<String>();
+		for(FormalParam fp: fpList)
+			types.add(fp.t.type);
+		return types;
+	}
+	
 	public void check() throws SemanticException {
 		
 		symTable = SymbolTable.getInstance();

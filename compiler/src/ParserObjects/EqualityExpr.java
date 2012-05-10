@@ -17,6 +17,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 		addExp = ae;
 		op = o;
 		eqExp = ee;
+		returnType = "boolean";
 	}
 	
 	public String toString(){
@@ -42,4 +43,8 @@ public class EqualityExpr extends ConditionalAndExpr{
 		return ret;
 	}
 
+	public void check() throws SemanticException {
+		addExp.check();
+		eqExp.check();
+	}
 }

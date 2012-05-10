@@ -22,13 +22,17 @@ public class ProperActualParams {
 		 
 		String ret = "ProperActualParams\n";
 		
-		if(eList.isEmpty())
-			return ret;
-		 
 		 for(Expression e: eList)
 				ret += "| " + e.toString() + "\n";
 			
 		return ret;
+	}
+	
+	public ArrayList<String> getParamatersTypes(){
+		ArrayList<String> types = new ArrayList<String>();
+		for(Expression e: eList)
+			types.add(e.getType());
+		return types;
 	}
 	
 	public void check() throws SemanticException {
