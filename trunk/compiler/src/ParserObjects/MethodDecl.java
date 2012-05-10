@@ -45,15 +45,28 @@ public class MethodDecl {
 	public void check() throws SemanticException {
 		
 		symTable = SymbolTable.getInstance();
-		symTable.openScope();
 		
-		if(symTable.contains(id))
-			throw new SemanticException("bbb");
+		if(symTable.contains(id)){
 			
+			if(symTable.get(id).level == 0)
+				throw new SemanticException("Method name \"" + id + "\" cannot be the same as the class name");
+			
+			else 
+				throw new SemanticException("Method name \"" + id + "\" cannot be the same as the name of another method");
+		}
+		
 		symTable.add(new Entry(id));
+		symTable.openScope();	
+		
 		fps.check();
 		b.check();
+		
+		int type = b.sts.stList.get(b.sts.stList.size()-1).type;
 		symTable.closeScope();
+		
+	/*	for(Entry e: symTable.st.values())
+			System.out.println("ID= " + e.id + " , Level=" + e.level);
+		System.out.println("\n");*/
 		
 	}
 	

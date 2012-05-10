@@ -25,8 +25,11 @@ public class Entry {
 	 */
 	public String id;
 	
+	public Entry(String s, int level) {
+		id = s;
+		this.level = level;
+	}
 	public Entry(String s) {
 		id = s;
 	}
-
 }

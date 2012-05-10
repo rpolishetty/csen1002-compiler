@@ -34,8 +34,18 @@ public class FormalParam {
 		
 		symTable = SymbolTable.getInstance();
 		
-		if(symTable.contains(id))
-			throw new SemanticException("bbb");
+		if(symTable.contains(id)){
+	
+			if(symTable.get(id).level == 0)
+				throw new SemanticException("Formal Param name \"" + id + "\" cannot be the same as the class name");
+			
+			else if(symTable.get(id).level == 1)
+				throw new SemanticException("Formal Param name \"" + id + "\" cannot be the same as the method name");
+			
+			else
+				throw new SemanticException("Formal Param \"" + id + "\" is previously defined in the current scope");
+		}
+		
 			
 		symTable.add(new Entry(id));
 		

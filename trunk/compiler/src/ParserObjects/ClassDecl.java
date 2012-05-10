@@ -35,12 +35,8 @@ public class ClassDecl {
 	public void check() throws SemanticException {
 
 		symTable = SymbolTable.getInstance();
-		
-		symTable.openScope();
-		if(symTable.contains(id))
-			throw new SemanticException("bbb");
-			
 		symTable.add(new Entry(id));
+		symTable.openScope();
 		mds.check();
 		symTable.closeScope();
 		
