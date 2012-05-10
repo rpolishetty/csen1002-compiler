@@ -418,10 +418,10 @@ public class ParserManual {
 			match(token.getTokenType());
 			
 			if(token.getTokenType() == Token.LP)
-				exp = new PrimaryExpr(callExpr(tk));
+				exp = callExpr(tk);
 			
 			else
-				exp = new PrimaryExpr(tk);
+				exp = new PrimaryExpr("id",tk);
 				
 				
 			break;

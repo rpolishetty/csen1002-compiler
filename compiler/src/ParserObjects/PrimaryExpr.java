@@ -47,6 +47,12 @@ public class PrimaryExpr extends MultiplicativeExpr{
 		returnType = "String";
 	}
 	
+	public PrimaryExpr(String idType, String st) {
+		this.st = st;
+		type = ID;
+		returnType = "String";
+	}
+	
 	public PrimaryExpr(CallExpr ce) {
 		this.cExp = ce;
 		type = CE;

@@ -131,8 +131,8 @@ primaryExpr ::= NM:nm {:
 				RESULT = new PrimaryExpr(Integer.parseInt(nm));:}
 			| BL:bl {:RESULT =  new PrimaryExpr(Boolean.parseBoolean(bl));:}
 			| ST:st {:RESULT = new PrimaryExpr(st);:}
-			| ID:id {:RESULT = new PrimaryExpr(id);:}
-			| callExpr:ce {:RESULT = new PrimaryExpr(ce);:}
+			| ID:id {:RESULT = new PrimaryExpr("id",id);:}
+			| callExpr:ce {:RESULT = ce;:}
 			| LP expression:e RP {:RESULT = new PrimaryExpr(e);:};
 			
 callExpr ::= ID:id LP actualParams:aps RP {:RESULT = new CallExpr(id,aps);:};
