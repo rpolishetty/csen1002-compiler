@@ -6,7 +6,7 @@ public class ConditionalAndExpr extends Expression{
 	public int op;
 	public ConditionalAndExpr condExp;
 	
-	public static final int LA = 1;
+	public static final int LA = 11;
 	
 	public ConditionalAndExpr() {
 		
@@ -16,7 +16,7 @@ public class ConditionalAndExpr extends Expression{
 		eqExp = ee;
 		op = o;
 		condExp = ce;
-		returnType = "boolean";
+		returnType = Expression.BOOLEAN;
 	}
 	
 	public String toString(){
@@ -41,7 +41,17 @@ public class ConditionalAndExpr extends Expression{
 	
 	public void check() throws SemanticException {
 		eqExp.check();
-		condExp.check();
+		
+		if(eqExp.returnType != Expression.BOOLEAN)
+			throw new SemanticException("Conditional Expression must be of type Boolean");
+		
+		
+		if(condExp !=null) {
+			condExp.check();
+			
+			if(condExp.returnType != Expression.BOOLEAN)
+				throw new SemanticException("Conditional Expression must be of type Boolean");
+		}
 		
 	}
 

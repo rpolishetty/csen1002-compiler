@@ -12,39 +12,47 @@ public class Statement {
 	WhileStmt whileStmt;
 	ReturnStmt returnStmt;
 	public static SymbolTable symTable;
+	
 	int type;
+	
+	public static final int BLOCK = 1;
+	public static final int LOCALVAR = 2;
+	public static final int ASSIGNSTMT = 3;
+	public static final int IFSTMT = 4;
+	public static final int WHILESTMT = 5;
+	public static final int RETUTNSTMT = 6;
 	
 	public Statement() {
 	}
 
 	public Statement(Block b) {
 		this.b = b;
-		type = 1;
+		type = BLOCK;
 	}
 
 	public Statement(LocalVarDecl lcd) {
 		this.lcd = lcd;
-		type = 2;
+		type = LOCALVAR;
 	}
 
 	public Statement(AssignStmt assignSt) {
 		this.assignSt = assignSt;
-		type = 3;
+		type = ASSIGNSTMT;
 	}
 
 	public Statement(IfStmt ifStmt) {
 		this.ifStmt = ifStmt;
-		type = 4;
+		type = IFSTMT;
 	}
 
 	public Statement(WhileStmt whileStmt) {
 		this.whileStmt = whileStmt;
-		type = 5;
+		type = WHILESTMT;
 	}
 
 	public Statement(ReturnStmt returnStmt) {
 		this.returnStmt = returnStmt;
-		type = 6;
+		type = RETUTNSTMT;
 	}
 
 	public String toString() {
@@ -52,27 +60,27 @@ public class Statement {
 		
 		switch(type){
 		
-		case 1: 
+		case BLOCK: 
 			ret += "| " + b.toString() + "\n";
 			break;
 			
-		case 2: 
+		case LOCALVAR: 
 			ret += "| " + lcd.toString() + "\n";
 			break;
 			
-		case 3: 
+		case ASSIGNSTMT: 
 			ret += "| " + assignSt.toString() + "\n";
 			break;
 			
-		case 4: 
+		case IFSTMT: 
 			ret += "| " + ifStmt.toString() + "\n";
 			break;
 			
-		case 5: 
+		case WHILESTMT: 
 			ret += "| " + whileStmt.toString() + "\n";
 			break;
 			
-		case 6: 
+		case RETUTNSTMT: 
 			ret += "| " + returnStmt.toString() + "\n";
 			break;
 		}
@@ -85,27 +93,27 @@ public class Statement {
 		symTable = SymbolTable.getInstance();
 		
 		switch(type){
-			case 1: 
+			case BLOCK: 
 				b.check();
 				break;
 				
-			case 2: 
+			case LOCALVAR: 
 				lcd.check();
 				break;
 				
-			case 3: 
+			case ASSIGNSTMT: 
 				assignSt.check();
 				break;
 				
-			case 4: 
+			case IFSTMT: 
 				ifStmt.check();
 				break;
 				
-			case 5: 
+			case WHILESTMT: 
 				whileStmt.check();
 				break;
 				
-			case 6: 
+			case RETUTNSTMT: 
 				returnStmt.check();
 				break;
 		}

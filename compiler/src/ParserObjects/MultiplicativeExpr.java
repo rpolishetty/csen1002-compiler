@@ -6,9 +6,9 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	public int op;
 	public MultiplicativeExpr multExp;
 	
-	public static final int TO = 1;
-	public static final int DO = 2;
-	public static final int MD = 3;
+	public static final int TO = 16;
+	public static final int DO = 17;
+	public static final int MD = 19;
 	
 	public MultiplicativeExpr() {
 		
@@ -20,27 +20,27 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		multExp = me;
 		switch(primExp.type){
 		
-		case PrimaryExpr.INT: 
-			returnType = "int";
+		case INT: 
+			returnType = Expression.INT;
 			break;
 			
-		case PrimaryExpr.FLOAT: 
-			returnType = "float";
+		case FLOAT: 
+			returnType = Expression.FLOAT;
 			break;
 			
-		case PrimaryExpr.BOOL: 
-			returnType = "boolean";
+		case BOOLEAN: 
+			returnType = Expression.BOOLEAN;
 			break;
 			
-		case PrimaryExpr.STRING: 
-			returnType = "String";
+		case STRING: 
+			returnType = Expression.STRING;
 			break;
 			
-		case PrimaryExpr.CE: 
+		case CE: 
 			returnType = primExp.getType();
 			break;
 			
-		case PrimaryExpr.E: 
+		case E: 
 			returnType = primExp.getType();
 			break;
 	
@@ -74,7 +74,21 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	
 	public void check() throws SemanticException {
 		primExp.check();
-		multExp.check();
+		
+		if((primExp.returnType != Expression.INT) && (primExp.returnType != Expression.FLOAT))
+			throw new SemanticException("Multiplicative expression must be of type int or float");
+				
+		if(multExp !=null) {
+			multExp.check();
+			
+			if(primExp.returnType != multExp.returnType)
+				throw new SemanticException("Both sides of multiplicative expression must be of the same type");
+			
+			else if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
+				throw new SemanticException("Multiplicative expression must be of type int or float");
+			
+			
+		}
 	}
 
 	

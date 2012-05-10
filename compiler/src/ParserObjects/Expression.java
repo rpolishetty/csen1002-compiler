@@ -1,16 +1,23 @@
 package ParserObjects;
 
-import Parser.SymbolTable;
-
 public class Expression {
 
 	public ConditionalAndExpr condExp;
 	public int op;
 	public Expression exp;
 	
-	String returnType;
+	int returnType;
+	String idName;
+		
+	public static final int INT = 1;
+	public static final int FLOAT = 2;
+	public static final int BOOLEAN = 3;
+	public static final int STRING = 4;
+	public static final int ID = 5;
+	public static final int CE = 6;
+	public static final int E = 7;
 	
-	public static final int LO = 1;
+	public static final int LO = 10;
 	
 	public Expression() {
 		
@@ -20,7 +27,7 @@ public class Expression {
 		condExp = ce;
 		op = o;
 		exp = e;
-		returnType = "boolean";
+		returnType = BOOLEAN;
 	}
 	
 	public String toString(){
@@ -45,14 +52,25 @@ public class Expression {
 		return ret;
 	}
 	
-	public String getType(){
+	public int getType(){
 		return returnType;
 	}
 	
 	public void check() throws SemanticException {
 		
 		condExp.check();
-		exp.check();
+		
+		System.out.println(condExp.returnType);
+
+		if(condExp.returnType != Expression.BOOLEAN)
+			throw new SemanticException("Expression must be of type Boolean");
+		
+		if(exp !=null) {
+			exp.check();
+
+			if(exp.returnType != Expression.BOOLEAN)
+				throw new SemanticException("Expression must be of type Boolean");
+		}
 	
 		
 	}

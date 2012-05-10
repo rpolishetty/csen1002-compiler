@@ -31,8 +31,8 @@ public class ProperFormalParams {
 		return ret;
 	}
 	
-	public ArrayList<String> getParamatersTypes(){
-		ArrayList<String> types = new ArrayList<String>();
+	public ArrayList<Integer> getParamatersTypes(){
+		ArrayList<Integer> types = new ArrayList<Integer>();
 		for(FormalParam fp: fpList)
 			types.add(fp.t.type);
 		return types;

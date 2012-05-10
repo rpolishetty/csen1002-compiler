@@ -94,13 +94,13 @@ public class ParserManual {
 			return new Type(Type.INT);
 		
 		else if(token.getLexeme().equals("float"))
-			return new Type(Type.FL);
+			return new Type(Type.FLOAT);
 			
 		else if(token.getLexeme().equals("boolean"))
-			return new Type(Type.BL);
+			return new Type(Type.BOOL);
 		
 		else if(token.getLexeme().equals("String"))
-			return new Type(Type.ST);
+			return new Type(Type.STRING);
 		
 		else
 			return null;
@@ -143,7 +143,16 @@ public class ParserManual {
 		String id = token.getLexeme();
 		match(Token.ID);
 		
-		return new FormalParam(new Type(t) , id);
+		int t2;
+		if(t.equals("int"))
+			t2 = 1;
+		else if(t.equals("float"))
+			t2 = 2;
+		else if(t.equals("boolean"))
+			t2 = 3;
+		else
+			t2 = 4;
+		return new FormalParam(new Type(t2) , id);
 	}
 	
 
@@ -223,7 +232,17 @@ public class ParserManual {
 		match(Token.ID);
 		match(Token.SM);
 		
-		return new LocalVarDecl(new Type(t), id);
+		int t2;
+		if(t.equals("int"))
+			t2 = 1;
+		else if(t.equals("float"))
+			t2 = 2;
+		else if(t.equals("boolean"))
+			t2 = 3;
+		else
+			t2 = 4;
+		
+		return new LocalVarDecl(new Type(t2), id);
 	}
 
 	private AssignStmt assignStmt() throws SyntacticException, SemanticException {

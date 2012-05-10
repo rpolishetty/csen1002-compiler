@@ -30,6 +30,10 @@ public class WhileStmt {
 		symTable = SymbolTable.getInstance();
 		
 		exp.check();
+		
+		if(exp.returnType != Expression.BOOLEAN)
+			throw new SemanticException("Expression in while statement must be of type Boolean");
+		
 		stmt.check();
 	}
 	
