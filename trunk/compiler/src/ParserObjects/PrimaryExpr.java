@@ -53,11 +53,13 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	public PrimaryExpr(CallExpr ce) {
 		this.cExp = ce;
 		type = CE;
+		returnType = ce.getType();
 	}
 	
 	public PrimaryExpr(Expression e) {
 		this.exp = e;
 		type = E;
+		returnType = e.getType();
 	}
 	
 	public String toString() {
