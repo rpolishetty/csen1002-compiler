@@ -28,6 +28,7 @@ public class IfStmt {
 		String ret = "IfStmt\n";
 		
 		ret += "| " + exp.toString() + "\n";
+		ret += "| ThenStmt\n";
 		ret += "| " + ifStmt.toString() + "\n";
 		
 		if(elseStmt != null){

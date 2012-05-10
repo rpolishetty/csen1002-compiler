@@ -9,10 +9,10 @@ import java.util.Hashtable;
  */
 public class SymbolTable {
 	// The Hash Table used to build the Symbol Table
-	private Hashtable<String, Entry> st;
+	public Hashtable<String, Entry> st;
 	
 	// The level of the scope of the current instance
-	private int level;
+	public int level;
 	
 	// The current instance of the class
 	private static SymbolTable inst;
@@ -42,6 +42,7 @@ public class SymbolTable {
 	 * This method is used to add entries to the table
 	 */
 	public void add(Entry e) {
+		e.level = level;
 		st.put(e.id, e);
 	}
 	
@@ -51,6 +52,8 @@ public class SymbolTable {
 	public Entry get(String k) {
 		return st.get(k);
 	}
+	
+
 	
 	/*
 	 * This method checks if a certain identifier
@@ -77,9 +80,15 @@ public class SymbolTable {
 		
 		Collection<Entry> ce = st.values();
 		
-		for(Entry e: ce)
-			if(e.level == level)
+		for(int i = 0 ; i < ce.size() ; i++){
+			Entry e = (Entry) ce.toArray()[i];
+			
+			if(e.level == level){
 				st.remove(e.id);
+				i--;
+			}
+				
+		}
 		
 		level--;
 	}

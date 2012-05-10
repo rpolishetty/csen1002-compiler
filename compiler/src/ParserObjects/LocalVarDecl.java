@@ -35,7 +35,16 @@ public class LocalVarDecl {
 		symTable = SymbolTable.getInstance();
 		
 		if(symTable.contains(id))
-			throw new SemanticException("bbb");
+			
+			if(symTable.get(id).level == 0)
+				throw new SemanticException("Local Variable name \"" + id + "\" cannot be the same as the class name");
+			
+			else if(symTable.get(id).level == 1)
+				throw new SemanticException("Local Variable name \"" + id + "\" cannot be the same as the method name");
+			
+			else
+				throw new SemanticException("Local Variable \"" + id + "\" is previously defined in the current scope");
+		
 			
 		symTable.add(new Entry(id));
 		
