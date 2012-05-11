@@ -6,21 +6,21 @@ import Parser.SymbolTable;
 public class IfStmt {
 
 	Expression exp;
-	Statement ifStmt;
+	Statement thenStmt;
 	Statement elseStmt;
 	public static SymbolTable symTable;
 	
 	public IfStmt() {
 
 	}
-	public IfStmt(Expression exp, Statement ifStmt) {
+	public IfStmt(Expression exp, Statement thenStmt) {
 		this.exp = exp;
-		this.ifStmt = ifStmt;
+		this.thenStmt = thenStmt;
 	}
 	
-	public IfStmt(Expression exp, Statement ifStmt, Statement elseStmt) {
+	public IfStmt(Expression exp, Statement thenStmt, Statement elseStmt) {
 		this.exp = exp;
-		this.ifStmt = ifStmt;
+		this.thenStmt = thenStmt;
 		this.elseStmt = elseStmt;
 	}
 
@@ -29,7 +29,7 @@ public class IfStmt {
 		
 		ret += "| " + exp.toString() + "\n";
 		ret += "| ThenStmt\n";
-		ret += "| " + ifStmt.toString() + "\n";
+		ret += "| " + thenStmt.toString() + "\n";
 		
 		if(elseStmt != null){
 			ret += "| ElseStmt\n";
@@ -48,7 +48,7 @@ public class IfStmt {
 		if(exp.returnType != Expression.BOOLEAN)
 			throw new SemanticException("Expression in if statement must be of type Boolean");
 		
-		ifStmt.check();
+		thenStmt.check();
 		
 		if(elseStmt != null){
 			elseStmt.check();

@@ -59,8 +59,6 @@ public class Expression {
 	public void check() throws SemanticException {
 		
 		condExp.check();
-		
-		System.out.println(condExp.returnType);
 
 		if(condExp.returnType != Expression.BOOLEAN)
 			throw new SemanticException("Expression must be of type Boolean");

@@ -119,6 +119,37 @@ public class Statement {
 		}
 		
 	}
+
+	public boolean hasReturnStmt(int type1, String id) throws SemanticException {
+		
+		if(type == RETUTNSTMT){
+			
+			if(returnStmt.exp.returnType != type1)
+				throw new SemanticException("Return expression of method \"" + id + "\" " +
+						"should be of same type as method return type");
+			
+			return true;
+		}
+		
+		else if(type == IFSTMT){
+			
+			boolean flag1 = ifStmt.thenStmt.hasReturnStmt(type1, id);
+			
+			boolean flag2 = false;
+			
+			if(ifStmt.elseStmt != null)
+				flag2 = ifStmt.elseStmt.hasReturnStmt(type1, id);
+			
+			return flag1 && flag2;
+					
+		}
+		
+		else if(type == BLOCK)
+			return b.hasReturnStmt(type1, id);
+			
+			
+		return false;
+	}
 	
 	
 	

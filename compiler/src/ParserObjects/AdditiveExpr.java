@@ -43,6 +43,7 @@ public class AdditiveExpr extends EqualityExpr{
 		return ret;
 	}
 	public void check() throws SemanticException {
+		
 		multExp.check();
 		
 		if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
@@ -51,10 +52,7 @@ public class AdditiveExpr extends EqualityExpr{
 		if(addExp !=null) {
 			addExp.check();
 			
-			if(multExp.returnType != addExp.returnType)
-				throw new SemanticException("Both sides of additive expression must be of the same type");
-			
-			else if((addExp.returnType != Expression.INT) && (addExp.returnType != Expression.FLOAT))
+			if((addExp.returnType != Expression.INT) && (addExp.returnType != Expression.FLOAT))
 				throw new SemanticException("Additive expression must be of type int or float");
 			
 			

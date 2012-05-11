@@ -81,10 +81,7 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		if(multExp !=null) {
 			multExp.check();
 			
-			if(primExp.returnType != multExp.returnType)
-				throw new SemanticException("Both sides of multiplicative expression must be of the same type");
-			
-			else if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
+			if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
 				throw new SemanticException("Multiplicative expression must be of type int or float");
 			
 			
