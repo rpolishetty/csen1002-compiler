@@ -33,6 +33,21 @@ public class MethodDecls {
 	public void check() throws SemanticException {
 		symTable = SymbolTable.getInstance();
 		
+		for(MethodDecl md: mdList){
+			symTable = SymbolTable.getInstance();
+			
+			if(symTable.contains(md.id)){
+				
+				if(symTable.get(md.id).level == 0)
+					throw new SemanticException("Method name '" + md.id + "' cannot be the same as the class name");
+				
+				else 
+					throw new SemanticException("Method name '" + md.id + "' cannot be the same as the name of another method");
+			}
+			
+			symTable.add(new Entry(md.id),md);
+		}
+		
 		for(MethodDecl md: mdList)
 			md.check();
 		

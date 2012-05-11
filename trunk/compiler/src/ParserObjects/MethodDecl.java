@@ -52,16 +52,6 @@ public class MethodDecl {
 		
 		symTable = SymbolTable.getInstance();
 		
-		if(symTable.contains(id)){
-			
-			if(symTable.get(id).level == 0)
-				throw new SemanticException("Method name '" + id + "' cannot be the same as the class name");
-			
-			else 
-				throw new SemanticException("Method name '" + id + "' cannot be the same as the name of another method");
-		}
-		
-		symTable.add(new Entry(id),this);
 		symTable.openScope();	
 		
 		fps.check();
