@@ -20,9 +20,8 @@ public class CallExpr extends PrimaryExpr {
 
 
 	public String toString() {
-		String ret = "CallExpr\n";
+		String ret = "CallExpr " + id + "\n";
 		
-		ret += "| " + "ID\n| " + id + "\n";
 		ret += "| " + aps.toString() + "\n";
 		
 		return ret;

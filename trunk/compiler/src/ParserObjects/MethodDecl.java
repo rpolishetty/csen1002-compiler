@@ -55,10 +55,10 @@ public class MethodDecl {
 		if(symTable.contains(id)){
 			
 			if(symTable.get(id).level == 0)
-				throw new SemanticException("Method name \"" + id + "\" cannot be the same as the class name");
+				throw new SemanticException("Method name '" + id + "' cannot be the same as the class name");
 			
 			else 
-				throw new SemanticException("Method name \"" + id + "\" cannot be the same as the name of another method");
+				throw new SemanticException("Method name '" + id + "' cannot be the same as the name of another method");
 		}
 		
 		symTable.add(new Entry(id),this);
@@ -68,14 +68,10 @@ public class MethodDecl {
 		b.check();
 				
 		if(!hasReturnStmt(t.type, id))
-			throw new SemanticException("Method \"" + id + "\" should have a reachable return statement");
+			throw new SemanticException("Method '" + id + "' should have a reachable return statement");
 		
 		
 		symTable.closeScope();
-		
-	/*	for(Entry e: symTable.st.values())
-			System.out.println("ID= " + e.id + " , Level=" + e.level);
-		System.out.println("\n");*/
 		
 	}
 	
