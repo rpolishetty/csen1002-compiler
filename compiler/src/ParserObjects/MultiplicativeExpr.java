@@ -18,33 +18,17 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		primExp = pe;
 		op = o;
 		multExp = me;
-		switch(primExp.type){
-		
-		case INT: 
-			returnType = Expression.INT;
-			break;
-			
-		case FLOAT: 
-			returnType = Expression.FLOAT;
-			break;
-			
-		case BOOLEAN: 
-			returnType = Expression.BOOLEAN;
-			break;
-			
-		case STRING: 
-			returnType = Expression.STRING;
-			break;
-			
-		case CE: 
-			returnType = primExp.getType();
-			break;
-			
-		case E: 
-			returnType = primExp.getType();
-			break;
-	
-		}
+//		returnType = INT;
+//		switch(primExp.type){
+//			case INT: 
+//				returnType = Expression.INT;
+//				break;
+//				
+//			case FLOAT: 
+//				returnType = Expression.FLOAT;
+//				break;
+//		}
+//		returnType = INT;
 	}
 	
 	public String toString(){
@@ -74,7 +58,7 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	
 	public void check() throws SemanticException {
 		primExp.check();
-		
+		returnType = primExp.getType();
 		if((primExp.returnType != Expression.INT) && (primExp.returnType != Expression.FLOAT))
 			throw new SemanticException("Multiplicative expression must be of type int or float");
 				

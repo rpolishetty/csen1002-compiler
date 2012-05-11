@@ -17,7 +17,7 @@ public class AdditiveExpr extends EqualityExpr{
 		multExp = me;
 		op = o;
 		addExp = ae;
-		returnType = me.returnType;
+		//returnType = INT;
 	}
 	
 	public String toString(){
@@ -45,7 +45,7 @@ public class AdditiveExpr extends EqualityExpr{
 	public void check() throws SemanticException {
 		
 		multExp.check();
-		
+		returnType = multExp.getType();
 		if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
 			throw new SemanticException("Additive expression must be of type int or float");
 				
