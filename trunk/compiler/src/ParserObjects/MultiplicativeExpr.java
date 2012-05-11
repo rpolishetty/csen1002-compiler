@@ -18,17 +18,6 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		primExp = pe;
 		op = o;
 		multExp = me;
-//		returnType = INT;
-//		switch(primExp.type){
-//			case INT: 
-//				returnType = Expression.INT;
-//				break;
-//				
-//			case FLOAT: 
-//				returnType = Expression.FLOAT;
-//				break;
-//		}
-//		returnType = INT;
 	}
 	
 	public String toString(){

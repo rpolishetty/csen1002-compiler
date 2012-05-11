@@ -17,7 +17,6 @@ public class AdditiveExpr extends EqualityExpr{
 		multExp = me;
 		op = o;
 		addExp = ae;
-		//returnType = INT;
 	}
 	
 	public String toString(){

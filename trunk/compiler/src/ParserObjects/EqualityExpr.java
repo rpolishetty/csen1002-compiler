@@ -49,7 +49,6 @@ public class EqualityExpr extends ConditionalAndExpr{
 		
 		if(eqExp !=null) {
 			eqExp.check();
-			System.out.println(addExp.returnType + " " + eqExp.returnType);
 			if(addExp.returnType != eqExp.returnType)
 				throw new SemanticException("Both sides of equality expression must be of the same type");
 		}
