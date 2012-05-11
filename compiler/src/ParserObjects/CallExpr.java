@@ -1,5 +1,7 @@
 package ParserObjects;
 
+import java.util.ArrayList;
+
 import Parser.Entry;
 import Parser.SymbolTable;
 
@@ -21,8 +23,8 @@ public class CallExpr extends PrimaryExpr {
 
 	public String toString() {
 		String ret = "CallExpr " + id + "\n";
-		
-		ret += "| " + aps.toString() + "\n";
+		if(aps != null)
+			ret += "| " + aps.toString() + "\n";
 		
 		return ret;
 	}
@@ -30,19 +32,21 @@ public class CallExpr extends PrimaryExpr {
 	public void check() throws SemanticException {
 		
 		symTable = SymbolTable.getInstance();
-		
+		ArrayList<Integer> parametersList = new ArrayList<Integer>();
 		if(!symTable.contains(id))
 			throw new SemanticException("Method \"" + id + "\" is not declared in the class");
 		
-		aps.check();
-		
+		if(aps != null){
+			aps.check();
+			parametersList = aps.getParamatersTypes();
+		}
 		Entry e = symTable.get(id);
 		
 		MethodDecl md = (MethodDecl) e.object;
 		
 		returnType = md.t.type;
 		
-		if(md.getParamatersTypes().size() != aps.getParamatersTypes().size()){
+		if(md.getParamatersTypes().size() != parametersList.size()){
 			throw new SemanticException("Method \"" + id + "\" with the same parameter types is not declared in the current scope");
 		}
 		
