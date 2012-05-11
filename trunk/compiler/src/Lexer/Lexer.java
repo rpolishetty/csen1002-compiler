@@ -1,5 +1,4 @@
 package Lexer;
-
 import Parser.sym;
 import java_cup.runtime.Symbol;
 
@@ -60,9 +59,9 @@ public class Lexer implements java_cup.runtime.Scanner {
 	private final int ONELINECOMMENTS = 1;
 	private final int yy_state_dtrans[] = {
 		0,
-		50,
-		53,
-		57
+		52,
+		55,
+		59
 	};
 	private void yybegin (int state) {
 		yy_lexical_state = state;
@@ -256,25 +255,25 @@ public class Lexer implements java_cup.runtime.Scanner {
 		/* 38 */ YY_NO_ANCHOR,
 		/* 39 */ YY_NO_ANCHOR,
 		/* 40 */ YY_NO_ANCHOR,
-		/* 41 */ YY_NOT_ACCEPT,
+		/* 41 */ YY_NO_ANCHOR,
 		/* 42 */ YY_NO_ANCHOR,
-		/* 43 */ YY_NO_ANCHOR,
+		/* 43 */ YY_NOT_ACCEPT,
 		/* 44 */ YY_NO_ANCHOR,
 		/* 45 */ YY_NO_ANCHOR,
-		/* 46 */ YY_NOT_ACCEPT,
+		/* 46 */ YY_NO_ANCHOR,
 		/* 47 */ YY_NO_ANCHOR,
-		/* 48 */ YY_NO_ANCHOR,
+		/* 48 */ YY_NOT_ACCEPT,
 		/* 49 */ YY_NO_ANCHOR,
-		/* 50 */ YY_NOT_ACCEPT,
+		/* 50 */ YY_NO_ANCHOR,
 		/* 51 */ YY_NO_ANCHOR,
-		/* 52 */ YY_NO_ANCHOR,
-		/* 53 */ YY_NOT_ACCEPT,
+		/* 52 */ YY_NOT_ACCEPT,
+		/* 53 */ YY_NO_ANCHOR,
 		/* 54 */ YY_NO_ANCHOR,
 		/* 55 */ YY_NOT_ACCEPT,
 		/* 56 */ YY_NO_ANCHOR,
 		/* 57 */ YY_NOT_ACCEPT,
 		/* 58 */ YY_NO_ANCHOR,
-		/* 59 */ YY_NO_ANCHOR,
+		/* 59 */ YY_NOT_ACCEPT,
 		/* 60 */ YY_NO_ANCHOR,
 		/* 61 */ YY_NO_ANCHOR,
 		/* 62 */ YY_NO_ANCHOR,
@@ -305,38 +304,48 @@ public class Lexer implements java_cup.runtime.Scanner {
 		/* 87 */ YY_NO_ANCHOR,
 		/* 88 */ YY_NO_ANCHOR,
 		/* 89 */ YY_NO_ANCHOR,
-		/* 90 */ YY_NO_ANCHOR
+		/* 90 */ YY_NO_ANCHOR,
+		/* 91 */ YY_NO_ANCHOR,
+		/* 92 */ YY_NO_ANCHOR,
+		/* 93 */ YY_NO_ANCHOR,
+		/* 94 */ YY_NO_ANCHOR,
+		/* 95 */ YY_NO_ANCHOR,
+		/* 96 */ YY_NO_ANCHOR,
+		/* 97 */ YY_NO_ANCHOR,
+		/* 98 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
 "5:8,4:2,24,5,4,40,5:18,4,37,1,5:2,36,39,6,27,28,34,32,26,33,5,35,3:10,5,25," +
 "5,31,5:3,2:18,18,2:7,5,6,5:2,2,5,9,17,7,2,11,13,20,23,12,2:2,8,2,14,16,2:2," +
 "19,10,15,21,2,22,2:3,29,38,30,5:2,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,91,
-"0,1,2,3,4,5,1:7,6,1:3,7,1:2,3,1:6,8,3:9,1:4,8,9,10,11,12:2,2,13,14,15,16,17" +
-",18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42" +
-",43,44,45,46,47,48,49,50,51,52,53,54,55")[0];
+	private int yy_rmap[] = unpackFromString(1,99,
+"0,1,2,3,4,5,1:7,6,1:3,7,1:2,3,1:6,8,3:11,1:4,8,9,10,11,12:2,2,13,14,15,16,1" +
+"7,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,4" +
+"2,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61")[0];
 
-	private int yy_nxt[][] = unpackFromString(56,41,
-"1,2,3,4,5,6:2,79,3:2,86,71,43,80,3:3,90,87,88,3:2,81,3,5,7,8,9,10,11,12,13," +
-"14,15,16,17,18,44,49,52,5,-1:42,19,2,42,2,-1,2:18,-1,2:8,-1:2,2:5,-1:3,3:2," +
-"-1:3,3:17,-1:18,41:2,4,41:20,-1,41:15,-1:5,5,-1:19,5,-1:15,5,-1:31,21,-1:43" +
-",22,23,-1:8,27,-1:38,45,47,42,47,46,47:18,-1,47:8,46:2,47:5,-1:3,3:2,-1:3,3" +
-":6,20,48,3:9,-1:48,24,-1:12,47,-1:39,3:2,-1:3,3:8,28,3:8,-1:55,25,-1:2,1,37" +
-":23,38,37:16,-1:2,3:2,-1:3,3:4,29,3:12,-1:56,26,-1,1,39:33,55,-1,39:5,-1:2," +
-"3:2,-1:3,3:3,30,3:13,-1:52,40,-1:7,3:2,-1:3,3:8,31,3:8,-1:17,1,-1:42,3:2,-1" +
-":3,3:4,32,3:12,-1:19,3:2,-1:3,33,3:16,-1:19,3:2,-1:3,3:13,34,3:3,-1:19,3:2," +
-"-1:3,3:7,35,3:9,-1:19,3:2,-1:3,3:7,36,3:9,-1:19,3:2,-1:3,3:3,51,3:13,-1:19," +
-"3:2,-1:3,3:3,54,3:13,-1:19,3:2,-1:3,3:2,56,3:14,-1:19,3:2,-1:3,3,58,3:15,-1" +
-":19,3:2,-1:3,3:5,59,3:11,-1:19,3:2,-1:3,3:7,60,3:9,-1:19,3:2,-1:3,3:12,61,3" +
-":4,-1:19,3:2,-1:3,3:2,62,3:14,-1:19,3:2,-1:3,3,63,3:15,-1:19,3:2,-1:3,3:2,6" +
-"4,3:14,-1:19,3:2,-1:3,3:9,65,3:7,-1:19,3:2,-1:3,3:5,66,3:11,-1:19,3:2,-1:3," +
-"3:8,67,3:8,-1:19,3:2,-1:3,3:5,68,3:11,-1:19,3:2,-1:3,3:14,69,3:2,-1:19,3:2," +
-"-1:3,3:4,70,3:12,-1:19,3:2,-1:3,3,72,3:15,-1:19,3:2,-1:3,3,73,3:15,-1:19,3:" +
-"2,-1:3,3:16,74,-1:19,3:2,-1:3,3:2,75,3:14,-1:19,3:2,-1:3,3:12,76,3:4,-1:19," +
-"3:2,-1:3,3:8,77,3:8,-1:19,3:2,-1:3,3,78,3:15,-1:19,3:2,-1:3,3:8,82,3:8,-1:1" +
-"9,3:2,-1:3,3:8,83,3:8,-1:19,3:2,-1:3,3:4,84,3:12,-1:19,3:2,-1:3,3:9,85,3:7," +
-"-1:19,3:2,-1:3,3:9,89,3:7,-1:17");
+	private int yy_nxt[][] = unpackFromString(62,41,
+"1,2,3,4,5,6:2,87,3:2,94,77,45,88,3,78,3,98,95,96,3:2,89,3,5,7,8,9,10,11,12," +
+"13,14,15,16,17,18,46,51,54,5,-1:42,19,2,44,2,-1,2:18,-1,2:8,-1:2,2:5,-1:3,3" +
+":2,-1:3,3:17,-1:18,43:2,4,43:20,-1,43:15,-1:5,5,-1:19,5,-1:15,5,-1:31,21,-1" +
+":43,22,23,-1:8,27,-1:38,47,49,44,49,48,49:18,-1,49:8,48:2,49:5,-1:3,3:2,-1:" +
+"3,3:6,20,50,3:9,-1:48,24,-1:12,49,-1:39,3:2,-1:3,3:8,28,3:8,-1:55,25,-1:2,1" +
+",39:23,40,39:16,-1:2,3:2,-1:3,3:4,29,3:12,-1:56,26,-1,1,41:33,57,-1,41:5,-1" +
+":2,3:2,-1:3,3:4,30,3:12,-1:52,42,-1:7,3:2,-1:3,3:3,31,3:13,-1:17,1,-1:42,3:" +
+"2,-1:3,3:8,32,3:8,-1:19,3:2,-1:3,3:4,33,3:12,-1:19,3:2,-1:3,3:4,34,3:12,-1:" +
+"19,3:2,-1:3,35,3:16,-1:19,3:2,-1:3,3:13,36,3:3,-1:19,3:2,-1:3,3:7,37,3:9,-1" +
+":19,3:2,-1:3,3:7,38,3:9,-1:19,3:2,-1:3,3:3,53,3:13,-1:19,3:2,-1:3,3:14,56,3" +
+":2,-1:19,3:2,-1:3,3:3,58,3:13,-1:19,3:2,-1:3,3:2,60,3:14,-1:19,3:2,-1:3,3:3" +
+",61,3:13,-1:19,3:2,-1:3,3,62,3:15,-1:19,3:2,-1:3,3:5,63,3:11,-1:19,3:2,-1:3" +
+",3:7,64,3:9,-1:19,3:2,-1:3,3:12,65,3:4,-1:19,3:2,-1:3,3:2,66,3:14,-1:19,3:2" +
+",-1:3,3,67,3:15,-1:19,3:2,-1:3,3:12,68,3:4,-1:19,3:2,-1:3,3:2,69,3:14,-1:19" +
+",3:2,-1:3,3:9,70,3:7,-1:19,3:2,-1:3,3,71,3:15,-1:19,3:2,-1:3,3:5,72,3:11,-1" +
+":19,3:2,-1:3,3:8,73,3:8,-1:19,3:2,-1:3,3:5,74,3:11,-1:19,3:2,-1:3,3:14,75,3" +
+":2,-1:19,3:2,-1:3,3:4,76,3:12,-1:19,3:2,-1:3,3,79,3:15,-1:19,3:2,-1:3,3,80," +
+"81,3:14,-1:19,3:2,-1:3,3:16,82,-1:19,3:2,-1:3,3:2,83,3:14,-1:19,3:2,-1:3,3:" +
+"12,84,3:4,-1:19,3:2,-1:3,3:8,85,3:8,-1:19,3:2,-1:3,3,86,3:15,-1:19,3:2,-1:3" +
+",3:8,90,3:8,-1:19,3:2,-1:3,3:8,91,3:8,-1:19,3:2,-1:3,3:4,92,3:12,-1:19,3:2," +
+"-1:3,3:9,93,3:7,-1:19,3:2,-1:3,3:9,97,3:7,-1:17");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -574,54 +583,55 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 30:
 						{ 
-  return new Symbol(sym.CLASS, yytext());
+  return new Symbol(sym.BL, yytext());
 }
 					case -31:
 						break;
 					case 31:
 						{ 
-  return new Symbol(sym.FLOAT, yytext());
+  return new Symbol(sym.CLASS, yytext());
 }
 					case -32:
 						break;
 					case 32:
 						{ 
-  return new Symbol(sym.WHILE, yytext());
+  return new Symbol(sym.FLOAT, yytext());
 }
 					case -33:
 						break;
 					case 33:
 						{ 
-  return new Symbol(sym.STATIC, yytext());
+  return new Symbol(sym.BL, yytext());
 }
 					case -34:
 						break;
 					case 34:
 						{ 
-  return new Symbol(sym.STRING, yytext());
+  return new Symbol(sym.WHILE, yytext());
 }
 					case -35:
 						break;
 					case 35:
 						{ 
-  return new Symbol(sym.RETURN, yytext());
+  return new Symbol(sym.STATIC, yytext());
 }
 					case -36:
 						break;
 					case 36:
 						{ 
-  return new Symbol(sym.BOOLEAN, yytext());
+  return new Symbol(sym.STRING, yytext());
 }
 					case -37:
 						break;
 					case 37:
-						{
+						{ 
+  return new Symbol(sym.RETURN, yytext());
 }
 					case -38:
 						break;
 					case 38:
-						{
-  yybegin(YYINITIAL);
+						{ 
+  return new Symbol(sym.BOOLEAN, yytext());
 }
 					case -39:
 						break;
@@ -636,79 +646,78 @@ public class Lexer implements java_cup.runtime.Scanner {
 }
 					case -41:
 						break;
-					case 42:
-						{ 
-  return new Symbol(sym.error, yytext());
+					case 41:
+						{
 }
 					case -42:
 						break;
-					case 43:
-						{ 
-  return new Symbol(sym.ID, yytext());
+					case 42:
+						{
+  yybegin(YYINITIAL);
 }
 					case -43:
 						break;
 					case 44:
-						{
+						{ 
   return new Symbol(sym.error, yytext());
 }
 					case -44:
 						break;
 					case 45:
 						{ 
-  return new Symbol(sym.ST, yytext());
+  return new Symbol(sym.ID, yytext());
 }
 					case -45:
 						break;
-					case 47:
-						{ 
+					case 46:
+						{
   return new Symbol(sym.error, yytext());
 }
 					case -46:
 						break;
-					case 48:
+					case 47:
 						{ 
-  return new Symbol(sym.ID, yytext());
+  return new Symbol(sym.ST, yytext());
 }
 					case -47:
 						break;
 					case 49:
-						{
+						{ 
   return new Symbol(sym.error, yytext());
 }
 					case -48:
 						break;
-					case 51:
+					case 50:
 						{ 
   return new Symbol(sym.ID, yytext());
 }
 					case -49:
 						break;
-					case 52:
+					case 51:
 						{
   return new Symbol(sym.error, yytext());
 }
 					case -50:
 						break;
-					case 54:
+					case 53:
 						{ 
   return new Symbol(sym.ID, yytext());
 }
 					case -51:
 						break;
-					case 56:
-						{ 
-  return new Symbol(sym.ID, yytext());
+					case 54:
+						{
+  return new Symbol(sym.error, yytext());
 }
 					case -52:
 						break;
-					case 58:
+					case 56:
 						{ 
   return new Symbol(sym.ID, yytext());
 }
 					case -53:
 						break;
-					case 59:
+					case 58:
 						{ 
   return new Symbol(sym.ID, yytext());
 }
@@ -899,6 +908,54 @@ public class Lexer implements java_cup.runtime.Scanner {
   return new Symbol(sym.ID, yytext());
 }
 					case -85:
+						break;
+					case 91:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -86:
+						break;
+					case 92:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -87:
+						break;
+					case 93:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -88:
+						break;
+					case 94:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -89:
+						break;
+					case 95:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -90:
+						break;
+					case 96:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -91:
+						break;
+					case 97:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -92:
+						break;
+					case 98:
+						{ 
+  return new Symbol(sym.ID, yytext());
+}
+					case -93:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
