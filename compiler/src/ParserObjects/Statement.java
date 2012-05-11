@@ -125,7 +125,7 @@ public class Statement {
 		if(type == RETUTNSTMT){
 			
 			if(returnStmt.exp.returnType != type1)
-				throw new SemanticException("Return expression of method \"" + id + "\" " +
+				throw new SemanticException("Return expression of method '" + id + "' " +
 						"should be of same type as method return type");
 			
 			return true;
@@ -146,6 +146,9 @@ public class Statement {
 		
 		else if(type == BLOCK)
 			return b.hasReturnStmt(type1, id);
+		
+		else if(type == WHILESTMT)
+			return whileStmt.stmt.hasReturnStmt(type1, id);
 			
 			
 		return false;

@@ -46,7 +46,7 @@ public class AssignStmt {
 		}
 		
 		if(t != exp.returnType)
-			throw new SemanticException("Expression assgined to local variable \"" + id + "\" " +
+			throw new SemanticException("Expression assgined to local variable '" + id + "' " +
 					"should be the same as the variable type");
 			
 	}
