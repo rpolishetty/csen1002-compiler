@@ -48,7 +48,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 		if(eqExp !=null) {
 			eqExp.check();
 			if(addExp.returnType != eqExp.returnType)
-				throw new SemanticException("All elements of equality expression must be of same type");
+				throw new SemanticException("All elements of an equality expression must be of same type");
 		}
 	}
 }

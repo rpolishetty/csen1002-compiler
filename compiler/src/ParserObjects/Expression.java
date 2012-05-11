@@ -69,13 +69,13 @@ public class Expression {
 		condExp.check();
 
 		if(condExp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("Expression must be of type Boolean");
+			throw new SemanticException("All elements of an expression must be of type Boolean");
 		
 		if(exp !=null) {
 			exp.check();
 
 			if(exp.returnType != Expression.BOOLEAN)
-				throw new SemanticException("Expression must be of type Boolean");
+				throw new SemanticException("All elements of an expression must be of type Boolean");
 		}
 	
 		

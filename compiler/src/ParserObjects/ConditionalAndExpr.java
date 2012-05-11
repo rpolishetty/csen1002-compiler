@@ -41,14 +41,14 @@ public class ConditionalAndExpr extends Expression{
 		eqExp.check();
 		
 		if(eqExp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("Conditional Expression must be of type Boolean");
+			throw new SemanticException("All elements of a conditional expression must be of type Boolean");
 		
 		
 		if(condExp !=null) {
 			condExp.check();
 			
 			if(condExp.returnType != Expression.BOOLEAN)
-				throw new SemanticException("Conditional Expression must be of type Boolean");
+				throw new SemanticException("All elements of a conditional expression must be of type Boolean");
 		}
 		
 	}
