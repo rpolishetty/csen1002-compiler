@@ -6,8 +6,6 @@ public class EqualityExpr extends ConditionalAndExpr{
 	public int op;
 	public EqualityExpr eqExp;
 	
-	public static final int EQ = 12;
-	public static final int NE = 13;
 	
 	public EqualityExpr() {
 		

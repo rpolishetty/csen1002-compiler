@@ -18,6 +18,14 @@ public class Expression {
 	public static final int E = 7;
 	
 	public static final int LO = 10;
+	public static final int LA = 11;
+	public static final int EQ = 12;
+	public static final int NE = 13;
+	public static final int PO = 14;
+	public static final int MO = 15;
+	public static final int TO = 16;
+	public static final int DO = 17;
+	public static final int MD = 19;
 	
 	public Expression() {
 		

@@ -6,8 +6,6 @@ public class ConditionalAndExpr extends Expression{
 	public int op;
 	public ConditionalAndExpr condExp;
 	
-	public static final int LA = 11;
-	
 	public ConditionalAndExpr() {
 		
 	}

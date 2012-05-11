@@ -331,7 +331,7 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.LA:
 				match(token.getTokenType());
-				exp = new ConditionalAndExpr(equalityExpr(), ConditionalAndExpr.LA, exp);
+				exp = new ConditionalAndExpr(equalityExpr(), Expression.LA, exp);
 				break;
 				
 			default:
@@ -348,11 +348,11 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.EQ:
 				match(token.getTokenType());
-				exp = new EqualityExpr(additiveExpr(), EqualityExpr.EQ, exp);
+				exp = new EqualityExpr(additiveExpr(), Expression.EQ, exp);
 				break;
 			case Token.NE:
 				match(token.getTokenType());
-				exp = new EqualityExpr(additiveExpr(), EqualityExpr.NE, exp);
+				exp = new EqualityExpr(additiveExpr(), Expression.NE, exp);
 				break;
 				
 			default:
@@ -370,11 +370,11 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.PO:
 				match(token.getTokenType());
-				exp = new AdditiveExpr(multiplicativeExpr(), AdditiveExpr.PO, exp);
+				exp = new AdditiveExpr(multiplicativeExpr(), Expression.PO, exp);
 				break;
 			case Token.MO:
 				match(token.getTokenType());
-				exp = new AdditiveExpr(multiplicativeExpr(), AdditiveExpr.MO, exp);
+				exp = new AdditiveExpr(multiplicativeExpr(), Expression.MO, exp);
 				break;
 				
 			default:
@@ -391,15 +391,15 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.TO:
 				match(token.getTokenType());
-				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.TO, exp);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.TO, exp);
 				break;
 			case Token.DO:
 				match(token.getTokenType());
-				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.DO, exp);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.DO, exp);
 				break;
 			case Token.MD:
 				match(token.getTokenType());
-				exp = new MultiplicativeExpr(primaryExpr(), MultiplicativeExpr.MD, exp);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.MD, exp);
 				break;
 				
 			default:
