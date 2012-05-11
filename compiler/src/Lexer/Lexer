@@ -1,3 +1,4 @@
+package Lexer;
 import Parser.sym;
 import java_cup.runtime.Symbol;
 %%
@@ -100,6 +101,12 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 }
 <YYINITIAL> "while" { 
   return new Symbol(sym.WHILE, yytext());
+}
+<YYINITIAL> "true" { 
+  return new Symbol(sym.BL, yytext());
+}
+<YYINITIAL> "false" { 
+  return new Symbol(sym.BL, yytext());
 }
 <YYINITIAL> {IDENT} { 
   return new Symbol(sym.ID, yytext());
