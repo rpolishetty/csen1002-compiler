@@ -4,8 +4,8 @@ import ParserObjects.*;
 import java_cup.runtime.*;
 	
 /* Terminals (tokens returned by the scanner). */
-terminal			SM, PO, MO, TO, DO, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
-terminal String		ID, INT, FLOAT, BOOLEAN, STRING, ST;
+terminal			SM, PO, MO, INT, FLOAT, BOOLEAN, STRING, TO, DO, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
+terminal String		ID, ST;
 terminal String		NM;
 terminal String		BL;
 /* Non-terminals */
@@ -74,8 +74,8 @@ properFormalParams ::= properFormalParams:pfp FA formalParam:fp
 			  
 formalParam ::= type:t ID:id {:RESULT = new FormalParam(t,id);:};
 
-type ::= INT:int1{:RESULT = new Type(int1);:} | FLOAT:float1{:RESULT = new Type(float1);:} | BOOLEAN:boolean1{:RESULT = new Type(boolean1);:}
-	 | STRING:string1 {:RESULT = new Type(string1);:};
+type ::= INT {:RESULT = new Type(1);:} | FLOAT {:RESULT = new Type(2);:} | BOOLEAN {:RESULT = new Type(3);:}
+	 | STRING {:RESULT = new Type(4);:};
 			  
 block ::= LB statements:sts RB  {:RESULT = new Block(sts);:};
 
