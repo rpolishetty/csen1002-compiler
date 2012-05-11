@@ -15,7 +15,7 @@ public class AP {
 
 	public static void main(String[] args) {
 		
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
 		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
 
 		if (args.length > 1) {
@@ -29,21 +29,11 @@ public class AP {
 	
 			parser parser = new parser(new Lexer(dis));
 			Symbol res = parser.parse();
-//			boolean value = ((Boolean)res.value).booleanValue();
-//			
-//			if(value)
-//				System.out.println("File: " + inFile + " parsed successfully.");
-//			else
-//				System.out.println("Error in parsing file: " + inFile);
-			
-//			ArrayList<Expr> expressions = (ArrayList<Expr>)res.value;
-//			
-//			for(Expr e: expressions) {
-//				System.out.print(e);
-//				System.out.println("Value = " + e.evaluate() + "\n");
-//			}
+
 	
 			ClassDecl c = (ClassDecl) res.value;
+			
+			c.check();
 			//for(Expr e: expressions) {
 				System.out.print(c);
 				

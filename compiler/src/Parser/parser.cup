@@ -105,23 +105,23 @@ whileStmt ::= WHILE LP expression:e RP statement:s {:RESULT = new WhileStmt(e,s)
 
 returnStmt ::= RETURN expression:e SM {:RESULT = new ReturnStmt(e);:}; 
 
-expression ::= expression:e LO conditionalAndExpr:cae {:RESULT = new Expression(cae,1,e);:}
+expression ::= expression:e LO conditionalAndExpr:cae {:RESULT = new Expression(cae,Expression.LA,e);:}
 			| conditionalAndExpr:cae  {:RESULT = cae;:};
 			
-conditionalAndExpr ::= conditionalAndExpr:cae LA equalityExpr:ee {:RESULT = new ConditionalAndExpr(ee , 1, cae);:}
+conditionalAndExpr ::= conditionalAndExpr:cae LA equalityExpr:ee {:RESULT = new ConditionalAndExpr(ee ,Expression.LO, cae);:}
 			| equalityExpr:ee {:RESULT = ee;:};
 			
-equalityExpr ::= equalityExpr:ee EQ additiveExpr:ae {:RESULT = new EqualityExpr(ae, 1, ee);:}  
-			| equalityExpr:ee NE additiveExpr:ae {:RESULT = new EqualityExpr(ae, 2, ee);:}
+equalityExpr ::= equalityExpr:ee EQ additiveExpr:ae {:RESULT = new EqualityExpr(ae,Expression.EQ, ee);:}  
+			| equalityExpr:ee NE additiveExpr:ae {:RESULT = new EqualityExpr(ae,Expression.NE, ee);:}
 			| additiveExpr:ae {:RESULT = ae;:};
 			
-additiveExpr ::= additiveExpr:ae PO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, 1, ae);:}  
-			| additiveExpr:ae MO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, 2, ae);:}
+additiveExpr ::= additiveExpr:ae PO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, Expression.PO, ae);:}  
+			| additiveExpr:ae MO multiplicativeExpr:me {:RESULT = new AdditiveExpr(me, Expression.MO, ae);:}
 			| multiplicativeExpr:me {:RESULT = me;:};
 			
-multiplicativeExpr ::= multiplicativeExpr:me TO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 1, me);:}  
-			| multiplicativeExpr:me DO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 2, me);:}
-			| multiplicativeExpr:me MD primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, 3, me);:}
+multiplicativeExpr ::= multiplicativeExpr:me TO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, Expression.TO, me);:}  
+			| multiplicativeExpr:me DO primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, Expression.DO, me);:}
+			| multiplicativeExpr:me MD primaryExpr:pe {:RESULT = new MultiplicativeExpr(pe, Expression.MD, me);:}
 			| primaryExpr:pe {:RESULT = pe;:};
 
 primaryExpr ::= NM:nm {:

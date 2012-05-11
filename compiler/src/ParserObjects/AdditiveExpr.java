@@ -6,8 +6,6 @@ public class AdditiveExpr extends EqualityExpr{
 	public int op;
 	public AdditiveExpr addExp;
 	
-	public static final int PO = 14;
-	public static final int MO = 15;
 	
 	public AdditiveExpr() {
 		

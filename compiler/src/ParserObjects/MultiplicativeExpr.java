@@ -6,9 +6,6 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	public int op;
 	public MultiplicativeExpr multExp;
 	
-	public static final int TO = 16;
-	public static final int DO = 17;
-	public static final int MD = 19;
 	
 	public MultiplicativeExpr() {
 		
