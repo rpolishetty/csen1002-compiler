@@ -34,7 +34,8 @@ public class MethodDecl {
 		String s = "";
 		s += t.toString();
 		s += "ID\n| " + id + "\n";
-		s += fps.toString();
+		if(fps != null)
+			s += fps.toString();
 		s += b.toString();
 		
 		for(String st: s.split("\n"))
@@ -44,7 +45,10 @@ public class MethodDecl {
 	}
 	
 	public ArrayList<Integer> getParamatersTypes(){
-		return fps.getParamatersTypes();
+		if(fps != null)
+			return fps.getParamatersTypes();
+		else
+			return  new ArrayList<Integer>();
 	}
 
 
@@ -53,8 +57,8 @@ public class MethodDecl {
 		symTable = SymbolTable.getInstance();
 		
 		symTable.openScope();	
-		
-		fps.check();
+		if(fps != null)
+			fps.check();
 		b.check();
 				
 		if(!hasReturnStmt(t.type, id))
