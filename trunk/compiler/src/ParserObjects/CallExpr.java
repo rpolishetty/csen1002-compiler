@@ -42,6 +42,10 @@ public class CallExpr extends PrimaryExpr {
 		
 		returnType = md.t.type;
 		
+		if(md.getParamatersTypes().size() != aps.getParamatersTypes().size()){
+			throw new SemanticException("Method \"" + id + "\" with the same parameter types is not declared in the current scope");
+		}
+		
 		for(int i = 0; i < md.getParamatersTypes().size(); i++){
 			int t = aps.getParamatersTypes().get(i);
 			
