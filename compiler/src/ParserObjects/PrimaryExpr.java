@@ -107,7 +107,7 @@ public class PrimaryExpr extends MultiplicativeExpr{
 			case ID: 
 
 				if(!symTable.contains(idName))
-					throw new SemanticException("Local Variable \"" + idName + "\" is not declared in the current scope");
+					throw new SemanticException("Local Variable '" + idName + "' is not declared in the current scope");
 				
 				Entry e = symTable.get(st);
 				int t;
