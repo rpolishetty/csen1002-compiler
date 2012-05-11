@@ -84,7 +84,6 @@ public class MultiplicativeExpr extends AdditiveExpr{
 			if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
 				throw new SemanticException("Multiplicative expression must be of type int or float");
 			
-			
 		}
 	}
 
