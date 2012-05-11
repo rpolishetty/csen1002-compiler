@@ -33,6 +33,11 @@ public class Block {
 		symTable.closeScope();
 		
 	}
+
+	public boolean hasReturnStmt(int type, String id) throws SemanticException {
+
+		return sts.hasReturnStmt(type, id);
+	}
 	
 	
 	

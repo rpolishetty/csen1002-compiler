@@ -66,41 +66,9 @@ public class MethodDecl {
 		
 		fps.check();
 		b.check();
-		
-		boolean flag = false;
-		
-		for(Statement s: b.sts.stList){
-			if(s.type == Statement.RETUTNSTMT){ 
-				flag = true;
 				
-				if(this.t.type != s.returnStmt.exp.returnType)
-					throw new SemanticException("Return type of method \"" + id + "\" " +
-							"should be the same as the method type");
-				
-				break;
-			}
-			
-			else if(s.type == Statement.IFSTMT && s.ifStmt.elseStmt != null && s.ifStmt.elseStmt.type != Statement.IFSTMT){ 
-
-					if(s.b != null){
-						for(Statement st: s.b.sts.stList){
-							if(st.type == Statement.RETUTNSTMT){ 
-								
-								flag = true;
-								
-								if(this.t.type != s.returnStmt.exp.returnType)
-									throw new SemanticException("Return type of method \"" + id + "\" " +
-											"should be the same as the method type");
-								break;
-							}
-			
-						}
-					}
-				}	
-			}
-		
-		//if(!flag)
-			//throw new SemanticException("Method \"" + id + "\" should have a reachable return statement");
+		if(!hasReturnStmt(t.type, id))
+			throw new SemanticException("Method \"" + id + "\" should have a reachable return statement");
 		
 		
 		symTable.closeScope();
@@ -109,6 +77,11 @@ public class MethodDecl {
 			System.out.println("ID= " + e.id + " , Level=" + e.level);
 		System.out.println("\n");*/
 		
+	}
+	
+	public boolean hasReturnStmt(int type, String md) throws SemanticException{
+		
+		return b.hasReturnStmt(type, md);
 	}
 	
 	

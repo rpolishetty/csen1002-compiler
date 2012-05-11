@@ -39,6 +39,17 @@ public class Statements {
 			st.check();
 		
 	}
+
+	public boolean hasReturnStmt(int type, String id) throws SemanticException {
+		
+		for(Statement st: stList){
+			
+			if(st.hasReturnStmt(type, id))
+				return true;
+		}
+		
+		return false;
+	}
 	
 	
 	
