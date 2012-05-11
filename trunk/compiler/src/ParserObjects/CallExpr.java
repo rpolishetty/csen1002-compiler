@@ -34,7 +34,7 @@ public class CallExpr extends PrimaryExpr {
 		symTable = SymbolTable.getInstance();
 		ArrayList<Integer> parametersList = new ArrayList<Integer>();
 		if(!symTable.contains(id))
-			throw new SemanticException("Method \"" + id + "\" is not declared in the class");
+			throw new SemanticException("Method '" + id + "' is not declared in the class");
 		
 		if(aps != null){
 			aps.check();
@@ -47,14 +47,14 @@ public class CallExpr extends PrimaryExpr {
 		returnType = md.t.type;
 		
 		if(md.getParamatersTypes().size() != parametersList.size()){
-			throw new SemanticException("Method \"" + id + "\" with the same parameter types is not declared in the current scope");
+			throw new SemanticException("Method '" + id + "' with the same number of parameters is not declared in the current scope");
 		}
 		
 		for(int i = 0; i < md.getParamatersTypes().size(); i++){
 			int t = aps.getParamatersTypes().get(i);
 			
 			if(md.getParamatersTypes().get(i) != t){
-				throw new SemanticException("Method \"" + id + "\" with the same parameter types is not declared in the current scope");
+				throw new SemanticException("Method '" + id + "' with the same parameter types is not declared in the current scope");
 			}
 				
 		}
