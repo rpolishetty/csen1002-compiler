@@ -30,7 +30,7 @@ public class AssignStmt {
 		symTable = SymbolTable.getInstance();
 		
 		if(!symTable.contains(id))
-			throw new SemanticException("Local Variable \"" + id + "\" is not declared in the current scope");
+			throw new SemanticException("Local Variable '" + id + "' is not declared in the current scope");
 		
 		exp.check();
 		
