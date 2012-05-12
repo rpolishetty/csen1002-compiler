@@ -74,8 +74,8 @@ properFormalParams ::= properFormalParams:pfp FA formalParam:fp
 			  
 formalParam ::= type:t ID:id {:RESULT = new FormalParam(t,id);:};
 
-type ::= INT {:RESULT = new Type(1);:} | FLOAT {:RESULT = new Type(2);:} | BOOLEAN {:RESULT = new Type(3);:}
-	 | STRING {:RESULT = new Type(4);:};
+type ::= INT {:RESULT = new Type(Type.INT);:} | FLOAT {:RESULT = new Type(Type.FLOAT);:} 
+		| BOOLEAN {:RESULT = new Type(Type.BOOL);:} | STRING {:RESULT = new Type(Type.STRING);:};
 			  
 block ::= LB statements:sts RB  {:RESULT = new Block(sts);:};
 
