@@ -11,6 +11,8 @@ public class LexerManual {
 
 	private BufferedReader reader; // Reader
 	private char curr; // The current character being scanned
+	int lineNumber = 1;
+	int charNumber = 0;
 
 	private static final char EOF = (char) (-1);
 
@@ -29,7 +31,16 @@ public class LexerManual {
 
 	private char read() {
 		try {
-			return (char) (reader.read());
+			char newChar = (char) (reader.read());
+			if (curr == '\n'){
+				charNumber = 0;
+				lineNumber++;
+			}else if (curr == '\r'){
+				charNumber = 0;
+				lineNumber = 1;
+			}
+			charNumber++;
+			return newChar;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return EOF;
@@ -67,7 +78,7 @@ public class LexerManual {
 			if (curr == EOF) {
 				try {
 					reader.close();
-					return new Token(Token.EOF, "");
+					return new Token(Token.EOF, "", lineNumber, charNumber);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -78,51 +89,50 @@ public class LexerManual {
 			// Controller
 			case 1:
 				switch (curr) {
-				case ' ': 
 				case '\n':
+				case '\r':
+				case ' ':
 				case '\b':
 				case '\t':
-				case '\r':
 				case '\f':
 					curr = read();
 					continue;
-					
 				case ';':
 					curr = read();
-					return new Token(Token.SM, ";");
+					return new Token(Token.SM, ";", lineNumber, charNumber);
 
 				case ',':
 					curr = read();
-					return new Token(Token.FA, ",");
+					return new Token(Token.FA, ",", lineNumber, charNumber);
 
 				case '(':
 					curr = read();
-					return new Token(Token.LP, "(");
+					return new Token(Token.LP, "(", lineNumber, charNumber);
 
 				case ')':
 					curr = read();
-					return new Token(Token.RP, ")");
+					return new Token(Token.RP, ")", lineNumber, charNumber);
 
 				case '{':
 
 					curr = read();
-					return new Token(Token.LB, "{");
+					return new Token(Token.LB, "{", lineNumber, charNumber);
 
 				case '}':
 					curr = read();
-					return new Token(Token.RB, "}");
+					return new Token(Token.RB, "}", lineNumber, charNumber);
 
 				case '+':
 					curr = read();
-					return new Token(Token.PO, "+");
+					return new Token(Token.PO, "+", lineNumber, charNumber);
 
 				case '-':
 					curr = read();
-					return new Token(Token.MO, "-");
+					return new Token(Token.MO, "-", lineNumber, charNumber);
 
 				case '*':
 					curr = read();
-					return new Token(Token.TO, "*");
+					return new Token(Token.TO, "*", lineNumber, charNumber);
 
 				case '/':
 					curr = read();
@@ -136,27 +146,27 @@ public class LexerManual {
 						curr = read();
 						continue;
 					}
-					else return new Token(Token.DO, "/");
+					else return new Token(Token.DO, "/", lineNumber, charNumber);
 				
 				case '%':
 					curr = read();
-					return new Token(Token.MD, "%");
+					return new Token(Token.MD, "%", lineNumber, charNumber);
 
 				case '=':
 					if (symbolBuffer == '=') {
 						curr = read();
-						return new Token(Token.EQ, "==");
+						return new Token(Token.EQ, "==", lineNumber, charNumber);
 					} 
 					else if (symbolBuffer == '!') {
 						curr = read();
-						return new Token(Token.NE, "!=");
+						return new Token(Token.NE, "!=", lineNumber, charNumber);
 					} 
 					else {
 						symbolBuffer = curr;
 						curr = read();
 						if (curr != '=') {
 							symbolBuffer = 0;
-							return new Token(Token.AO, "=");
+							return new Token(Token.AO, "=", lineNumber, charNumber);
 						} else
 							continue;
 					}
@@ -170,7 +180,7 @@ public class LexerManual {
 					curr = read();
 					if (curr == '|') {
 						curr = read();
-						return new Token(Token.LO, "||");
+						return new Token(Token.LO, "||", lineNumber, charNumber);
 					}
 					continue;
 				
@@ -178,7 +188,7 @@ public class LexerManual {
 					curr = read();
 					if (curr == '&') {
 						curr = read();
-						return new Token(Token.LA, "&&");
+						return new Token(Token.LA, "&&", lineNumber, charNumber);
 					}
 					continue;
 				
@@ -215,7 +225,7 @@ public class LexerManual {
 				else if (curr != '\u0000') {
 					invalidBuffer = curr;
 					curr = read();
-					return new Token(Token.InvalidInput, "" + invalidBuffer);
+					return new Token(Token.InvalidInput, "" + invalidBuffer, lineNumber, charNumber);
 				}
 				
 				else{
@@ -241,12 +251,12 @@ public class LexerManual {
 							|| charBuffer.equals("return")
 							|| charBuffer.equals("static")
 							|| charBuffer.equals("while"))
-						return new Token(Token.KW, "" + charBuffer);
+						return new Token(Token.KW, "" + charBuffer, lineNumber, charNumber);
 					
 					else if(charBuffer.equals("true") || charBuffer.equals("false"))
-						return new Token(Token.BL, "" + charBuffer);
+						return new Token(Token.BL, "" + charBuffer, lineNumber, charNumber);
 					
-					else  return new Token(Token.ID, "" + charBuffer);
+					else  return new Token(Token.ID, "" + charBuffer, lineNumber, charNumber);
 					
 				}
 				continue;
@@ -255,7 +265,7 @@ public class LexerManual {
 				
 				if (curr == '\n' || curr == '\r' ) {
 					curr = read();
-					return new Token(Token.InvalidString, "" + stringBuffer);
+					return new Token(Token.InvalidString, "" + stringBuffer, lineNumber, charNumber);
 
 				}
 				
@@ -266,7 +276,7 @@ public class LexerManual {
 				else {
 					stringBuffer += curr;
 					curr = read();
-					return new Token(Token.ST, "" + stringBuffer);
+					return new Token(Token.ST, "" + stringBuffer, lineNumber, charNumber);
 				}
 				continue;
 				
@@ -292,11 +302,11 @@ public class LexerManual {
 				}
 				
 				else if(decimalPoint < 10){
-					return new Token(Token.NM, "" + intBuffer);
+					return new Token(Token.NM, "" + intBuffer, lineNumber, charNumber);
 				}
 				
 				else {
-					return new Token(Token.NM, "" + numBuffer);
+					return new Token(Token.NM, "" + numBuffer, lineNumber, charNumber);
 				}
 				continue;
 				
