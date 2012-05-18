@@ -32,10 +32,14 @@ public class Token {
 	
 	private int token; // Type of of token
 	private String lexeme; // The lexeme
+	public int lineNumber;
+	public int charNumber;
 
-	public Token(int token, String lexeme) {
+	public Token(int token, String lexeme, int lineNumber, int charNumber) {
 		this.token = token;
 		this.lexeme = lexeme;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber - lexeme.length() ;
 	}
 
 	// Returns the type of the token
@@ -47,9 +51,38 @@ public class Token {
 	public String getLexeme() {
 		return lexeme;
 	}
+	
+	public static String returnLexeme(int token) {
+		switch (token) {
+			case 0: return "EOF";
+			case 1: return ";";
+			case 2: return "+";
+			case 3: return "-";
+			case 4: return "*";
+			case 5: return "/";
+			case 6: return "Number";
+			case 7: return ",";
+			case 8: return "(";
+			case 9: return ")";
+			case 10: return "{";
+			case 11: return "}";
+			case 12: return "%";
+			case 13: return "==";
+			case 14: return "!=";
+			case 15: return "||";
+			case 16: return "&&";
+			case 17: return "Keyword";
+			case 18: return "ID";
+			case 19: return "boolean";
+			case 20: return "string";
+			case 21: return "=";
+			
+		}
+		return null;
+	}
 
 	// Returns a string representation of the token
 	public String toString() {
-		return token + "\t" + lexeme;
+		return token + "\t" + lexeme + "\tline: " + lineNumber + "\tchar: " + charNumber;
 	}
 }
