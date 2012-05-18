@@ -181,17 +181,21 @@ public class LexerManual {
 					if (curr == '|') {
 						curr = read();
 						return new Token(Token.LO, "||", lineNumber, charNumber);
+					}else{
+						warningReport("|", "||", 1);
+						return new Token(Token.LO, "||", lineNumber, charNumber);
 					}
-					continue;
 				
 				case '&':
 					curr = read();
 					if (curr == '&') {
 						curr = read();
 						return new Token(Token.LA, "&&", lineNumber, charNumber);
+					}else{
+						warningReport("&", "&&", 1);
+						return new Token(Token.LA, "&&", lineNumber, charNumber);
 					}
-					continue;
-				
+						
 				case '"': // string = Start
 					stringBuffer = "";
 					stringBuffer += curr;
@@ -225,7 +229,9 @@ public class LexerManual {
 				else if (curr != '\u0000') {
 					invalidBuffer = curr;
 					curr = read();
-					return new Token(Token.InvalidInput, "" + invalidBuffer, lineNumber, charNumber);
+					state = 1;
+					warningReport("" + invalidBuffer, "", 2);
+					continue;
 				}
 				
 				else{
@@ -265,7 +271,8 @@ public class LexerManual {
 				
 				if (curr == '\n' || curr == '\r' ) {
 					curr = read();
-					return new Token(Token.InvalidString, "" + stringBuffer, lineNumber, charNumber);
+					warningReport(stringBuffer, "", 3);
+					return new Token(Token.ST, "" + stringBuffer, lineNumber, charNumber);
 
 				}
 				
@@ -287,6 +294,11 @@ public class LexerManual {
 					numBuffer = intBuffer;
 					decimalPoint = 10;
 					curr = read();
+					
+					if (!isNumeric(curr)){
+						decimalPoint = 0;
+						warningReport(".", "", 2);
+					}
 				}
 				
 				if (isNumeric(curr) && decimalPoint < 10) {
@@ -302,6 +314,7 @@ public class LexerManual {
 				}
 				
 				else if(decimalPoint < 10){
+					
 					return new Token(Token.NM, "" + intBuffer, lineNumber, charNumber);
 				}
 				
@@ -332,4 +345,41 @@ public class LexerManual {
 			
 		}
 	}
+	
+	private void warningReport(String found, String expected, int c){
+		
+		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		try {
+			String error = "";
+			BufferedReader reader = null;
+			reader = new BufferedReader(new FileReader(inFile));
+			String line = "";
+			for(int i = 1; i <= lineNumber; i++)
+				line = reader.readLine().trim();
+			
+			error += "Warning at line " + lineNumber + " char " + charNumber + ":\n";
+			
+			switch(c){
+			
+			case 1: 
+				error += found + " converted to " + expected;
+				break;
+				
+			case 2:
+				error += "Invalid Input: '" + found + "' is ignored";
+				break;
+				
+			case 3:
+				error += "Missing \" in string: " + found + ", is added";
+				break;
+			}
+				
+			error += "\nIn: " + line + "\n";
+			
+			System.out.println(error);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+	}
+
 }
