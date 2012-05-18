@@ -1,5 +1,9 @@
 package Parser;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Lexer.LexerManual;
@@ -41,17 +45,17 @@ public class ParserManual {
 		MethodDecls mds;
 		
 		if(token.getLexeme().equals("class")){
-			match(Token.KW);
+			match(Token.KW, "#class");
 			id = token.getLexeme();
-			match(Token.ID);
-			match(Token.LB);
+			match(Token.ID, "ID");
+			match(Token.LB, "");
 			mds = methodDecls();
-			match(Token.RB);
+			match(Token.RB, "");
 			
 			return new ClassDecl(id,mds);
 		}
-		
-		throw new SyntacticException("Error");
+		errorReport(Token.KW, "#class");
+		return null;
 	}
 	
 	private MethodDecls methodDecls() throws SyntacticException, SemanticException {
@@ -75,14 +79,14 @@ public class ParserManual {
 		FormalParams fps;
 		Block b;
 		
-		match(Token.KW);
+		match(Token.KW, "#static");
 		t = type();
-		match(Token.KW);
+		match(Token.KW, "type");
 		id = token.getLexeme();
-		match(Token.ID);				
-		match(Token.LP);
+		match(Token.ID, "ID");				
+		match(Token.LP, "");
 		fps = formalParams();
-		match(Token.RP);
+		match(Token.RP, "");
 		b = block();
 			
 		return new MethodDecl(t,id,fps,b);
@@ -125,7 +129,7 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.FA:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				fp.add(formalParam());
 				break;
 				
@@ -138,10 +142,10 @@ public class ParserManual {
 	private FormalParam formalParam() throws SyntacticException {
 	
 		String t = token.getLexeme();
-		match(Token.KW);
+		match(Token.KW, "type");
 		
 		String id = token.getLexeme();
-		match(Token.ID);
+		match(Token.ID, "ID");
 		
 		int t2;
 		if(t.equals("int"))
@@ -160,9 +164,9 @@ public class ParserManual {
 	
 		Statements sts;
 		
-		match(Token.LB);
+		match(Token.LB, "");
 		sts = statements();
-		match(Token.RB);
+		match(Token.RB, "");
 		
 		return new Block(sts);
 	}
@@ -192,7 +196,7 @@ public class ParserManual {
 	
 	private Statement statement() throws SyntacticException, SemanticException {
 		
-		Statement stmt;
+		Statement stmt = null;
 		
 		switch (token.getTokenType()) {
 		case Token.LB:
@@ -217,7 +221,7 @@ public class ParserManual {
 				stmt = new Statement(localVarDecl());
 			break;
 		default:
-			throw new SyntacticException("Error");
+			errorReport(-1, "Statement");
 		}
 		
 		return stmt;
@@ -226,11 +230,11 @@ public class ParserManual {
 	private LocalVarDecl localVarDecl() throws SyntacticException {
 	
 		String t = token.getLexeme();
-		match(Token.KW);
+		match(Token.KW, "type");
 		
 		String id = token.getLexeme();
-		match(Token.ID);
-		match(Token.SM);
+		match(Token.ID, "ID");
+		match(Token.SM, "");
 		
 		int t2;
 		if(t.equals("int"))
@@ -250,10 +254,10 @@ public class ParserManual {
 		String id = token.getLexeme();
 		Expression exp;
 		
-		match(Token.ID);
-		match(Token.AO);
+		match(Token.ID, "ID");
+		match(Token.AO, "");
 		exp = expression();
-		match(Token.SM);
+		match(Token.SM, "");
 		
 		return new AssignStmt(id, exp);
 	}
@@ -263,10 +267,10 @@ public class ParserManual {
 		Expression exp;
 		Statement stmt;
 		
-		match(Token.KW);
-		match(Token.LP);
+		match(Token.KW, "#while");
+		match(Token.LP, "");
 		exp = expression();
-		match(Token.RP);
+		match(Token.RP, "");
 		stmt = statement();
 
 		return new WhileStmt(exp, stmt);
@@ -276,9 +280,9 @@ public class ParserManual {
 		
 		Expression exp;
 		
-		match(Token.KW);
+		match(Token.KW, "#return");
 		exp = expression(); 
-		match(Token.SM);
+		match(Token.SM, "");
 		
 		return new ReturnStmt(exp);
 	}
@@ -289,14 +293,14 @@ public class ParserManual {
 		Statement ifStmt;
 		Statement elseStmt;
 		
-		match(Token.KW);
-		match(Token.LP);
+		match(Token.KW, "#if");
+		match(Token.LP, "");
 		exp = expression();
-		match(Token.RP);
+		match(Token.RP, "");
 		ifStmt = statement();
 		
 		if(token.getLexeme().equals("else")){
-			match(Token.KW);
+			match(Token.KW, "#else");
 			elseStmt = statement();
 			
 			return new IfStmt(exp, ifStmt, elseStmt);
@@ -313,7 +317,7 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.LO:
-				match(token.getTokenType());
+				match(token.getTokenType() , "");
 				exp = new Expression(conditionalAndExpr(), Expression.LO, exp);
 				break;
 				
@@ -330,7 +334,7 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.LA:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new ConditionalAndExpr(equalityExpr(), Expression.LA, exp);
 				break;
 				
@@ -347,11 +351,11 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.EQ:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new EqualityExpr(additiveExpr(), Expression.EQ, exp);
 				break;
 			case Token.NE:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new EqualityExpr(additiveExpr(), Expression.NE, exp);
 				break;
 				
@@ -369,11 +373,11 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.PO:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new AdditiveExpr(multiplicativeExpr(), Expression.PO, exp);
 				break;
 			case Token.MO:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new AdditiveExpr(multiplicativeExpr(), Expression.MO, exp);
 				break;
 				
@@ -390,15 +394,15 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.TO:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new MultiplicativeExpr(primaryExpr(), Expression.TO, exp);
 				break;
 			case Token.DO:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new MultiplicativeExpr(primaryExpr(), Expression.DO, exp);
 				break;
 			case Token.MD:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				exp = new MultiplicativeExpr(primaryExpr(), Expression.MD, exp);
 				break;
 				
@@ -410,13 +414,13 @@ public class ParserManual {
 
 	private PrimaryExpr primaryExpr() throws SyntacticException, SemanticException {
 		
-		PrimaryExpr exp;
+		PrimaryExpr exp = null;
 		
 		String tk = token.getLexeme();
 		
 		switch (token.getTokenType()) {
 		case Token.NM:
-			match(token.getTokenType());
+			match(token.getTokenType(), "a number");
 			
 			if(tk.contains("."))
 				exp = new PrimaryExpr(Float.parseFloat(tk));
@@ -425,16 +429,16 @@ public class ParserManual {
 				exp = new PrimaryExpr(Integer.parseInt(tk));
 			break;
 		case Token.BL:
-			match(token.getTokenType());
+			match(token.getTokenType(), "a boolean");
 			exp = new PrimaryExpr(Boolean.parseBoolean(tk));
 			break;
 		case Token.ST:
-			match(token.getTokenType());
+			match(token.getTokenType(), "a string");
 			exp = new PrimaryExpr(tk);
 			break;
 			
 		case Token.ID:
-			match(token.getTokenType());
+			match(token.getTokenType(), "ID");
 			
 			if(token.getTokenType() == Token.LP)
 				exp = callExpr(tk);
@@ -446,13 +450,13 @@ public class ParserManual {
 			break;
 			
 		case Token.LP:
-			match(Token.LP);
+			match(Token.LP, "");
 			exp = new PrimaryExpr(expression());
-			match(Token.RP);
+			match(Token.RP, "");
 			break;
 			
 		default: 
-			throw new SyntacticException("Error");
+			errorReport(Token.KW, "Expression");
 		}
 		
 		return exp;
@@ -462,9 +466,9 @@ public class ParserManual {
 		
 		ActualParams aps;
 		
-		match(Token.LP);
+		match(Token.LP, "");
 		aps = actualParams();
-		match(Token.RP);
+		match(Token.RP, "");
 		
 		return new CallExpr(id, aps);
 	}
@@ -495,7 +499,7 @@ public class ParserManual {
 		while (true) {
 			switch (token.getTokenType()) {	
 			case Token.FA:
-				match(token.getTokenType());
+				match(token.getTokenType(), "");
 				ap.add(expression());
 				break;
 				
@@ -504,13 +508,38 @@ public class ParserManual {
 			}
 		}
 	}
+	
+	private void errorReport(int t, String message) throws SyntacticException {
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		try {
+			String error = "";
+			BufferedReader reader = null;
+			reader = new BufferedReader(new FileReader(inFile));
+			String line = "";
+			for(int i = 1; i <= token.lineNumber; i++)
+				line = reader.readLine().trim();
+			
+			error += "\nSyntax Error at line " + token.lineNumber + " char " + token.charNumber + ":\n";
+			if(message.isEmpty())	
+				error += "Excpected '" + Token.returnLexeme(t) + "' \nFound '" + token.getLexeme() + "'\n";
+			else if(message.startsWith("#"))
+				error += "Excpected '" + message.substring(1)  + "' \nFound '" + token.getLexeme() + "'\n";
+			else
+				error += "Cannot match '" + token.getLexeme() + "' to " + message + "\n";
+			
+			error += "In: " + line;
+			
+			throw new SyntacticException(error);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+	}
 
-	private void match(int t) throws SyntacticException {
+	private void match(int t, String message) throws SyntacticException {
 		if (token.getTokenType() == t) {
 			token = lexer.nextToken();
-			
 		} else {
-			throw new SyntacticException("Error");
+			errorReport(t, message);
 		}
 	}
 }
