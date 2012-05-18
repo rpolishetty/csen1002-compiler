@@ -1,6 +1,9 @@
 package Lexer;
 import Parser.sym;
 import java_cup.runtime.Symbol;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 %%
 %class Lexer
 
@@ -11,6 +14,46 @@ import java_cup.runtime.Symbol;
 %eofval{
 	return new Symbol(sym.EOF, null);
 %eofval}
+
+%{
+
+  	int charNumber = 0;
+  	private void warningReport(String found, String expected, int c){
+		
+		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		try {
+			String error = "";
+			BufferedReader reader = null;
+			reader = new BufferedReader(new FileReader(inFile));
+			String line = "";
+			for(int i = 1; i <= yyline+1; i++)
+				line = reader.readLine().trim();
+			
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber+1) + ":\n";
+			
+			switch(c){
+			
+			case 1: 
+				error += found + " converted to " + expected;
+				break;
+				
+			case 2:
+				error += "Invalid Input: '" + found + "' is ignored";
+				break;
+				
+			case 3:
+				error += "Missing \" in string: " + found + ", is added";
+				break;
+			}
+				
+			error += "\nIn: " + line + "\n";
+			
+			System.out.println(error);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+	}
+%}
 
 %line
 %char
@@ -34,7 +77,9 @@ NUMBERINT=(({DIGIT})+)
 
 NUMBERFLOAT=(({DIGIT})+.({DIGIT})+)
 
-WHITE_SPACE=([\ \n\b\r\t\f])+
+WHITE_SPACE=([\ \b\t\f])+
+
+NEW_LINE= ([\n\r])
 
 STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*\")
 
@@ -45,7 +90,8 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ST, yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-  return new Symbol(sym.error, yytext());
+   warningReport(yytext(), "", 3);
+   return new Symbol(sym.ST, yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
   int number = 0;
@@ -112,6 +158,11 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ID, yytext());
 }
 <YYINITIAL> {WHITE_SPACE} { }
+
+<YYINITIAL> {NEW_LINE} { 
+	charNumber = yychar;
+}
+
 <YYINITIAL> ";" { 
   return new Symbol(sym.SM, ";");
 } 
@@ -154,6 +205,14 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 <YYINITIAL> "!=" { 
   return new Symbol(sym.NE, "!=");
 } 
+<YYINITIAL> "|" { 
+  warningReport("|", "||", 1);
+  return new Symbol(sym.LO, "||"); 
+} 
+<YYINITIAL> "&" { 
+  warningReport("&", "&&", 1);
+  return new Symbol(sym.LA, "&&"); 
+} 
 <YYINITIAL> "||" { 
   return new Symbol(sym.LO, "||"); 
 } 
@@ -177,6 +236,9 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  return new Symbol(sym.error, yytext());
+  warningReport(yytext(), "", 2);
+  
 }
+
+
 
