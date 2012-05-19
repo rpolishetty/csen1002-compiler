@@ -40,7 +40,6 @@ public class Type {
 				ret += "| String\n";
 				break;
 		}
-		ret += "| " + type + "\n";
 		
 		return ret;
 		
