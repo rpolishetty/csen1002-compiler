@@ -20,32 +20,36 @@ public class PrimaryExpr extends MultiplicativeExpr{
 
 	}
 	
-	public PrimaryExpr(int in, int lineNumber) {
+	public PrimaryExpr(int in, int lineNumber, int charNumber) {
 		this.in = in;
 		type = INT;
 		returnType = INT;
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
-	public PrimaryExpr(float fl, int lineNumber) {
+	public PrimaryExpr(float fl, int lineNumber, int charNumber) {
 		this.fl = fl;
 		type = FLOAT;
 		returnType = FLOAT;
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
-	public PrimaryExpr(boolean bl, int lineNumber) {
+	public PrimaryExpr(boolean bl, int lineNumber, int charNumber) {
 		this.bl = bl;
 		type = BOOLEAN;
 		returnType = BOOLEAN;
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
-	public PrimaryExpr(String st, int lineNumber) {
+	public PrimaryExpr(String st, int lineNumber, int charNumber) {
 		this.st = st;
 		type = STRING;
 		returnType = STRING;
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
 	public PrimaryExpr(String idType, String st, int lineNumber, int charNumber) {
@@ -57,18 +61,20 @@ public class PrimaryExpr extends MultiplicativeExpr{
 		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(CallExpr ce, int lineNumber) {
+	public PrimaryExpr(CallExpr ce, int lineNumber, int charNumber) {
 		this.cExp = ce;
 		type = CE;
 		returnType = ce.getType();
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
-	public PrimaryExpr(Expression e, int lineNumber) {
+	public PrimaryExpr(Expression e, int lineNumber, int charNumber) {
 		this.exp = e;
 		type = E;
 		returnType = e.getType();
 		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
 	public String toString() {
