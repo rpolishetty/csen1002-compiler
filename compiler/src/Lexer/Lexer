@@ -1,3 +1,4 @@
+
 package Lexer;
 import Parser.sym;
 import java_cup.runtime.Symbol;
@@ -87,11 +88,11 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 
 %%
 <YYINITIAL> {STRING} { 
-  return new Symbol(sym.ST, yytext());
+  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
    warningReport(yytext(), "", 3);
-   return new Symbol(sym.ST, yytext());
+   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
   int number = 0;
@@ -99,7 +100,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 		number *= 10;
 		number += yy_buffer[k]-'0';
 	}
-  return new Symbol(sym.NM,  "" + number);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + number);
 }
 <YYINITIAL> {NUMBERFLOAT} {
 	float floatNumber = 0;
@@ -116,46 +117,46 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 			floatNumber += yy_buffer[k]-'0';
 		}
 	}
-  return new Symbol(sym.NM,  "" + floatNumber);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + floatNumber);
 }
 <YYINITIAL> "class" { 
-  return new Symbol(sym.CLASS, yytext());
+  return new Symbol(sym.CLASS,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "else" { 
-  return new Symbol(sym.ELSE, yytext());
+  return new Symbol(sym.ELSE,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "if" { 
-  return new Symbol(sym.IF, yytext());
+  return new Symbol(sym.IF,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "int" { 
-  return new Symbol(sym.INT, yytext());
+  return new Symbol(sym.INT,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "float" { 
-  return new Symbol(sym.FLOAT, yytext());
+  return new Symbol(sym.FLOAT,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "boolean" { 
-  return new Symbol(sym.BOOLEAN, yytext());
+  return new Symbol(sym.BOOLEAN,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "String" { 
-  return new Symbol(sym.STRING, yytext());
+  return new Symbol(sym.STRING,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "return" { 
-  return new Symbol(sym.RETURN, yytext());
+  return new Symbol(sym.RETURN,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "static" { 
-  return new Symbol(sym.STATIC, yytext());
+  return new Symbol(sym.STATIC,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "while" { 
-  return new Symbol(sym.WHILE, yytext());
+  return new Symbol(sym.WHILE,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "true" { 
-  return new Symbol(sym.BL, yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> "false" { 
-  return new Symbol(sym.BL, yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> {IDENT} { 
-  return new Symbol(sym.ID, yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
 }
 <YYINITIAL> {WHITE_SPACE} { }
 
@@ -164,60 +165,60 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 }
 
 <YYINITIAL> ";" { 
-  return new Symbol(sym.SM, ";");
+  return new Symbol(sym.SM,(yyline+1), (yychar-charNumber+1), ";");
 } 
 <YYINITIAL> "," { 
-  return new Symbol(sym.FA, ","); 
+  return new Symbol(sym.FA,(yyline+1), (yychar-charNumber+1), ","); 
 } 
 <YYINITIAL> "(" { 
-  return new Symbol(sym.LP, "(");
+  return new Symbol(sym.LP,(yyline+1), (yychar-charNumber+1), "(");
 } 
 <YYINITIAL> ")" { 
-  return new Symbol(sym.RP, ")"); 
+  return new Symbol(sym.RP,(yyline+1), (yychar-charNumber+1), ")"); 
 } 
 <YYINITIAL> "{" { 
-  return new Symbol(sym.LB, "{");
+  return new Symbol(sym.LB,(yyline+1), (yychar-charNumber+1), "{");
 } 
 <YYINITIAL> "}" { 
-  return new Symbol(sym.RB, "}");
+  return new Symbol(sym.RB,(yyline+1), (yychar-charNumber+1), "}");
 } 
 <YYINITIAL> "=" { 
-  return new Symbol(sym.AO, "="); 
+  return new Symbol(sym.AO,(yyline+1), (yychar-charNumber+1), "="); 
 } 
 <YYINITIAL> "+" { 
-  return new Symbol(sym.PO, "+"); 
+  return new Symbol(sym.PO,(yyline+1), (yychar-charNumber+1), "+"); 
 } 
 <YYINITIAL> "-" { 
-  return new Symbol(sym.MO, "-");
+  return new Symbol(sym.MO,(yyline+1), (yychar-charNumber+1), "-");
 } 
 <YYINITIAL> "*" { 
-  return new Symbol(sym.TO, "*");
+  return new Symbol(sym.TO,(yyline+1), (yychar-charNumber+1), "*");
 } 
 <YYINITIAL> "/" { 
-  return new Symbol(sym.DO, "/");
+  return new Symbol(sym.DO,(yyline+1), (yychar-charNumber+1), "/");
 } 
 <YYINITIAL> "%" { 
-  return new Symbol(sym.MD, "%");
+  return new Symbol(sym.MD,(yyline+1), (yychar-charNumber+1), "%");
 } 
 <YYINITIAL> "==" { 
-  return new Symbol(sym.EQ, "==");
+  return new Symbol(sym.EQ,(yyline+1), (yychar-charNumber+1), "==");
 } 
 <YYINITIAL> "!=" { 
-  return new Symbol(sym.NE, "!=");
+  return new Symbol(sym.NE,(yyline+1), (yychar-charNumber+1), "!=");
 } 
 <YYINITIAL> "|" { 
   warningReport("|", "||", 1);
-  return new Symbol(sym.LO, "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
 } 
 <YYINITIAL> "&" { 
   warningReport("&", "&&", 1);
-  return new Symbol(sym.LA, "&&"); 
+  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&"); 
 } 
 <YYINITIAL> "||" { 
-  return new Symbol(sym.LO, "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
 } 
 <YYINITIAL> "&&" { 
-  return new Symbol(sym.LA, "&&");
+  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&");
 }  
 <YYINITIAL> "//" {
   yybegin(ONELINECOMMENTS);
