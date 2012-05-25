@@ -8,14 +8,15 @@ public class ProperActualParams {
 
 	public ArrayList<Expression> eList;
 	public static SymbolTable symTable;
-
+	int lineNumber;
 	public ProperActualParams() {
 	
 	}
 
-	public ProperActualParams(ArrayList<Expression> eList) {
+	public ProperActualParams(ArrayList<Expression> eList, int lineNumber) {
 
 		this.eList = eList;
+		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {

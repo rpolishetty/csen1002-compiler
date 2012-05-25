@@ -46,7 +46,7 @@ precedence left TO, DO, MD;
 /* The grammar */
 
 classDecl ::= CLASS ID:id LB methodDecls:mds RB
-			  {:RESULT = new ClassDecl(id,mds);:}
+			  {:RESULT = new ClassDecl(id,mds,idleft,idright);:}
 			  | error
 			  {:ClassDecl.throwException();:};
 			  
@@ -57,7 +57,7 @@ methodDecls ::= methodDecls:mds methodDecl:md
 			      RESULT = new MethodDecls(mdList);:};
 			  
 methodDecl ::= STATIC type:t ID:id LP formalParams:fps RP block:b
-			  {:RESULT = new MethodDecl(t,id,fps,b);:};
+			  {:RESULT = new MethodDecl(t,id,fps,b,idleft,idright);:};
 			  
 formalParams ::= properFormalParams:pfp 
 				{:RESULT = new FormalParams(pfp);:}
@@ -72,7 +72,7 @@ properFormalParams ::= properFormalParams:pfp FA formalParam:fp
 			      RESULT = new ProperFormalParams(fpList);
 			      :};
 			  
-formalParam ::= type:t ID:id {:RESULT = new FormalParam(t,id);:};
+formalParam ::= type:t ID:id {:RESULT = new FormalParam(t,id,idleft,idright);:};
 
 type ::= INT {:RESULT = new Type(Type.INT);:} | FLOAT {:RESULT = new Type(Type.FLOAT);:} 
 		| BOOLEAN {:RESULT = new Type(Type.BOOL);:} | STRING {:RESULT = new Type(Type.STRING);:};
@@ -93,17 +93,17 @@ statement ::= block:b {:RESULT = new Statement(b);:}
 			| returnStmt:rs {:RESULT = new Statement(rs);:};
 			
 
-localVarDecl ::= type:t ID:id SM {:RESULT = new LocalVarDecl(t,id);:};
+localVarDecl ::= type:t ID:id SM {:RESULT = new LocalVarDecl(t,id,idleft,idright);:};
 
-assignStmt ::= ID:id AO expression:e SM {:RESULT = new AssignStmt(id,e);:};
+assignStmt ::= ID:id AO expression:e SM {:RESULT = new AssignStmt(id,e,idleft,idright);:};
 
-ifStmt ::= IF LP expression:e RP statement:s {:RESULT = new IfStmt(e,s);:} 
-		 | IF LP expression:e RP statement:s ELSE statement:s1 {:RESULT = new IfStmt(e,s,s1);:};
+ifStmt ::= IF LP:lp expression:e RP statement:s {:RESULT = new IfStmt(e,s,lpleft,lpright);:} 
+		 | IF LP:lp expression:e RP statement:s ELSE statement:s1 {:RESULT = new IfStmt(e,s,s1,lpleft,lpright);:};
 			
 
-whileStmt ::= WHILE LP expression:e RP statement:s {:RESULT = new WhileStmt(e,s);:};
+whileStmt ::= WHILE LP:lp expression:e RP statement:s {:RESULT = new WhileStmt(e,s,lpleft,lpright);:};
 
-returnStmt ::= RETURN expression:e SM {:RESULT = new ReturnStmt(e);:}; 
+returnStmt ::= RETURN:r expression:e SM {:RESULT = new ReturnStmt(e,rleft,rright);:}; 
 
 expression ::= expression:e LO conditionalAndExpr:cae {:RESULT = new Expression(cae,Expression.LA,e);:}
 			| conditionalAndExpr:cae  {:RESULT = cae;:};

@@ -6,14 +6,16 @@ import Parser.SymbolTable;
 public class Block {
 
 	Statements sts;
+	int lineNumber;
 	public static SymbolTable symTable;
 	public Block() {
 
 	}
 
-	public Block(Statements sts) {
+	public Block(Statements sts, int lineNumber) {
 		
 		this.sts = sts;
+		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {

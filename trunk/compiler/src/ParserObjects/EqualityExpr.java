@@ -5,17 +5,18 @@ public class EqualityExpr extends ConditionalAndExpr{
 	public AdditiveExpr addExp;
 	public int op;
 	public EqualityExpr eqExp;
-	
+	int lineNumber;
 	
 	public EqualityExpr() {
 		
 	}
 	
-	public EqualityExpr(AdditiveExpr ae, int o, EqualityExpr ee) {
+	public EqualityExpr(AdditiveExpr ae, int o, EqualityExpr ee, int lineNumber) {
 		addExp = ae;
 		op = o;
 		eqExp = ee;
 		returnType = Expression.BOOLEAN;
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){
@@ -48,7 +49,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 		if(eqExp !=null) {
 			eqExp.check();
 			if(addExp.returnType != eqExp.returnType)
-				throw new SemanticException("All elements of an equality expression must be of same type");
+				ClassDecl.returnError("All elements of an equality expression must be of same type", lineNumber);
 		}
 	}
 }

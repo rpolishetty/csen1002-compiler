@@ -5,7 +5,8 @@ public class Expression {
 	public ConditionalAndExpr condExp;
 	public int op;
 	public Expression exp;
-	
+	int lineNumber;
+	int charNumber;
 	int returnType;
 	String idName;
 		
@@ -31,11 +32,13 @@ public class Expression {
 		
 	}
 	
-	public Expression(ConditionalAndExpr ce, int o, Expression e) {
+	public Expression(ConditionalAndExpr ce, int o, Expression e, int lineNumber, int charNumber) {
 		condExp = ce;
 		op = o;
 		exp = e;
 		returnType = BOOLEAN;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
 	public String toString(){
@@ -69,13 +72,13 @@ public class Expression {
 		condExp.check();
 
 		if(condExp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("All elements of an expression must be of type Boolean");
+			ClassDecl.returnError("All elements of an expression must be of type Boolean", condExp.lineNumber);
 		
 		if(exp !=null) {
 			exp.check();
 
 			if(exp.returnType != Expression.BOOLEAN)
-				throw new SemanticException("All elements of an expression must be of type Boolean");
+				ClassDecl.returnError("All elements of an expression must be of type Boolean", exp.lineNumber);
 		}
 	
 		

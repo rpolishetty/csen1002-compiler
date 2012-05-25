@@ -7,13 +7,17 @@ public class AssignStmt {
 
 	String id;
 	Expression exp;
+	int lineNumber;
+	int idCharNumber;
 	public static SymbolTable symTable;
 	public AssignStmt() {
 	}
 	
-	public AssignStmt(String id, Expression exp) {
+	public AssignStmt(String id, Expression exp, int lineNumber, int idCharNumber) {
 		this.id = id;
 		this.exp = exp;
+		this.lineNumber = lineNumber;
+		this.idCharNumber = idCharNumber;
 	}
 
 	public String toString() {
@@ -30,7 +34,7 @@ public class AssignStmt {
 		symTable = SymbolTable.getInstance();
 		
 		if(!symTable.contains(id))
-			throw new SemanticException("Local Variable '" + id + "' is not declared in the current scope");
+			ClassDecl.returnError("Local Variable '" + id + "' is not declared in the current scope", lineNumber, idCharNumber );
 		
 		exp.check();
 		
@@ -46,8 +50,8 @@ public class AssignStmt {
 		}
 		
 		if(t != exp.returnType)
-			throw new SemanticException("Expression assgined to local variable '" + id + "' " +
-					"should be the same as the variable type");
+			ClassDecl.returnError("Expression assgined to local variable '" + id + "' " +
+					"should be the same as the variable type", lineNumber);
 			
 	}
 	

@@ -7,14 +7,18 @@ public class FormalParam {
 
 	Type t;
 	String id;
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 	public FormalParam() {
 	
 	}
-	public FormalParam(Type t, String id) {
+	public FormalParam(Type t, String id, int lineNumber, int charNumber) {
 
 		this.t = t;
 		this.id = id;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 	public String toString() {
@@ -37,13 +41,13 @@ public class FormalParam {
 		if(symTable.contains(id)){
 	
 			if(symTable.get(id).level == 0)
-				throw new SemanticException("Formal Param name \"" + id + "\" cannot be the same as the class name");
+				ClassDecl.returnError("Formal Param name \"" + id + "\" cannot be the same as the class name", lineNumber, charNumber);
 			
 			else if(symTable.get(id).level == 1)
-				throw new SemanticException("Formal Param name \"" + id + "\" cannot be the same as the method name");
+				ClassDecl.returnError("Formal Param name \"" + id + "\" cannot be the same as the method name", lineNumber, charNumber);
 			
 			else
-				throw new SemanticException("Formal Param \"" + id + "\" is previously defined in the current scope");
+				ClassDecl.returnError("Formal Param \"" + id + "\" is previously defined in the current scope", lineNumber, charNumber);
 		}
 		
 			

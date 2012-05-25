@@ -5,16 +5,17 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	public PrimaryExpr primExp;
 	public int op;
 	public MultiplicativeExpr multExp;
-	
+	int lineNumber;
 	
 	public MultiplicativeExpr() {
 		
 	}
 	
-	public MultiplicativeExpr(PrimaryExpr pe, int o, MultiplicativeExpr me) {
+	public MultiplicativeExpr(PrimaryExpr pe, int o, MultiplicativeExpr me, int lineNumber) {
 		primExp = pe;
 		op = o;
 		multExp = me;
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){
@@ -46,16 +47,16 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		primExp.check();
 		returnType = primExp.getType();
 		if((primExp.returnType != Expression.INT) && (primExp.returnType != Expression.FLOAT))
-			throw new SemanticException("All elements of a multiplicative expression must be of type int or float");
+			ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", lineNumber);
 				
 		if(multExp !=null) {
 			multExp.check();
 			
 			if(multExp.returnType != primExp.returnType)
-				throw new SemanticException("All elements of a multiplicative expression must be of same type");
+				ClassDecl.returnError("All elements of a multiplicative expression must be of same type", lineNumber);
 			
 			else if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
-				throw new SemanticException("All elements of a multiplicative expression must be of type int or float");
+				ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", lineNumber);
 			
 		}
 	}
