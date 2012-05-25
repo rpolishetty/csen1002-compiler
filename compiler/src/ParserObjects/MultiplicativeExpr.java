@@ -6,16 +6,18 @@ public class MultiplicativeExpr extends AdditiveExpr{
 	public int op;
 	public MultiplicativeExpr multExp;
 	int lineNumber;
+	int charNumber;
 	
 	public MultiplicativeExpr() {
 		
 	}
 	
-	public MultiplicativeExpr(PrimaryExpr pe, int o, MultiplicativeExpr me, int lineNumber) {
+	public MultiplicativeExpr(PrimaryExpr pe, int o, MultiplicativeExpr me) {
 		primExp = pe;
 		op = o;
 		multExp = me;
-		this.lineNumber = lineNumber;
+		this.lineNumber = pe.lineNumber;
+		this.charNumber = pe.charNumber;
 	}
 	
 	public String toString(){
