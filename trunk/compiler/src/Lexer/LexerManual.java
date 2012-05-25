@@ -270,8 +270,8 @@ public class LexerManual {
 			case 4: //strings - Body
 				
 				if (curr == '\n' || curr == '\r' ) {
+					warningReport(stringBuffer, "", 3,1);
 					curr = read();
-					warningReport(stringBuffer, "", 3,0);
 					return new Token(Token.ST, "" + stringBuffer, lineNumber, charNumber);
 
 				}

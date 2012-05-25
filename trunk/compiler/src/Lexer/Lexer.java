@@ -18,7 +18,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 	private final int YY_EOF = 129;
 
   	int charNumber = 0;
-  	private void warningReport(String found, String expected, int c){
+  	private void warningReport(String found, String expected, int c, int lexeme){
 		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
@@ -27,7 +27,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 			String line = "";
 			for(int i = 1; i <= yyline+1; i++)
 				line = reader.readLine().trim();
-			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber+1) + ":\n";
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme) + ":\n";
 			switch(c){
 			case 1: 
 				error += found + " converted to " + expected;
@@ -431,14 +431,14 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 2:
 						{ 
-   warningReport(yytext(), "", 3);
-   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+   warningReport(yytext(), "", 3,1-yytext().length());
+   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -3:
 						break;
 					case 3:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -4:
 						break;
@@ -449,7 +449,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 		number *= 10;
 		number += yy_buffer[k]-'0';
 	}
-  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + number);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber),  "" + number);
 }
 					case -5:
 						break;
@@ -459,7 +459,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 6:
 						{
-  warningReport(yytext(), "", 2);
+  warningReport(yytext(), "", 2,0);
 }
 					case -7:
 						break;
@@ -471,105 +471,105 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 8:
 						{ 
-  return new Symbol(sym.SM,(yyline+1), (yychar-charNumber+1), ";");
+  return new Symbol(sym.SM,(yyline+1), (yychar-charNumber), ";");
 }
 					case -9:
 						break;
 					case 9:
 						{ 
-  return new Symbol(sym.FA,(yyline+1), (yychar-charNumber+1), ","); 
+  return new Symbol(sym.FA,(yyline+1), (yychar-charNumber), ","); 
 }
 					case -10:
 						break;
 					case 10:
 						{ 
-  return new Symbol(sym.LP,(yyline+1), (yychar-charNumber+1), "(");
+  return new Symbol(sym.LP,(yyline+1), (yychar-charNumber), "(");
 }
 					case -11:
 						break;
 					case 11:
 						{ 
-  return new Symbol(sym.RP,(yyline+1), (yychar-charNumber+1), ")"); 
+  return new Symbol(sym.RP,(yyline+1), (yychar-charNumber), ")"); 
 }
 					case -12:
 						break;
 					case 12:
 						{ 
-  return new Symbol(sym.LB,(yyline+1), (yychar-charNumber+1), "{");
+  return new Symbol(sym.LB,(yyline+1), (yychar-charNumber), "{");
 }
 					case -13:
 						break;
 					case 13:
 						{ 
-  return new Symbol(sym.RB,(yyline+1), (yychar-charNumber+1), "}");
+  return new Symbol(sym.RB,(yyline+1), (yychar-charNumber), "}");
 }
 					case -14:
 						break;
 					case 14:
 						{ 
-  return new Symbol(sym.AO,(yyline+1), (yychar-charNumber+1), "="); 
+  return new Symbol(sym.AO,(yyline+1), (yychar-charNumber), "="); 
 }
 					case -15:
 						break;
 					case 15:
 						{ 
-  return new Symbol(sym.PO,(yyline+1), (yychar-charNumber+1), "+"); 
+  return new Symbol(sym.PO,(yyline+1), (yychar-charNumber), "+"); 
 }
 					case -16:
 						break;
 					case 16:
 						{ 
-  return new Symbol(sym.MO,(yyline+1), (yychar-charNumber+1), "-");
+  return new Symbol(sym.MO,(yyline+1), (yychar-charNumber), "-");
 }
 					case -17:
 						break;
 					case 17:
 						{ 
-  return new Symbol(sym.TO,(yyline+1), (yychar-charNumber+1), "*");
+  return new Symbol(sym.TO,(yyline+1), (yychar-charNumber), "*");
 }
 					case -18:
 						break;
 					case 18:
 						{ 
-  return new Symbol(sym.DO,(yyline+1), (yychar-charNumber+1), "/");
+  return new Symbol(sym.DO,(yyline+1), (yychar-charNumber), "/");
 }
 					case -19:
 						break;
 					case 19:
 						{ 
-  return new Symbol(sym.MD,(yyline+1), (yychar-charNumber+1), "%");
+  return new Symbol(sym.MD,(yyline+1), (yychar-charNumber), "%");
 }
 					case -20:
 						break;
 					case 20:
 						{ 
-  warningReport("|", "||", 1);
+  warningReport("|", "||", 1,1);
   return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
 }
 					case -21:
 						break;
 					case 21:
 						{ 
-  warningReport("&", "&&", 1);
+  warningReport("&", "&&", 1,1);
   return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&"); 
 }
 					case -22:
 						break;
 					case 22:
 						{ 
-  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -23:
 						break;
 					case 23:
 						{ 
-  return new Symbol(sym.IF,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.IF,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -24:
 						break;
 					case 24:
 						{ 
-  return new Symbol(sym.EQ,(yyline+1), (yychar-charNumber+1), "==");
+  return new Symbol(sym.EQ,(yyline+1), (yychar-charNumber), "==");
 }
 					case -25:
 						break;
@@ -587,19 +587,19 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 27:
 						{ 
-  return new Symbol(sym.NE,(yyline+1), (yychar-charNumber+1), "!=");
+  return new Symbol(sym.NE,(yyline+1), (yychar-charNumber), "!=");
 }
 					case -28:
 						break;
 					case 28:
 						{ 
-  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber), "||"); 
 }
 					case -29:
 						break;
 					case 29:
 						{ 
-  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&");
+  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber), "&&");
 }
 					case -30:
 						break;
@@ -619,73 +619,73 @@ public class Lexer implements java_cup.runtime.Scanner {
 			floatNumber += yy_buffer[k]-'0';
 		}
 	}
-  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + floatNumber);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber),  "" + floatNumber);
 }
 					case -31:
 						break;
 					case 31:
 						{ 
-  return new Symbol(sym.INT,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.INT,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -32:
 						break;
 					case 32:
 						{ 
-  return new Symbol(sym.ELSE,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ELSE,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -33:
 						break;
 					case 33:
 						{ 
-  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -34:
 						break;
 					case 34:
 						{ 
-  return new Symbol(sym.CLASS,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.CLASS,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -35:
 						break;
 					case 35:
 						{ 
-  return new Symbol(sym.FLOAT,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.FLOAT,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -36:
 						break;
 					case 36:
 						{ 
-  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -37:
 						break;
 					case 37:
 						{ 
-  return new Symbol(sym.WHILE,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.WHILE,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -38:
 						break;
 					case 38:
 						{ 
-  return new Symbol(sym.STATIC,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.STATIC,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -39:
 						break;
 					case 39:
 						{ 
-  return new Symbol(sym.STRING,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.STRING,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -40:
 						break;
 					case 40:
 						{ 
-  return new Symbol(sym.RETURN,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.RETURN,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -41:
 						break;
 					case 41:
 						{ 
-  return new Symbol(sym.BOOLEAN,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BOOLEAN,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -42:
 						break;
@@ -713,291 +713,291 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 47:
 						{ 
-   warningReport(yytext(), "", 3);
-   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+   warningReport(yytext(), "", 3,1-yytext().length());
+   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -47:
 						break;
 					case 48:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -48:
 						break;
 					case 49:
 						{
-  warningReport(yytext(), "", 2);
+  warningReport(yytext(), "", 2,0);
 }
 					case -49:
 						break;
 					case 50:
 						{ 
-  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -50:
 						break;
 					case 52:
 						{ 
-   warningReport(yytext(), "", 3);
-   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+   warningReport(yytext(), "", 3,1-yytext().length());
+   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -51:
 						break;
 					case 53:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -52:
 						break;
 					case 55:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -53:
 						break;
 					case 57:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -54:
 						break;
 					case 59:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -55:
 						break;
 					case 61:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -56:
 						break;
 					case 62:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -57:
 						break;
 					case 63:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -58:
 						break;
 					case 64:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -59:
 						break;
 					case 65:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -60:
 						break;
 					case 66:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -61:
 						break;
 					case 67:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -62:
 						break;
 					case 68:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -63:
 						break;
 					case 69:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -64:
 						break;
 					case 70:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -65:
 						break;
 					case 71:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -66:
 						break;
 					case 72:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -67:
 						break;
 					case 73:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -68:
 						break;
 					case 74:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -69:
 						break;
 					case 75:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -70:
 						break;
 					case 76:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -71:
 						break;
 					case 77:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -72:
 						break;
 					case 78:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -73:
 						break;
 					case 79:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -74:
 						break;
 					case 80:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -75:
 						break;
 					case 81:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -76:
 						break;
 					case 82:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -77:
 						break;
 					case 83:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -78:
 						break;
 					case 84:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -79:
 						break;
 					case 85:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -80:
 						break;
 					case 86:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -81:
 						break;
 					case 87:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -82:
 						break;
 					case 88:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -83:
 						break;
 					case 89:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -84:
 						break;
 					case 90:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -85:
 						break;
 					case 91:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -86:
 						break;
 					case 92:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -87:
 						break;
 					case 93:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -88:
 						break;
 					case 94:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -89:
 						break;
 					case 95:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -90:
 						break;
 					case 96:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -91:
 						break;
 					case 97:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -92:
 						break;
 					case 98:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -93:
 						break;
 					case 99:
 						{ 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -94:
 						break;
