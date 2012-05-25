@@ -10,6 +10,7 @@ public class ClassDecl {
 	
 	public String id;
 	public MethodDecls mds;
+	String inFile;
 	int lineNumber;
 	int charNumber;
 	public static SymbolTable symTable;
@@ -33,7 +34,7 @@ public class ClassDecl {
 	
 	public static void returnError(String message, int lineNumber) throws SemanticException{
 		
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;
@@ -55,7 +56,7 @@ public class ClassDecl {
 	
 	public static void returnError(String message, int lineNumber, int charNumber) throws SemanticException{
 		
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;

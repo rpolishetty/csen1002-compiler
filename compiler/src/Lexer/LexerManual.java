@@ -348,7 +348,7 @@ public class LexerManual {
 	
 	private void warningReport(String found, String expected, int c, int lexemeLength){
 		
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;

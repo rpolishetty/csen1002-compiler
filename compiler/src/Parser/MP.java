@@ -23,10 +23,10 @@ import ParserObjects.SyntacticException;
 public class MP {
 	public static void main(String[] args) throws SyntacticException, SemanticException {
 		//String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = "";
 		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
 
-		if (args.length > 1) {
+		if (args.length > 0) {
 			inFile = args[0];
 		}
 

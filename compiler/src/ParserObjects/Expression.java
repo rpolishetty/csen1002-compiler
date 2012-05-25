@@ -37,8 +37,8 @@ public class Expression {
 		op = o;
 		exp = e;
 		returnType = BOOLEAN;
-		this.lineNumber = ce.lineNumber;
-		this.charNumber = ce.charNumber;
+	//	this.lineNumber = ce.lineNumber;
+	//	this.charNumber = ce.charNumber;
 	}
 	
 	public String toString(){
@@ -72,13 +72,13 @@ public class Expression {
 		condExp.check();
 
 		if(condExp.returnType != Expression.BOOLEAN)
-			ClassDecl.returnError("All elements of an expression must be of type Boolean", condExp.lineNumber);
+			ClassDecl.returnError("All elements of an expression must be of type Boolean", condExp.lineNumber, condExp.charNumber);
 		
 		if(exp !=null) {
 			exp.check();
 
 			if(exp.returnType != Expression.BOOLEAN)
-				ClassDecl.returnError("All elements of an expression must be of type Boolean", exp.lineNumber);
+				ClassDecl.returnError("All elements of an expression must be of type Boolean", exp.lineNumber, exp.charNumber);
 		}
 	
 		
