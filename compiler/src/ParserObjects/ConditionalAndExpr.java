@@ -5,16 +5,17 @@ public class ConditionalAndExpr extends Expression{
 	public EqualityExpr eqExp;
 	public int op;
 	public ConditionalAndExpr condExp;
-	
+	int lineNumber;
 	public ConditionalAndExpr() {
 		
 	}
 	
-	public ConditionalAndExpr(EqualityExpr ee, int o, ConditionalAndExpr ce) {
+	public ConditionalAndExpr(EqualityExpr ee, int o, ConditionalAndExpr ce, int lineNumber) {
 		eqExp = ee;
 		op = o;
 		condExp = ce;
 		returnType = Expression.BOOLEAN;
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){
@@ -41,14 +42,14 @@ public class ConditionalAndExpr extends Expression{
 		eqExp.check();
 		
 		if(eqExp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("All elements of a conditional expression must be of type Boolean");
+			ClassDecl.returnError("All elements of a conditional expression must be of type Boolean", lineNumber);
 		
 		
 		if(condExp !=null) {
 			condExp.check();
 			
 			if(condExp.returnType != Expression.BOOLEAN)
-				throw new SemanticException("All elements of a conditional expression must be of type Boolean");
+				ClassDecl.returnError("All elements of a conditional expression must be of type Boolean", lineNumber);
 		}
 		
 	}

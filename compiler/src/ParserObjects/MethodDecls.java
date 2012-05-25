@@ -6,15 +6,16 @@ import Parser.Entry;
 import Parser.SymbolTable;
 
 public class MethodDecls {
-	
+	int lineNumber;
 	public ArrayList<MethodDecl> mdList;
 	public static SymbolTable symTable;
 	public MethodDecls() {
 		
 	}
 	
-	public MethodDecls(ArrayList<MethodDecl> mdList) {
+	public MethodDecls(ArrayList<MethodDecl> mdList, int lineNumber) {
 		this.mdList = mdList;
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){
@@ -39,10 +40,10 @@ public class MethodDecls {
 			if(symTable.contains(md.id)){
 				
 				if(symTable.get(md.id).level == 0)
-					throw new SemanticException("Method name '" + md.id + "' cannot be the same as the class name");
+					ClassDecl.returnError("Method name '" + md.id + "' cannot be the same as the class name", md.lineNumber, md.charNumber);
 				
 				else 
-					throw new SemanticException("Method name '" + md.id + "' cannot be the same as the name of another method");
+					ClassDecl.returnError("Method name '" + md.id + "' cannot be the same as the name of another method", md.lineNumber, md.charNumber);
 			}
 			
 			symTable.add(new Entry(md.id),md);

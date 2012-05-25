@@ -18,7 +18,10 @@ precedence left TO, DO;
 /* The grammar */
 
 expr_list ::= expr_list:el expr_part:e
-			  {: el.add(e);
+			  {:Lexer s = (Lexer)getScanner();
+  				int c = s.charNumber;
+  				System.out.println(c); 
+			  	el.add(e);
 			     RESULT = el;
 			  :} 
 			  | expr_part:e 

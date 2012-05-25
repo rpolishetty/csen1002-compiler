@@ -5,16 +5,17 @@ public class AdditiveExpr extends EqualityExpr{
 	public MultiplicativeExpr multExp;
 	public int op;
 	public AdditiveExpr addExp;
-	
+	int lineNumber;
 	
 	public AdditiveExpr() {
 		
 	}
 	
-	public AdditiveExpr(MultiplicativeExpr me, int o, AdditiveExpr ae) {
+	public AdditiveExpr(MultiplicativeExpr me, int o, AdditiveExpr ae, int lineNumber) {
 		multExp = me;
 		op = o;
 		addExp = ae;
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){
@@ -44,16 +45,16 @@ public class AdditiveExpr extends EqualityExpr{
 		multExp.check();
 		returnType = multExp.getType();
 		if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
-			throw new SemanticException("All elements of an additive expression must be of type int or float");
+			ClassDecl.returnError("All elements of an additive expression must be of type int or float", lineNumber);
 				
 		if(addExp !=null) {
 			addExp.check();
 			
 			if(multExp.returnType != addExp.returnType)
-				throw new SemanticException("All elements of an additive expression must be of same type");
+				ClassDecl.returnError("All elements of an additive expression must be of same type", lineNumber);
 			
 			else if((addExp.returnType != Expression.INT) && (addExp.returnType != Expression.FLOAT))
-				throw new SemanticException("All elements of an additive expression must be of type int or float");
+				ClassDecl.returnError("All elements of an additive expression must be of type int or float", lineNumber);
 			
 			
 		}

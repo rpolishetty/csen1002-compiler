@@ -6,14 +6,18 @@ public class WhileStmt {
 
 	Expression exp;
 	Statement stmt;
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 	
 	public WhileStmt() {
 
 	}
-	public WhileStmt(Expression exp, Statement stmt) {
+	public WhileStmt(Expression exp, Statement stmt, int lineNumber, int charNumber) {
 		this.exp = exp;
 		this.stmt = stmt;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 	public String toString() {
@@ -32,7 +36,7 @@ public class WhileStmt {
 		exp.check();
 		
 		if(exp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("Expression in while statement must be of type Boolean");
+			ClassDecl.returnError("Expression in while statement must be of type Boolean", lineNumber, charNumber );
 		
 		stmt.check();
 	}

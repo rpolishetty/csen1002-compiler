@@ -6,12 +6,15 @@ public class ReturnStmt {
 
 	Expression exp;
 	public static SymbolTable symTable;
-	
+	int lineNumber;
+	int charNumber;
 	public ReturnStmt() {
 
 	}
-	public ReturnStmt(Expression exp) {
+	public ReturnStmt(Expression exp, int lineNumber, int charNumber) {
 		this.exp = exp;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 	public String toString() {

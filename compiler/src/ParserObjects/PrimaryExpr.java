@@ -12,54 +12,63 @@ public class PrimaryExpr extends MultiplicativeExpr{
 	CallExpr cExp;
 	Expression exp;
 	int type;
-	
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 
 	public PrimaryExpr() {
 
 	}
 	
-	public PrimaryExpr(int in) {
+	public PrimaryExpr(int in, int lineNumber) {
 		this.in = in;
 		type = INT;
 		returnType = INT;
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(float fl) {
+	public PrimaryExpr(float fl, int lineNumber) {
 		this.fl = fl;
 		type = FLOAT;
 		returnType = FLOAT;
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(boolean bl) {
+	public PrimaryExpr(boolean bl, int lineNumber) {
 		this.bl = bl;
 		type = BOOLEAN;
 		returnType = BOOLEAN;
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(String st) {
+	public PrimaryExpr(String st, int lineNumber) {
 		this.st = st;
 		type = STRING;
 		returnType = STRING;
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(String idType, String st) {
+	public PrimaryExpr(String idType, String st, int lineNumber, int charNumber) {
 		this.st = st;
 		type = ID;
 		idName = st;
 		returnType = ID;
+		this.charNumber = charNumber;
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(CallExpr ce) {
+	public PrimaryExpr(CallExpr ce, int lineNumber) {
 		this.cExp = ce;
 		type = CE;
 		returnType = ce.getType();
+		this.lineNumber = lineNumber;
 	}
 	
-	public PrimaryExpr(Expression e) {
+	public PrimaryExpr(Expression e, int lineNumber) {
 		this.exp = e;
 		type = E;
 		returnType = e.getType();
+		this.lineNumber = lineNumber;
 	}
 	
 	public String toString() {
@@ -107,7 +116,7 @@ public class PrimaryExpr extends MultiplicativeExpr{
 			case ID: 
 
 				if(!symTable.contains(idName))
-					throw new SemanticException("Local Variable '" + idName + "' is not declared in the current scope");
+					ClassDecl.returnError("Local Variable '" + idName + "' is not declared in the current scope", lineNumber, charNumber);
 				
 				Entry e = symTable.get(st);
 				int t;

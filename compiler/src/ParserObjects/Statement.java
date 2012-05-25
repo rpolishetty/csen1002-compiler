@@ -4,7 +4,8 @@ import Parser.Entry;
 import Parser.SymbolTable;
 
 public class Statement {
-	
+	int lineNumber;
+	int charNumber;
 	Block b;
 	LocalVarDecl lcd;
 	AssignStmt assignSt;
@@ -25,34 +26,41 @@ public class Statement {
 	public Statement() {
 	}
 
-	public Statement(Block b) {
+	public Statement(Block b, int lineNumber, int charNumber) {
 		this.b = b;
 		type = BLOCK;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
-	public Statement(LocalVarDecl lcd) {
+	public Statement(LocalVarDecl lcd, int lineNumber) {
 		this.lcd = lcd;
 		type = LOCALVAR;
+		this.lineNumber = lineNumber;
 	}
 
-	public Statement(AssignStmt assignSt) {
+	public Statement(AssignStmt assignSt, int lineNumber) {
 		this.assignSt = assignSt;
 		type = ASSIGNSTMT;
+		this.lineNumber = lineNumber;
 	}
 
-	public Statement(IfStmt ifStmt) {
+	public Statement(IfStmt ifStmt, int lineNumber) {
 		this.ifStmt = ifStmt;
 		type = IFSTMT;
+		this.lineNumber = lineNumber;
 	}
 
-	public Statement(WhileStmt whileStmt) {
+	public Statement(WhileStmt whileStmt, int lineNumber) {
 		this.whileStmt = whileStmt;
 		type = WHILESTMT;
+		this.lineNumber = lineNumber;
 	}
 
-	public Statement(ReturnStmt returnStmt) {
+	public Statement(ReturnStmt returnStmt, int lineNumber) {
 		this.returnStmt = returnStmt;
 		type = RETUTNSTMT;
+		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {
@@ -125,8 +133,8 @@ public class Statement {
 		if(type == RETUTNSTMT){
 			
 			if(returnStmt.exp.returnType != type1)
-				throw new SemanticException("Return expression of method '" + id + "' " +
-						"should be of same type as method return type");
+				ClassDecl.returnError("Return expression of method '" + id + "' " +
+						"should be of same type as method return type", returnStmt.lineNumber, returnStmt.charNumber);
 			
 			return true;
 		}

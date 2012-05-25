@@ -11,6 +11,8 @@ public class MethodDecl {
 	String id;
 	FormalParams fps;
 	Block b;
+	int lineNumber;
+	int charNumber;
 	
 	public static SymbolTable symTable;
 	
@@ -20,11 +22,13 @@ public class MethodDecl {
 	}
 
 
-	public MethodDecl(Type t, String id, FormalParams fps, Block b) {
+	public MethodDecl(Type t, String id, FormalParams fps, Block b, int lineNumber, int charNumber) {
 		this.t = t;
 		this.id = id;
 		this.fps = fps;
 		this.b = b;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 
@@ -62,7 +66,7 @@ public class MethodDecl {
 		b.check();
 				
 		if(!hasReturnStmt(t.type, id))
-			throw new SemanticException("Method '" + id + "' should have a reachable return statement");
+			ClassDecl.returnError("Method '" + id + "' should have a reachable return statement", lineNumber);
 		
 		
 		symTable.closeScope();

@@ -8,20 +8,26 @@ public class IfStmt {
 	Expression exp;
 	Statement thenStmt;
 	Statement elseStmt;
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 	
 	public IfStmt() {
 
 	}
-	public IfStmt(Expression exp, Statement thenStmt) {
+	public IfStmt(Expression exp, Statement thenStmt, int lineNumber, int charNumber) {
 		this.exp = exp;
 		this.thenStmt = thenStmt;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 	
-	public IfStmt(Expression exp, Statement thenStmt, Statement elseStmt) {
+	public IfStmt(Expression exp, Statement thenStmt, Statement elseStmt, int lineNumber, int charNumber) {
 		this.exp = exp;
 		this.thenStmt = thenStmt;
 		this.elseStmt = elseStmt;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 	public String toString() {
@@ -46,7 +52,7 @@ public class IfStmt {
 		exp.check();
 		
 		if(exp.returnType != Expression.BOOLEAN)
-			throw new SemanticException("Expression in if statement must be of type Boolean");
+			ClassDecl.returnError("Expression in if statement must be of type Boolean", lineNumber, charNumber);
 		
 		thenStmt.check();
 		

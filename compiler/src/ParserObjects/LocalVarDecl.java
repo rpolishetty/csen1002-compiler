@@ -7,14 +7,18 @@ public class LocalVarDecl {
 
 	Type t;
 	String id;
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 	public LocalVarDecl() {
 	
 	}
-	public LocalVarDecl(Type t, String id) {
+	public LocalVarDecl(Type t, String id, int lineNumber, int charNumber) {
 
 		this.t = t;
 		this.id = id;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 	}
 
 	public String toString() {
@@ -37,13 +41,13 @@ public class LocalVarDecl {
 		if(symTable.contains(id))
 			
 			if(symTable.get(id).level == 0)
-				throw new SemanticException("Local Variable name \"" + id + "\" cannot be the same as the class name");
+				ClassDecl.returnError("Local Variable name \"" + id + "\" cannot be the same as the class name", lineNumber, charNumber);
 			
 			else if(symTable.get(id).level == 1)
-				throw new SemanticException("Local Variable name \"" + id + "\" cannot be the same as the method name");
+				ClassDecl.returnError("Local Variable name \"" + id + "\" cannot be the same as the method name", lineNumber, charNumber);
 			
 			else
-				throw new SemanticException("Local Variable \"" + id + "\" is previously defined in the current scope");
+				ClassDecl.returnError("Local Variable \"" + id + "\" is previously defined in the current scope", lineNumber, charNumber);
 		
 			
 		symTable.add(new Entry(id), this);

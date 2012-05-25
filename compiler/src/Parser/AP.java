@@ -15,7 +15,7 @@ public class AP {
 
 	public static void main(String[] args) {
 		
-		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
 		//String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Sample.in";
 
 		if (args.length > 1) {
@@ -32,7 +32,6 @@ public class AP {
 
 	
 			ClassDecl c = (ClassDecl) res.value;
-			
 			c.check();
 			//for(Expr e: expressions) {
 				System.out.print(c);

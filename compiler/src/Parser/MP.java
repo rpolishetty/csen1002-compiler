@@ -51,7 +51,7 @@ public class MP {
 		
 //		ArrayList<Expr> expressions = parser.parse();
 		ClassDecl c = parser.parse();
-		//c.check();
+		c.check();
 		//for(Expr e: expressions) {
 			System.out.print(c);
 			//System.out.println("Value = " + e.evaluate() + "\n");

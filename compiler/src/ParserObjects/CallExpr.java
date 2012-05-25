@@ -9,13 +9,17 @@ public class CallExpr extends PrimaryExpr {
 
 	String id;
 	ActualParams aps;
+	int lineNumber;
+	int charNumber;
 	public static SymbolTable symTable;
 	public CallExpr() {
 	}
 	
-	public CallExpr(String id, ActualParams aps) throws SemanticException {
+	public CallExpr(String id, ActualParams aps, int lineNumber, int charNumber) throws SemanticException {
 		this.id = id;
 		this.aps = aps;
+		this.lineNumber = lineNumber;
+		this.charNumber = charNumber;
 		symTable = SymbolTable.getInstance();
 		
 	}
@@ -47,14 +51,14 @@ public class CallExpr extends PrimaryExpr {
 		returnType = md.t.type;
 		
 		if(md.getParamatersTypes().size() != parametersList.size()){
-			throw new SemanticException("Method '" + id + "' with the same number of parameters is not declared in the current scope");
+			ClassDecl.returnError("Method '" + id + "' with the same number of parameters is not declared in the current scope", lineNumber, charNumber);
 		}
 		
 		for(int i = 0; i < md.getParamatersTypes().size(); i++){
 			int t = aps.getParamatersTypes().get(i);
 			
 			if(md.getParamatersTypes().get(i) != t){
-				throw new SemanticException("Method '" + id + "' with the same parameter types is not declared in the current scope");
+				ClassDecl.returnError("Method '" + id + "' with the same parameter types is not declared in the current scope", lineNumber, charNumber);
 			}
 				
 		}
