@@ -26,41 +26,34 @@ public class Statement {
 	public Statement() {
 	}
 
-	public Statement(Block b, int lineNumber, int charNumber) {
+	public Statement(Block b) {
 		this.b = b;
 		type = BLOCK;
-		this.lineNumber = lineNumber;
-		this.charNumber = charNumber;
 	}
 
-	public Statement(LocalVarDecl lcd, int lineNumber) {
+	public Statement(LocalVarDecl lcd) {
 		this.lcd = lcd;
 		type = LOCALVAR;
-		this.lineNumber = lineNumber;
 	}
 
-	public Statement(AssignStmt assignSt, int lineNumber) {
+	public Statement(AssignStmt assignSt) {
 		this.assignSt = assignSt;
 		type = ASSIGNSTMT;
-		this.lineNumber = lineNumber;
 	}
 
-	public Statement(IfStmt ifStmt, int lineNumber) {
+	public Statement(IfStmt ifStmt) {
 		this.ifStmt = ifStmt;
 		type = IFSTMT;
-		this.lineNumber = lineNumber;
 	}
 
-	public Statement(WhileStmt whileStmt, int lineNumber) {
+	public Statement(WhileStmt whileStmt) {
 		this.whileStmt = whileStmt;
 		type = WHILESTMT;
-		this.lineNumber = lineNumber;
 	}
 
-	public Statement(ReturnStmt returnStmt, int lineNumber) {
+	public Statement(ReturnStmt returnStmt) {
 		this.returnStmt = returnStmt;
 		type = RETUTNSTMT;
-		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {

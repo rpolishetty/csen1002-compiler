@@ -8,17 +8,15 @@ import Parser.SymbolTable;
 public class FormalParams {
 
 	ProperFormalParams pfp;
-	int lineNumber;
 	public static SymbolTable symTable;
 	
 	public FormalParams() {
 
 	}
 
-	public FormalParams(ProperFormalParams pfp, int lineNumber) {
+	public FormalParams(ProperFormalParams pfp) {
 
 		this.pfp = pfp;
-		this.lineNumber = lineNumber;
 	}
 
 

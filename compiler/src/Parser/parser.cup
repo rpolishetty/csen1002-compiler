@@ -126,16 +126,16 @@ multiplicativeExpr ::= multiplicativeExpr:me TO primaryExpr:pe {:RESULT = new Mu
 
 primaryExpr ::= NM:nm {:
 			if(nm.contains("."))
-				RESULT = new PrimaryExpr(Float.parseFloat(nm));
+				RESULT = new PrimaryExpr(Float.parseFloat(nm),nmleft,nmright);
 			else
-				RESULT = new PrimaryExpr(Integer.parseInt(nm));:}
-			| BL:bl {:RESULT =  new PrimaryExpr(Boolean.parseBoolean(bl));:}
-			| ST:st {:RESULT = new PrimaryExpr(st);:}
-			| ID:id {:RESULT = new PrimaryExpr("id",id);:}
+				RESULT = new PrimaryExpr(Integer.parseInt(nm),nmleft,nmright);:}
+			| BL:bl {:RESULT =  new PrimaryExpr(Boolean.parseBoolean(bl),blleft,blright);:}
+			| ST:st {:RESULT = new PrimaryExpr(st,stleft,stright);:}
+			| ID:id {:RESULT = new PrimaryExpr("id",id,idleft,idright);:}
 			| callExpr:ce {:RESULT = ce;:}
-			| LP expression:e RP {:RESULT = new PrimaryExpr(e);:};
+			| LP:lp expression:e RP {:RESULT = new PrimaryExpr(e,lpleft,lpright);:};
 			
-callExpr ::= ID:id LP actualParams:aps RP {:RESULT = new CallExpr(id,aps);:};
+callExpr ::= ID:id LP actualParams:aps RP {:RESULT = new CallExpr(id,aps,idleft,idright);:};
 
 actualParams ::= properActualParams:pap2 {:RESULT = new ActualParams(pap2);:}
 				| {:RESULT = null;:};

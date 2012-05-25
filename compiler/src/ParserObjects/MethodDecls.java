@@ -6,16 +6,14 @@ import Parser.Entry;
 import Parser.SymbolTable;
 
 public class MethodDecls {
-	int lineNumber;
 	public ArrayList<MethodDecl> mdList;
 	public static SymbolTable symTable;
 	public MethodDecls() {
 		
 	}
 	
-	public MethodDecls(ArrayList<MethodDecl> mdList, int lineNumber) {
+	public MethodDecls(ArrayList<MethodDecl> mdList) {
 		this.mdList = mdList;
-		this.lineNumber = lineNumber;
 	}
 	
 	public String toString(){

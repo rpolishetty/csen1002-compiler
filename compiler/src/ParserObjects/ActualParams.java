@@ -7,15 +7,13 @@ import Parser.SymbolTable;
 public class ActualParams {
 
 	ProperActualParams pap;
-	int lineNumber;
 	public static SymbolTable symTable;
 
 	public ActualParams() {
 	}
 
-	public ActualParams(ProperActualParams pap, int lineNumber) {
+	public ActualParams(ProperActualParams pap) {
 		this.pap = pap;
-		this.lineNumber = lineNumber;
 	}
 	
 	public String toString() {
