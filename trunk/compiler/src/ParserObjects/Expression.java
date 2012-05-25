@@ -32,13 +32,13 @@ public class Expression {
 		
 	}
 	
-	public Expression(ConditionalAndExpr ce, int o, Expression e, int lineNumber, int charNumber) {
+	public Expression(ConditionalAndExpr ce, int o, Expression e) {
 		condExp = ce;
 		op = o;
 		exp = e;
 		returnType = BOOLEAN;
-		this.lineNumber = lineNumber;
-		this.charNumber = charNumber;
+		this.lineNumber = ce.lineNumber;
+		this.charNumber = ce.charNumber;
 	}
 	
 	public String toString(){

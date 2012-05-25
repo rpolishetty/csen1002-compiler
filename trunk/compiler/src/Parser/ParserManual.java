@@ -361,7 +361,7 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.LO:
 				match(token.getTokenType() , "");
-				exp = new Expression(conditionalAndExpr(), Expression.LO, exp,line,charN);
+				exp = new Expression(conditionalAndExpr(), Expression.LO, exp);
 				break;
 				
 			default:
@@ -380,7 +380,7 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.LA:
 				match(token.getTokenType(), "");
-				exp = new ConditionalAndExpr(equalityExpr(), Expression.LA, exp,line);
+				exp = new ConditionalAndExpr(equalityExpr(), Expression.LA, exp);
 				break;
 				
 			default:
@@ -399,11 +399,11 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.EQ:
 				match(token.getTokenType(), "");
-				exp = new EqualityExpr(additiveExpr(), Expression.EQ, exp,line);
+				exp = new EqualityExpr(additiveExpr(), Expression.EQ, exp);
 				break;
 			case Token.NE:
 				match(token.getTokenType(), "");
-				exp = new EqualityExpr(additiveExpr(), Expression.NE, exp,line);
+				exp = new EqualityExpr(additiveExpr(), Expression.NE, exp);
 				break;
 				
 			default:
@@ -423,11 +423,11 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.PO:
 				match(token.getTokenType(), "");
-				exp = new AdditiveExpr(multiplicativeExpr(), Expression.PO, exp,line);
+				exp = new AdditiveExpr(multiplicativeExpr(), Expression.PO, exp);
 				break;
 			case Token.MO:
 				match(token.getTokenType(), "");
-				exp = new AdditiveExpr(multiplicativeExpr(), Expression.MO, exp,line);
+				exp = new AdditiveExpr(multiplicativeExpr(), Expression.MO, exp);
 				break;
 				
 			default:
@@ -446,15 +446,15 @@ public class ParserManual {
 			switch (token.getTokenType()) {	
 			case Token.TO:
 				match(token.getTokenType(), "");
-				exp = new MultiplicativeExpr(primaryExpr(), Expression.TO, exp,line);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.TO, exp);
 				break;
 			case Token.DO:
 				match(token.getTokenType(), "");
-				exp = new MultiplicativeExpr(primaryExpr(), Expression.DO, exp,line);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.DO, exp);
 				break;
 			case Token.MD:
 				match(token.getTokenType(), "");
-				exp = new MultiplicativeExpr(primaryExpr(), Expression.MD, exp,line);
+				exp = new MultiplicativeExpr(primaryExpr(), Expression.MD, exp);
 				break;
 				
 			default:
