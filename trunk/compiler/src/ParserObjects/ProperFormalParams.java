@@ -9,15 +9,13 @@ public class ProperFormalParams {
 
 	public ArrayList<FormalParam> fpList;
 	public static SymbolTable symTable;
-	int lineNumber;
 	public ProperFormalParams() {
 	
 	}
 
-	public ProperFormalParams(ArrayList<FormalParam> fpList, int lineNumber) {
+	public ProperFormalParams(ArrayList<FormalParam> fpList) {
 
 		this.fpList = fpList;
-		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {

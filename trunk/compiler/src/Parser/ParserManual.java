@@ -73,7 +73,7 @@ public class ParserManual {
 			if(token.getLexeme().equals("static"))
 				md.add(methodDecl());
 			else
-				return new MethodDecls(md,0);
+				return new MethodDecls(md);
 		}
 		
 	}
@@ -106,16 +106,16 @@ public class ParserManual {
 		
 		line = lineNumber;
 		if(token.getLexeme().equals("int"))
-			return new Type(Type.INT,line);
+			return new Type(Type.INT);
 		
 		else if(token.getLexeme().equals("float"))
-			return new Type(Type.FLOAT,line);
+			return new Type(Type.FLOAT);
 			
 		else if(token.getLexeme().equals("boolean"))
-			return new Type(Type.BOOL,line);
+			return new Type(Type.BOOL);
 		
 		else if(token.getLexeme().equals("String"))
-			return new Type(Type.STRING,line);
+			return new Type(Type.STRING);
 		
 		else
 			return null;
@@ -128,7 +128,7 @@ public class ParserManual {
 		
 		line = lineNumber;
 		if(t != null)
-			return new FormalParams(properFormalParams(),line);
+			return new FormalParams(properFormalParams());
 		
 		return new FormalParams();
 	}
@@ -147,7 +147,7 @@ public class ParserManual {
 				break;
 				
 			default:
-				return new ProperFormalParams(fp,0);	
+				return new ProperFormalParams(fp);	
 			}
 		}
 	}
@@ -173,7 +173,7 @@ public class ParserManual {
 			t2 = 3;
 		else
 			t2 = 4;
-		return new FormalParam(new Type(t2,line) , id,line, charN);
+		return new FormalParam(new Type(t2) , id,line, charN);
 	}
 	
 
@@ -187,7 +187,7 @@ public class ParserManual {
 		sts = statements();
 		match(Token.RB, "");
 		
-		return new Block(sts,line);
+		return new Block(sts);
 	}
 
 	private Statements statements() throws SyntacticException, SemanticException {
@@ -210,7 +210,7 @@ public class ParserManual {
 					break;
 				}
 			default:
-				return new Statements(stmt,line);
+				return new Statements(stmt);
 			}
 		}
 	}
@@ -224,25 +224,25 @@ public class ParserManual {
 		switch (token.getTokenType()) {
 		case Token.LB:
 			charN = token.charNumber;
-			stmt = new Statement(block(),line,charN);
+			stmt = new Statement(block());
 			break;
 		
 		case Token.ID:
-			stmt = new Statement(assignStmt(),line);
+			stmt = new Statement(assignStmt());
 			break;
 			
 		case Token.KW:
 			if(token.getLexeme().equals("while"))
-				stmt = new Statement(whileStmt(),line);
+				stmt = new Statement(whileStmt());
 			
 			else if(token.getLexeme().equals("return"))
-				stmt = new Statement(returnStmt(),line);
+				stmt = new Statement(returnStmt());
 			
 			else if(token.getLexeme().equals("if"))
-				stmt = new Statement(ifStmt(),line);
+				stmt = new Statement(ifStmt());
 			
 			else
-				stmt = new Statement(localVarDecl(),line);
+				stmt = new Statement(localVarDecl());
 			break;
 		default:
 			errorReport(-1, "Statement");
@@ -274,7 +274,7 @@ public class ParserManual {
 		else
 			t2 = 4;
 		
-		return new LocalVarDecl(new Type(t2,line), id,line, charN);
+		return new LocalVarDecl(new Type(t2), id,line, charN);
 	}
 
 	private AssignStmt assignStmt() throws SyntacticException, SemanticException {
@@ -546,7 +546,7 @@ public class ParserManual {
 		case Token.ST:
 		case Token.ID:
 		case Token.LP:
-			aps = new ActualParams(properActualParams(),line);
+			aps = new ActualParams(properActualParams());
 			break;
 				
 		}
@@ -569,7 +569,7 @@ public class ParserManual {
 				break;
 				
 			default:
-				return new ProperActualParams(ap,line);	
+				return new ProperActualParams(ap);	
 			}
 		}
 	}

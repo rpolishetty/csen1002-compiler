@@ -3,7 +3,6 @@ package ParserObjects;
 public class Type {
 	
 	public int type;
-	int lineNumber;
 	public static final int INT = 1;
 	public static final int FLOAT = 2;
 	public static final int BOOL = 3;
@@ -13,10 +12,9 @@ public class Type {
 	
 	}
 
-	public Type(int t, int lineNumber) {
+	public Type(int t) {
 
 		this.type = t;
-		this.lineNumber = lineNumber;
 	}
 
 	public String toString() {
