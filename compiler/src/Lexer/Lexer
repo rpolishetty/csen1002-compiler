@@ -19,7 +19,7 @@ import java.io.IOException;
 %{
 
   	int charNumber = 0;
-  	private void warningReport(String found, String expected, int c){
+  	private void warningReport(String found, String expected, int c, int lexeme){
 		
 		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
 		try {
@@ -30,7 +30,7 @@ import java.io.IOException;
 			for(int i = 1; i <= yyline+1; i++)
 				line = reader.readLine().trim();
 			
-			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber) + ":\n";
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme) + ":\n";
 			
 			switch(c){
 			
@@ -91,7 +91,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-   warningReport(yytext(), "", 3);
+   warningReport(yytext(), "", 3,0);
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
@@ -165,60 +165,60 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 }
 
 <YYINITIAL> ";" { 
-  return new Symbol(sym.SM,(yyline+1), (yychar-charNumber+1), ";");
+  return new Symbol(sym.SM,(yyline+1), (yychar-charNumber), ";");
 } 
 <YYINITIAL> "," { 
-  return new Symbol(sym.FA,(yyline+1), (yychar-charNumber+1), ","); 
+  return new Symbol(sym.FA,(yyline+1), (yychar-charNumber), ","); 
 } 
 <YYINITIAL> "(" { 
-  return new Symbol(sym.LP,(yyline+1), (yychar-charNumber+1), "(");
+  return new Symbol(sym.LP,(yyline+1), (yychar-charNumber), "(");
 } 
 <YYINITIAL> ")" { 
-  return new Symbol(sym.RP,(yyline+1), (yychar-charNumber+1), ")"); 
+  return new Symbol(sym.RP,(yyline+1), (yychar-charNumber), ")"); 
 } 
 <YYINITIAL> "{" { 
-  return new Symbol(sym.LB,(yyline+1), (yychar-charNumber+1), "{");
+  return new Symbol(sym.LB,(yyline+1), (yychar-charNumber), "{");
 } 
 <YYINITIAL> "}" { 
-  return new Symbol(sym.RB,(yyline+1), (yychar-charNumber+1), "}");
+  return new Symbol(sym.RB,(yyline+1), (yychar-charNumber), "}");
 } 
 <YYINITIAL> "=" { 
-  return new Symbol(sym.AO,(yyline+1), (yychar-charNumber+1), "="); 
+  return new Symbol(sym.AO,(yyline+1), (yychar-charNumber), "="); 
 } 
 <YYINITIAL> "+" { 
-  return new Symbol(sym.PO,(yyline+1), (yychar-charNumber+1), "+"); 
+  return new Symbol(sym.PO,(yyline+1), (yychar-charNumber), "+"); 
 } 
 <YYINITIAL> "-" { 
-  return new Symbol(sym.MO,(yyline+1), (yychar-charNumber+1), "-");
+  return new Symbol(sym.MO,(yyline+1), (yychar-charNumber), "-");
 } 
 <YYINITIAL> "*" { 
-  return new Symbol(sym.TO,(yyline+1), (yychar-charNumber+1), "*");
+  return new Symbol(sym.TO,(yyline+1), (yychar-charNumber), "*");
 } 
 <YYINITIAL> "/" { 
-  return new Symbol(sym.DO,(yyline+1), (yychar-charNumber+1), "/");
+  return new Symbol(sym.DO,(yyline+1), (yychar-charNumber), "/");
 } 
 <YYINITIAL> "%" { 
-  return new Symbol(sym.MD,(yyline+1), (yychar-charNumber+1), "%");
+  return new Symbol(sym.MD,(yyline+1), (yychar-charNumber), "%");
 } 
 <YYINITIAL> "==" { 
-  return new Symbol(sym.EQ,(yyline+1), (yychar-charNumber+1), "==");
+  return new Symbol(sym.EQ,(yyline+1), (yychar-charNumber), "==");
 } 
 <YYINITIAL> "!=" { 
-  return new Symbol(sym.NE,(yyline+1), (yychar-charNumber+1), "!=");
+  return new Symbol(sym.NE,(yyline+1), (yychar-charNumber), "!=");
 } 
 <YYINITIAL> "|" { 
-  warningReport("|", "||", 1);
+  warningReport("|", "||", 1,1);
   return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
 } 
 <YYINITIAL> "&" { 
-  warningReport("&", "&&", 1);
+  warningReport("&", "&&", 1,1);
   return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&"); 
 } 
 <YYINITIAL> "||" { 
-  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber), "||"); 
 } 
 <YYINITIAL> "&&" { 
-  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber+1), "&&");
+  return new Symbol(sym.LA,(yyline+1), (yychar-charNumber), "&&");
 }  
 <YYINITIAL> "//" {
   yybegin(ONELINECOMMENTS);
@@ -237,7 +237,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  warningReport(yytext(), "", 2);
+  warningReport(yytext(), "", 2,0);
   
 }
 
