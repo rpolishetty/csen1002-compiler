@@ -182,8 +182,8 @@ public class LexerManual {
 						curr = read();
 						return new Token(Token.LO, "||", lineNumber, charNumber);
 					}else{
-						warningReport("|", "||", 1);
-						return new Token(Token.LO, "||", lineNumber, charNumber);
+						warningReport("|", "||", 1,1);
+						return new Token(Token.LO, "||", lineNumber, charNumber+1);
 					}
 				
 				case '&':
@@ -192,8 +192,8 @@ public class LexerManual {
 						curr = read();
 						return new Token(Token.LA, "&&", lineNumber, charNumber);
 					}else{
-						warningReport("&", "&&", 1);
-						return new Token(Token.LA, "&&", lineNumber, charNumber);
+						warningReport("&", "&&", 1,1);
+						return new Token(Token.LA, "&&", lineNumber, charNumber+1);
 					}
 						
 				case '"': // string = Start
@@ -230,7 +230,7 @@ public class LexerManual {
 					invalidBuffer = curr;
 					curr = read();
 					state = 1;
-					warningReport("" + invalidBuffer, "", 2);
+					warningReport("" + invalidBuffer, "", 2,0);
 					continue;
 				}
 				
@@ -271,7 +271,7 @@ public class LexerManual {
 				
 				if (curr == '\n' || curr == '\r' ) {
 					curr = read();
-					warningReport(stringBuffer, "", 3);
+					warningReport(stringBuffer, "", 3,0);
 					return new Token(Token.ST, "" + stringBuffer, lineNumber, charNumber);
 
 				}
@@ -297,7 +297,7 @@ public class LexerManual {
 					
 					if (!isNumeric(curr)){
 						decimalPoint = 0;
-						warningReport(".", "", 2);
+						warningReport(".", "", 2, 0);
 					}
 				}
 				
@@ -346,9 +346,9 @@ public class LexerManual {
 		}
 	}
 	
-	private void warningReport(String found, String expected, int c){
+	private void warningReport(String found, String expected, int c, int lexemeLength){
 		
-		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;
@@ -357,7 +357,7 @@ public class LexerManual {
 			for(int i = 1; i <= lineNumber; i++)
 				line = reader.readLine().trim();
 			
-			error += "Warning at line " + lineNumber + " char " + charNumber + ":\n";
+			error += "Warning at line " + lineNumber + " char " + (charNumber-lexemeLength) + ":\n";
 			
 			switch(c){
 			
