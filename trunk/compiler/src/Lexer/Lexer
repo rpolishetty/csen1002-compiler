@@ -21,7 +21,7 @@ import java.io.IOException;
   	int charNumber = 0;
   	private void warningReport(String found, String expected, int c, int lexeme){
 		
-		String inFile = "/Users/Magued/Documents/sheelMaayaaWorkspace/Compiler/src/Lexer/Algebra.decaf";
+		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;

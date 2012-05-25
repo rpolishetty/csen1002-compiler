@@ -5,8 +5,8 @@ public class AdditiveExpr extends EqualityExpr{
 	public MultiplicativeExpr multExp;
 	public int op;
 	public AdditiveExpr addExp;
-	int lineNumber;
-	int charNumber;
+	//int lineNumber;
+	//int charNumber;
 	
 	public AdditiveExpr() {
 		
@@ -16,8 +16,8 @@ public class AdditiveExpr extends EqualityExpr{
 		multExp = me;
 		op = o;
 		addExp = ae;
-		this.lineNumber = me.lineNumber;
-		this.charNumber = me.charNumber;
+		//this.lineNumber = me.lineNumber;
+		//this.charNumber = me.charNumber;
 	}
 	
 	public String toString(){
@@ -45,18 +45,20 @@ public class AdditiveExpr extends EqualityExpr{
 	public void check() throws SemanticException {
 		
 		multExp.check();
+	//	lineNumber = multExp.lineNumber;
+	//	charNumber = multExp.charNumber;
 		returnType = multExp.getType();
 		if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
-			ClassDecl.returnError("All elements of an additive expression must be of type int or float", lineNumber, charNumber);
+			ClassDecl.returnError("All elements of an additive expression must be of type int or float", multExp.lineNumber, multExp.charNumber);
 				
 		if(addExp !=null) {
 			addExp.check();
 			
 			if(multExp.returnType != addExp.returnType)
-				ClassDecl.returnError("All elements of an additive expression must be of same type", lineNumber, charNumber);
+				ClassDecl.returnError("All elements of an additive expression must be of same type", addExp.lineNumber, addExp.charNumber);
 			
 			else if((addExp.returnType != Expression.INT) && (addExp.returnType != Expression.FLOAT))
-				ClassDecl.returnError("All elements of an additive expression must be of type int or float", lineNumber, charNumber);
+				ClassDecl.returnError("All elements of an additive expression must be of type int or float", addExp.lineNumber, addExp.charNumber);
 			
 			
 		}

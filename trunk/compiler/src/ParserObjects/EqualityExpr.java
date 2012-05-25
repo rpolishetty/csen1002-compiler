@@ -5,7 +5,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 	public AdditiveExpr addExp;
 	public int op;
 	public EqualityExpr eqExp;
-	int lineNumber;
+	//int lineNumber;
 	
 	public EqualityExpr() {
 		
@@ -16,8 +16,8 @@ public class EqualityExpr extends ConditionalAndExpr{
 		op = o;
 		eqExp = ee;
 		returnType = Expression.BOOLEAN;
-		this.lineNumber = ae.lineNumber;
-		this.charNumber = ae.charNumber;
+	//	this.lineNumber = ae.lineNumber;
+	//	this.charNumber = ae.charNumber;
 	}
 	
 	public String toString(){
@@ -50,7 +50,7 @@ public class EqualityExpr extends ConditionalAndExpr{
 		if(eqExp !=null) {
 			eqExp.check();
 			if(addExp.returnType != eqExp.returnType)
-				ClassDecl.returnError("All elements of an equality expression must be of same type", lineNumber, charNumber);
+				ClassDecl.returnError("All elements of an equality expression must be of same type", addExp.lineNumber, addExp.charNumber);
 		}
 	}
 }
