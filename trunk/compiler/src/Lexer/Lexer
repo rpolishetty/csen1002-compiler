@@ -30,7 +30,7 @@ import java.io.IOException;
 			for(int i = 1; i <= yyline+1; i++)
 				line = reader.readLine().trim();
 			
-			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber+1) + ":\n";
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber) + ":\n";
 			
 			switch(c){
 			
@@ -88,11 +88,11 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 
 %%
 <YYINITIAL> {STRING} { 
-  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
    warningReport(yytext(), "", 3);
-   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber+1), yytext());
+   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
   int number = 0;
@@ -100,7 +100,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 		number *= 10;
 		number += yy_buffer[k]-'0';
 	}
-  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + number);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber),  "" + number);
 }
 <YYINITIAL> {NUMBERFLOAT} {
 	float floatNumber = 0;
@@ -117,46 +117,46 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 			floatNumber += yy_buffer[k]-'0';
 		}
 	}
-  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber+1),  "" + floatNumber);
+  return new Symbol(sym.NM,(yyline+1), (yychar-charNumber),  "" + floatNumber);
 }
 <YYINITIAL> "class" { 
-  return new Symbol(sym.CLASS,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.CLASS,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "else" { 
-  return new Symbol(sym.ELSE,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ELSE,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "if" { 
-  return new Symbol(sym.IF,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.IF,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "int" { 
-  return new Symbol(sym.INT,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.INT,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "float" { 
-  return new Symbol(sym.FLOAT,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.FLOAT,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "boolean" { 
-  return new Symbol(sym.BOOLEAN,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BOOLEAN,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "String" { 
-  return new Symbol(sym.STRING,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.STRING,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "return" { 
-  return new Symbol(sym.RETURN,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.RETURN,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "static" { 
-  return new Symbol(sym.STATIC,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.STATIC,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "while" { 
-  return new Symbol(sym.WHILE,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.WHILE,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "true" { 
-  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> "false" { 
-  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.BL,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {IDENT} { 
-  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber+1), yytext());
+  return new Symbol(sym.ID,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {WHITE_SPACE} { }
 
