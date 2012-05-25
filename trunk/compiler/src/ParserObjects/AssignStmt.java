@@ -51,7 +51,7 @@ public class AssignStmt {
 		
 		if(t != exp.returnType)
 			ClassDecl.returnError("Expression assgined to local variable '" + id + "' " +
-					"should be the same as the variable type", lineNumber);
+					"should be the same as the variable type", lineNumber, idCharNumber );
 			
 	}
 	
