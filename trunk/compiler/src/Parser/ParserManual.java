@@ -474,21 +474,24 @@ public class ParserManual {
 		
 		switch (token.getTokenType()) {
 		case Token.NM:
+			charN = token.charNumber;
 			match(token.getTokenType(), "a number");
 			
 			if(tk.contains("."))
-				exp = new PrimaryExpr(Float.parseFloat(tk),line);
+				exp = new PrimaryExpr(Float.parseFloat(tk),line,charN);
 			
 			else
-				exp = new PrimaryExpr(Integer.parseInt(tk),line);
+				exp = new PrimaryExpr(Integer.parseInt(tk),line,charN);
 			break;
 		case Token.BL:
+			charN = token.charNumber;
 			match(token.getTokenType(), "a boolean");
-			exp = new PrimaryExpr(Boolean.parseBoolean(tk),line);
+			exp = new PrimaryExpr(Boolean.parseBoolean(tk),line,charN);
 			break;
 		case Token.ST:
+			charN = token.charNumber;
 			match(token.getTokenType(), "a string");
-			exp = new PrimaryExpr(tk,line);
+			exp = new PrimaryExpr(tk,line,charN);
 			break;
 			
 		case Token.ID:
@@ -505,8 +508,9 @@ public class ParserManual {
 			break;
 			
 		case Token.LP:
+			charN = token.charNumber;
 			match(Token.LP, "");
-			exp = new PrimaryExpr(expression(),line);
+			exp = new PrimaryExpr(expression(),line,charN);
 			match(Token.RP, "");
 			break;
 			
