@@ -32,27 +32,27 @@ public class ClassDecl {
 	
 	}
 	
-	public static void returnError(String message, int lineNumber) throws SemanticException{
-		
-		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
-		try {
-			String error = "";
-			BufferedReader reader = null;
-			reader = new BufferedReader(new FileReader(inFile));
-			String line = "";
-			for(int i = 1; i <= lineNumber; i++)
-				line = reader.readLine().trim();
-			
-			error += "\nSemantic Error at line " + lineNumber + ":\n";	
-			error += message + "\n";
-			error += "In: " + line;
-			
-			throw new SemanticException(error);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		
-	}
+//	public static void returnError(String message, int lineNumber) throws SemanticException{
+//		
+//		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
+//		try {
+//			String error = "";
+//			BufferedReader reader = null;
+//			reader = new BufferedReader(new FileReader(inFile));
+//			String line = "";
+//			for(int i = 1; i <= lineNumber; i++)
+//				line = reader.readLine().trim();
+//			
+//			error += "\nSemantic Error at line " + lineNumber + ":\n";	
+//			error += message + "\n";
+//			error += "In: " + line;
+//			
+//			throw new SemanticException(error);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		
+//	}
 	
 	public static void returnError(String message, int lineNumber, int charNumber) throws SemanticException{
 		

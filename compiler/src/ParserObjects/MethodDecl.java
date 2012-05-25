@@ -66,7 +66,7 @@ public class MethodDecl {
 		b.check();
 				
 		if(!hasReturnStmt(t.type, id))
-			ClassDecl.returnError("Method '" + id + "' should have a reachable return statement", lineNumber);
+			ClassDecl.returnError("Method '" + id + "' should have a reachable return statement", lineNumber, charNumber);
 		
 		
 		symTable.closeScope();
