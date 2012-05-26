@@ -30,7 +30,7 @@ import java.io.IOException;
 			for(int i = 1; i <= yyline+1; i++)
 				line = reader.readLine().trim();
 			
-			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme) + ":\n";
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme+1) + ":\n";
 			
 			switch(c){
 			
@@ -91,7 +91,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-   warningReport(yytext(), "", 3,1-yytext().length());
+   warningReport(yytext(), "", 3,yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
@@ -208,7 +208,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 } 
 <YYINITIAL> "|" { 
   warningReport("|", "||", 1,1);
-  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber), "||"); 
 } 
 <YYINITIAL> "&" { 
   warningReport("&", "&&", 1,1);
@@ -237,7 +237,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
-  warningReport(yytext(), "", 2,0);
+  warningReport(yytext(), "", 2,1);
   
 }
 

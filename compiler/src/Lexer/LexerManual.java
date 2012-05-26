@@ -230,7 +230,7 @@ public class LexerManual {
 					invalidBuffer = curr;
 					curr = read();
 					state = 1;
-					warningReport("" + invalidBuffer, "", 2,0);
+					warningReport("" + invalidBuffer, "", 2,1);
 					continue;
 				}
 				
@@ -297,7 +297,7 @@ public class LexerManual {
 					
 					if (!isNumeric(curr)){
 						decimalPoint = 0;
-						warningReport(".", "", 2, 0);
+						warningReport(".", "", 2, 1);
 					}
 				}
 				
