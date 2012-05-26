@@ -27,7 +27,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 			String line = "";
 			for(int i = 1; i <= yyline+1; i++)
 				line = reader.readLine().trim();
-			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme) + ":\n";
+			error += "Warning at line " + (yyline+1) + " char " + (yychar-charNumber-lexeme+1) + ":\n";
 			switch(c){
 			case 1: 
 				error += found + " converted to " + expected;
@@ -431,7 +431,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 2:
 						{ 
-   warningReport(yytext(), "", 3,1-yytext().length());
+   warningReport(yytext(), "", 3,yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -3:
@@ -459,7 +459,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 6:
 						{
-  warningReport(yytext(), "", 2,0);
+  warningReport(yytext(), "", 2,1);
 }
 					case -7:
 						break;
@@ -544,7 +544,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 					case 20:
 						{ 
   warningReport("|", "||", 1,1);
-  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber), "||"); 
 }
 					case -21:
 						break;
@@ -713,7 +713,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 47:
 						{ 
-   warningReport(yytext(), "", 3,1-yytext().length());
+   warningReport(yytext(), "", 3,yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -47:
@@ -726,7 +726,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 49:
 						{
-  warningReport(yytext(), "", 2,0);
+  warningReport(yytext(), "", 2,1);
 }
 					case -49:
 						break;
@@ -738,7 +738,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 52:
 						{ 
-   warningReport(yytext(), "", 3,1-yytext().length());
+   warningReport(yytext(), "", 3,yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -51:
