@@ -575,7 +575,7 @@ public class ParserManual {
 	}
 	
 	private void errorReport(int t, String message) throws SyntacticException {
-		String inFile = "/Users/michaelmkamal/Documents/workspace/compiler-3/src/Lexer/Algebra.decaf";
+		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;
