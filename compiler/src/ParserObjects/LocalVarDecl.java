@@ -41,13 +41,13 @@ public class LocalVarDecl {
 		if(symTable.contains(id))
 			
 			if(symTable.get(id).level == 0)
-				ClassDecl.returnError("Local Variable name \"" + id + "\" cannot be the same as the class name", lineNumber, charNumber);
+				ClassDecl.returnError("Local Variable name '" + id + "' cannot be the same as the class name", lineNumber, charNumber);
 			
 			else if(symTable.get(id).level == 1)
-				ClassDecl.returnError("Local Variable name \"" + id + "\" cannot be the same as the method name", lineNumber, charNumber);
+				ClassDecl.returnError("Local Variable name '" + id + "' cannot be the same as the method name", lineNumber, charNumber);
 			
 			else
-				ClassDecl.returnError("Local Variable \"" + id + "\" is previously defined in the current scope", lineNumber, charNumber);
+				ClassDecl.returnError("Local Variable '" + id + "' is previously defined in the current scope", lineNumber, charNumber);
 		
 			
 		symTable.add(new Entry(id), this);
