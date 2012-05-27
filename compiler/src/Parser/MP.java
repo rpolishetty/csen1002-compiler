@@ -32,7 +32,7 @@ public class MP {
 
 		//Manual
 		LexerManual lexer = new LexerManual(inFile);
-		ParserManual parser = new ParserManual(lexer);
+		ParserManual parser = new ParserManual(lexer, inFile);
 		
 		//Sample
 		//LexerSample lexer = new LexerSample(inFile);

@@ -23,16 +23,18 @@ public class ParserManual {
 	private LexerManual lexer; // lexical analyzer
 	private Token token; // look ahead token
 	int lineNumber = 0;
+	String inFile;
 	
-	public ParserManual(LexerManual lex) {
+	public ParserManual(LexerManual lex, String inFile) {
 		lexer = lex;
+		this.inFile = inFile;
 	}
 	
 	public ClassDecl parse() throws SyntacticException, SemanticException {
 		
 		token = lexer.nextToken();
 		
-		ClassDecl cd = new ClassDecl();
+		ClassDecl cd = new ClassDecl(inFile);
 		
 		while(token.getTokenType() != Token.EOF) {
 			cd = classDecl();
@@ -57,7 +59,7 @@ public class ParserManual {
 			mds = methodDecls();
 			match(Token.RB, "");
 			
-			return new ClassDecl(id,mds,line,charN);
+			return new ClassDecl(id,mds,line,charN,inFile);
 		}
 		errorReport(Token.KW, "#class");
 		return null;
@@ -574,7 +576,6 @@ public class ParserManual {
 	}
 	
 	private void errorReport(int t, String message) throws SyntacticException {
-		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;
