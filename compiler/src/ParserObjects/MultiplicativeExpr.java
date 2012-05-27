@@ -51,16 +51,16 @@ public class MultiplicativeExpr extends AdditiveExpr{
 		//charNumber = primExp.charNumber;
 		returnType = primExp.getType();
 		if((primExp.returnType != Expression.INT) && (primExp.returnType != Expression.FLOAT))
-			ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", lineNumber, charNumber);
+			ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", primExp.lineNumber, primExp.charNumber);
 				
 		if(multExp !=null) {
 			multExp.check();
 			
 			if(multExp.returnType != primExp.returnType)
-				ClassDecl.returnError("All elements of a multiplicative expression must be of same type", lineNumber, charNumber);
+				ClassDecl.returnError("All elements of a multiplicative expression must be of same type", primExp.lineNumber, primExp.charNumber);
 			
 			else if((multExp.returnType != Expression.INT) && (multExp.returnType != Expression.FLOAT))
-				ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", lineNumber, charNumber);
+				ClassDecl.returnError("All elements of a multiplicative expression must be of type int or float", multExp.lineNumber, multExp.charNumber);
 			
 		}
 	}

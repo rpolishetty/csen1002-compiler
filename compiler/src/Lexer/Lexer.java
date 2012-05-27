@@ -431,7 +431,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 2:
 						{ 
-   warningReport(yytext(), "", 3,yytext().length());
+   warningReport(yytext(), "", 3,2-yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -3:
@@ -713,7 +713,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 47:
 						{ 
-   warningReport(yytext(), "", 3,yytext().length());
+   warningReport(yytext(), "", 3,2-yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -47:
@@ -738,7 +738,7 @@ public class Lexer implements java_cup.runtime.Scanner {
 						break;
 					case 52:
 						{ 
-   warningReport(yytext(), "", 3,yytext().length());
+   warningReport(yytext(), "", 3,2-yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 					case -51:
