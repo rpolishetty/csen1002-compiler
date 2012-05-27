@@ -18,8 +18,8 @@ public class Lexer implements java_cup.runtime.Scanner {
 	private final int YY_EOF = 129;
 
   	int charNumber = 0;
+  	public String inFile;
   	private void warningReport(String found, String expected, int c, int lexeme){
-		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;

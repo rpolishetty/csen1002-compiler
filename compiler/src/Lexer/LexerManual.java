@@ -13,12 +13,14 @@ public class LexerManual {
 	private char curr; // The current character being scanned
 	int lineNumber = 1;
 	int charNumber = 0;
+	String file;
 
 	private static final char EOF = (char) (-1);
 
 	// End of file character
 
 	public LexerManual(String file) {
+		this.file = file;
 		try {
 			reader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
@@ -348,11 +350,11 @@ public class LexerManual {
 	
 	private void warningReport(String found, String expected, int c, int lexemeLength){
 		
-		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
+		
 		try {
 			String error = "";
 			BufferedReader reader = null;
-			reader = new BufferedReader(new FileReader(inFile));
+			reader = new BufferedReader(new FileReader(file));
 			String line = "";
 			for(int i = 1; i <= lineNumber; i++)
 				line = reader.readLine().trim();

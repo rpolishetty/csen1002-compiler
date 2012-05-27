@@ -27,7 +27,9 @@ public class AP {
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			DataInputStream dis = new DataInputStream(bis);
 	
-			parser parser = new parser(new Lexer(dis));
+			Lexer lexer = new Lexer(dis);
+			lexer.inFile = inFile;
+			parser parser = new parser(lexer);
 			parser.infile = inFile;
 			Symbol res = parser.parse();
 
