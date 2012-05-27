@@ -229,14 +229,15 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 <YYINITIAL> "/*" {
   yybegin(MANYLINECOMMENTS);
 }
+<MANYLINECOMMENTS> [\n] {
+	charNumber = yychar;
+}
 <MANYLINECOMMENTS> [^*/] {
 }
 <MANYLINECOMMENTS> "*/" {
   yybegin(YYINITIAL);
 }
-<MANYLINECOMMENTS> [\n] {
-	charNumber = yychar;
-}
+
 <ONELINECOMMENTS> [^\n] {
 }
 <ONELINECOMMENTS> [\n] {
