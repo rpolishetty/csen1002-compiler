@@ -10,20 +10,21 @@ public class ClassDecl {
 	
 	public String id;
 	public MethodDecls mds;
-	String inFile;
+	static String inFile;
 	int lineNumber;
 	int charNumber;
 	public static SymbolTable symTable;
 	
-	public ClassDecl() {
-		
+	public ClassDecl(String inFile) {
+		this.inFile = inFile;
 	}
 	
-	public ClassDecl(String id, MethodDecls mds, int lineNumber, int charNumber) {
+	public ClassDecl(String id, MethodDecls mds, int lineNumber, int charNumber, String inFile) {
 		this.id = id;
 		this.mds = mds;
 		this.lineNumber = lineNumber;
 		this.charNumber = charNumber;
+		this.inFile = inFile;
 	}
 
 	public static void throwException() throws SyntacticException {
@@ -36,7 +37,6 @@ public class ClassDecl {
 	
 	public static void returnError(String message, int lineNumber, int charNumber) throws SemanticException{
 		
-		String inFile = System.getProperty("user.dir") +"/src/Lexer/Algebra.decaf";
 		try {
 			String error = "";
 			BufferedReader reader = null;
