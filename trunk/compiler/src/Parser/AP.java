@@ -28,6 +28,7 @@ public class AP {
 			DataInputStream dis = new DataInputStream(bis);
 	
 			parser parser = new parser(new Lexer(dis));
+			parser.infile = inFile;
 			Symbol res = parser.parse();
 
 	

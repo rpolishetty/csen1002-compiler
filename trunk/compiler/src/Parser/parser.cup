@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import ParserObjects.*;
 import java_cup.runtime.*;
 	
+parser code {:
+String infile;
+:};
+
+
 /* Terminals (tokens returned by the scanner). */
 terminal			SM, PO, MO, INT, FLOAT, BOOLEAN, STRING, TO, DO, FA, LB,LO,LA,EQ,NE,MD,AO, RB, LP, RP,STATIC,WHILE,RETURN,CLASS,IF,ELSE;
 terminal String		ID, ST;
@@ -46,7 +51,7 @@ precedence left TO, DO, MD;
 /* The grammar */
 
 classDecl ::= CLASS ID:id LB methodDecls:mds RB
-			  {:RESULT = new ClassDecl(id,mds,idleft,idright);:}
+			  {:RESULT = new ClassDecl(id,mds,idleft,idright,parser.infile);:}
 			  | error
 			  {:ClassDecl.throwException();:};
 			  
