@@ -91,7 +91,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
   return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {STRINGERROR} { 
-   warningReport(yytext(), "", 3,yytext().length());
+   warningReport(yytext(), "", 3,2-yytext().length());
    return new Symbol(sym.ST,(yyline+1), (yychar-charNumber), yytext());
 }
 <YYINITIAL> {NUMBERINT} { 
