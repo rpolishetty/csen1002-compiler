@@ -194,13 +194,13 @@ public class ParserManual {
 		
 		ArrayList<Statement> stmt = new ArrayList<Statement>();
 		int line;
-		
 		line = lineNumber;
 		while(true){
 			switch (token.getTokenType()) {
 			case Token.LB:
 			case Token.ID:
 				stmt.add(statement());
+				break;
 			case Token.KW:
 				if(token.getLexeme().equals("while") || token.getLexeme().equals("return")
 						|| token.getLexeme().equals("if") || token.getLexeme().equals("int")
@@ -499,7 +499,7 @@ public class ParserManual {
 			match(token.getTokenType(), "ID");
 			
 			if(token.getTokenType() == Token.LP)
-				exp = callExpr(tk);
+				exp = callExpr(tk, charN);
 			
 			else
 				exp = new PrimaryExpr("id",tk,line,charN);
@@ -521,9 +521,8 @@ public class ParserManual {
 		return exp;
 	}
 
-	private CallExpr callExpr(String id) throws SyntacticException, SemanticException {
+	private CallExpr callExpr(String id, int charN) throws SyntacticException, SemanticException {
 		int line;
-		int charN = token.charNumber;
 		line = lineNumber;
 		ActualParams aps;
 		
