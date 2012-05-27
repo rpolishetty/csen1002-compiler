@@ -76,7 +76,7 @@ NUMBER=(({DIGIT})+)|(({DIGIT})+.({DIGIT})+)
 
 NUMBERINT=(({DIGIT})+)
 
-NUMBERFLOAT=(({DIGIT})+.({DIGIT})+)
+NUMBERFLOAT=(({DIGIT})+[.]({DIGIT})+)
 
 WHITE_SPACE=([\ \b\t\f])+
 

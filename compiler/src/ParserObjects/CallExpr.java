@@ -49,14 +49,12 @@ public class CallExpr extends PrimaryExpr {
 		MethodDecl md = (MethodDecl) e.object;
 		
 		returnType = md.t.type;
-		System.out.println(md.getParamatersTypes().size() + " " + parametersList.size());
 		if(md.getParamatersTypes().size() != parametersList.size()){
 			ClassDecl.returnError("Method '" + id + "' with the same number of parameters is not declared in the current scope", lineNumber, charNumber);
 		}
 		
 		for(int i = 0; i < md.getParamatersTypes().size(); i++){
 			int t = aps.getParamatersTypes().get(i);
-			System.out.println(md.getParamatersTypes().get(i) + " " + t);
 			if(md.getParamatersTypes().get(i) != t){
 				ClassDecl.returnError("Method '" + id + "' with the same parameter types is not declared in the current scope", lineNumber, charNumber);
 			}
