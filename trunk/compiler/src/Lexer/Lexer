@@ -80,8 +80,6 @@ NUMBERFLOAT=(({DIGIT})+.({DIGIT})+)
 
 WHITE_SPACE=([\ \b\t\f])+
 
-NEW_LINE= ([\n\r])
-
 STRING=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*\")
 
 STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
@@ -160,8 +158,13 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 }
 <YYINITIAL> {WHITE_SPACE} { }
 
-<YYINITIAL> {NEW_LINE} { 
-	charNumber = yychar;
+<YYINITIAL> [\n] { 
+  charNumber = yychar;
+}
+
+<YYINITIAL> [\r] { 
+  yychar = 0;
+  yyline = 0;
 }
 
 <YYINITIAL> ";" { 
@@ -208,7 +211,7 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 } 
 <YYINITIAL> "|" { 
   warningReport("|", "||", 1,1);
-  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber), "||"); 
+  return new Symbol(sym.LO,(yyline+1), (yychar-charNumber+1), "||"); 
 } 
 <YYINITIAL> "&" { 
   warningReport("&", "&&", 1,1);
@@ -231,9 +234,13 @@ STRINGERROR=(\"({ALPHA_NUMERIC}|[\ \b\t\f]|{NUMBER}|[;,(){}=+-*/%!|&'\\])*)
 <MANYLINECOMMENTS> "*/" {
   yybegin(YYINITIAL);
 }
+<MANYLINECOMMENTS> [\n] {
+	charNumber = yychar;
+}
 <ONELINECOMMENTS> [^\n] {
 }
 <ONELINECOMMENTS> [\n] {
+  charNumber = yychar;
   yybegin(YYINITIAL);
 }
 <YYINITIAL> . {
